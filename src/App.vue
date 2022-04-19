@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import TilesEditor from '@/components/TilesEditor.vue';
+import BlockGame from '@/components/BlockGame.vue';
+import PlayerSheet from '@/components/PlayerSheet/PlayerSheet.vue';
 </script>
 
 <template>
-	<TilesEditor />
+	<PlayerSheet />
 </template>
 
 <style>
