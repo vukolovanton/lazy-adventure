@@ -3,12 +3,12 @@ import { PlayerBaseInfo } from '@/interfaces/PlayerStats';
 
 export const usePlayerBaseInfo = defineStore('playerBaseInfo', {
 	state: (): PlayerBaseInfo => ({
-		characterName: '',
-		characterClass: '',
+		characterName: 'Dickalion',
+		characterClass: 'Paladin',
 		level: 1,
-		race: '',
-		aligment: '',
-		experience: 0,
+		race: 'Elf',
+		aligment: 'Lawfull-Evil',
+		experience: 1230,
 	}),
 
 	actions: {

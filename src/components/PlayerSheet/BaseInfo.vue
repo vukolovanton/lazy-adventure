@@ -1,5 +1,5 @@
 <template>
-	<section>
+	<section class="BaseInfo">
 		<TextInputField
 			label="Character Name"
 			id="characterName"
@@ -12,11 +12,6 @@
 			:input-value="characterClass"
 			@set-input-value="store.setCharacterClass"
 		/>
-		<IncrementInputField
-			label="Level"
-			:value="level"
-			@set-incrementable-value="updateCharacterLevel"
-		/>
 		<TextInputField
 			label="Race"
 			id="race"
@@ -28,6 +23,11 @@
 			id="aligment"
 			:input-value="aligment"
 			@set-input-value="store.setAligment"
+		/>
+		<IncrementInputField
+			label="Level"
+			:value="level"
+			@set-incrementable-value="updateCharacterLevel"
 		/>
 		<TextInputField
 			label="Experience"
@@ -57,3 +57,13 @@ function updateCharacterLevel(value: string) {
 	}
 }
 </script>
+
+<style scoped>
+.BaseInfo {
+	grid-area: BaseInfo;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+}
+</style>

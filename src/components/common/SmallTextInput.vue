@@ -28,9 +28,7 @@ defineEmits(['setInputValue']);
 
 const calculatedClass = computed(
 	() =>
-		`${
-			props.type && props.type === 'number' ? 'input-number' : 'input-field'
-		} ${props.label && props.label === 'Experience' ? 'exp' : ''}`
+		`${props.type && props.type === 'number' ? 'input-number' : 'input-field'}`
 );
 </script>
 
@@ -39,7 +37,7 @@ const calculatedClass = computed(
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 1em;
-	max-width: 10em;
+	max-width: 5em;
 
 	& > label {
 		font-size: 0.6em;
@@ -49,8 +47,6 @@ const calculatedClass = computed(
 		background: none;
 		border: 0;
 		border-bottom: 1px solid #ccc;
-		font-size: 1.2em;
-		font-weight: 800;
 	}
 
 	& > input.input-number {
@@ -64,9 +60,5 @@ const calculatedClass = computed(
 		font-size: 2.5em;
 		max-width: 5em;
 	}
-
-	// & > input.input-field {
-	//  font-size: 1.5em;
-	// }
 }
 </style>

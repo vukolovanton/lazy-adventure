@@ -1,5 +1,5 @@
 <template>
-	<section>
+	<section class="BaseStats">
 		<TextInputField
 			type="number"
 			label="Strength"

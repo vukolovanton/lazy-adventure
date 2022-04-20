@@ -1,45 +1,46 @@
 <template>
-	<section>
-		<div v-for="spell in spells">
+	<section class="SpellsList">
+		<h3>Spells</h3>
+		<div v-for="spell in spells" class="spells-list">
 			<span>{{ spell.name }}</span>
 			<span>{{ spell.attack }}</span>
 			<span>{{ spell.dice }}</span>
 			<span>{{ spell.type }}</span>
 		</div>
-		<div>
-			<TextInputField
+		<div class="spells-input">
+			<SmallTextInput
 				label="Name"
 				id="spellName"
 				:input-value="newSpell.name"
 				@set-input-value="setSpellName"
 			/>
-			<TextInputField
+			<SmallTextInput
 				label="Attack"
 				id="spellAttack"
 				:input-value="newSpell.attack"
 				@set-input-value="setSpellAttack"
 			/>
-			<TextInputField
+			<SmallTextInput
 				label="Dice"
 				id="spellDice"
 				:input-value="newSpell.dice"
 				@set-input-value="setSpellDice"
 			/>
-			<TextInputField
+			<SmallTextInput
 				label="Type"
 				id="spellType"
 				:input-value="newSpell.type"
 				@set-input-value="setSpellType"
 			/>
-			<button @click="handleSaveNewSpell">Add</button>
 		</div>
+		<button @click="handleSaveNewSpell">Add</button>
 	</section>
 </template>
 
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia';
 import { usePlayerSpellsStore } from '@/store/palyerStats/playerSpellsStore';
-import TextInputField from '@/components/common/TextInputField.vue';
+import SmallTextInput from '@/components/common/SmallTextInput.vue';
 import { reactive } from 'vue';
 
 const store = usePlayerSpellsStore();
@@ -77,3 +78,21 @@ function handleSaveNewSpell() {
 	newSpell.type = '';
 }
 </script>
+
+<style lang="scss" scoped>
+h3 {
+	margin-bottom: 1em;
+}
+
+.spells-list {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 1em;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+}
+.spells-input {
+	display: flex;
+	justify-content: space-between;
+}
+</style>

@@ -7,7 +7,14 @@ type PlayerSpellsStore = {
 
 export const usePlayerSpellsStore = defineStore('playerSpells', {
 	state: (): PlayerSpellsStore => ({
-		spells: [],
+		spells: [
+			{
+				name: 'Rolling spell',
+				attack: 25,
+				dice: '1d6',
+				type: 'Fire',
+			},
+		],
 	}),
 
 	actions: {
