@@ -60,6 +60,10 @@ button {
 	margin-left: 0.2em;
 	margin-right: 0.2em;
 	cursor: pointer;
-	/* text-shadow: 1px 0 0 black; */
+	box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 3px 0px;
+}
+
+input[type='checkbox'] {
+	margin-right: 0.5em;
 }
 </style>

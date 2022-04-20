@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { Spell } from '@/interfaces/PlayerSpells';
+import { trimString } from '@/utils/utils';
 
 type PlayerSpellsStore = {
 	spells: Spell[];
@@ -23,9 +24,7 @@ export const usePlayerSpellsStore = defineStore('playerSpells', {
 		},
 		removeSpell(spell: Spell) {
 			const newState = this.spells.filter(
-				(s) =>
-					s.name.split(' ').join('').toLocaleLowerCase() !==
-					spell.name.split(' ').join('').toLocaleLowerCase()
+				(s) => trimString(s.name) !== trimString(spell.name)
 			);
 			this.spells = newState;
 		},

@@ -6,6 +6,7 @@
 			<span>{{ spell.attack }}</span>
 			<span>{{ spell.dice }}</span>
 			<span>{{ spell.type }}</span>
+			<button @click="store.removeSpell(spell)">X</button>
 		</div>
 		<div class="spells-input">
 			<SmallTextInput
@@ -33,7 +34,7 @@
 				@set-input-value="setSpellType"
 			/>
 		</div>
-		<button @click="handleSaveNewSpell">Add</button>
+		<button @click="handleSaveNewSpell" :disabled="!isFilled">Add</button>
 	</section>
 </template>
 
@@ -41,7 +42,7 @@
 import { storeToRefs } from 'pinia';
 import { usePlayerSpellsStore } from '@/store/palyerStats/playerSpellsStore';
 import SmallTextInput from '@/components/common/SmallTextInput.vue';
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
 
 const store = usePlayerSpellsStore();
 const { spells } = storeToRefs(store);
@@ -51,6 +52,19 @@ const newSpell = reactive({
 	dice: '',
 	type: '',
 });
+
+const isFilled = computed(() => {
+	return (
+		newSpell.attack > 0 &&
+		newSpell.name.trim() !== '' &&
+		newSpell.dice.trim() !== '' &&
+		newSpell.type.trim() !== ''
+	);
+});
+
+function handleRemove() {
+	store.removeSpell(newSpell);
+}
 
 function setSpellName(value: string) {
 	newSpell.name = value;
@@ -69,6 +83,8 @@ function setSpellType(value: string) {
 }
 
 function handleSaveNewSpell() {
+	if (!isFilled) return;
+
 	const t = { ...newSpell };
 	store.setNewSpell(t);
 

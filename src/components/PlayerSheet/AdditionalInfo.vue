@@ -56,7 +56,6 @@
 			/>
 			<div>
 				<div>
-					<span>Successes</span>
 					<input
 						v-for="(success, index) in successes"
 						type="checkbox"
@@ -64,9 +63,9 @@
 						:checked="success"
 						@change="store.setDeathSaves(0, index, $event.target?.checked)"
 					/>
+					<span>Successes</span>
 				</div>
 				<div>
-					<span>Failures</span>
 					<input
 						v-for="(failure, index) in failures"
 						type="checkbox"
@@ -74,6 +73,7 @@
 						:checked="failure"
 						@change="store.setDeathSaves(1, index, $event.target?.checked)"
 					/>
+					<span>Failures</span>
 				</div>
 			</div>
 		</div>

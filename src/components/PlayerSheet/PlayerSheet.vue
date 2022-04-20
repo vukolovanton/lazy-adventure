@@ -58,6 +58,6 @@ import InventoryList from './InventoryList.vue';
 
 .SkillList {
 	grid-area: SkillList;
-	justify-self: end;
+	justify-self: stretch;
 }
 </style>
