@@ -9,6 +9,17 @@ class PlayerService {
 		return axios.post(API_URL + 'player', player, { headers: authHeader() });
 	}
 
+	updatePlayer(player: Player) {
+		return axios.put(API_URL + 'player', player, { headers: authHeader() });
+	}
+
+	getPlayer(id: string): Promise<Player> {
+		return axios
+			.get(API_URL + 'player/' + id, { headers: authHeader() })
+			.then((response) => response.data)
+			.catch((e) => alert(e));
+	}
+
 	// getModeratorBoard() {
 	// 	return axios.get(API_URL + 'mod', { headers: authHeader() });
 	// }

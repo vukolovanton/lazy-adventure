@@ -17,6 +17,16 @@ export const usePlayerAdditionalInfo = defineStore('playerAdditionalInfo', {
 	}),
 
 	actions: {
+		setPlayerAdditionalInfo(additionalInfo: PlayerAdditionalInfo) {
+			this.armorClass = additionalInfo.armorClass;
+			this.initiative = additionalInfo.initiative;
+			this.speed = additionalInfo.speed;
+			this.currentHitPoints = additionalInfo.currentHitPoints;
+			this.maximumHitPoints = additionalInfo.maximumHitPoints;
+			this.temporaryHitPoints = additionalInfo.temporaryHitPoints;
+			this.hitDice = additionalInfo.hitDice;
+			this.deathSaves = additionalInfo.deathSaves;
+		},
 		setArmorClass(armorClass: number) {
 			this.armorClass = armorClass;
 		},

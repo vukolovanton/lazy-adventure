@@ -4,6 +4,7 @@ import {
 	SkillType,
 	SkillsList,
 	UserFacingSkillsList,
+	SkillStoreItem,
 } from '@/interfaces/PlayerSkills';
 
 export const usePlayerSkillsStore = defineStore('playerSkills', {
@@ -13,7 +14,7 @@ export const usePlayerSkillsStore = defineStore('playerSkills', {
 				name: UserFacingSkillsList.ACROBATICS,
 				type: SkillType.DEX,
 				points: 0,
-				isLearned: true,
+				isLearned: false,
 			},
 			{
 				name: UserFacingSkillsList.ARCANA,
@@ -115,6 +116,9 @@ export const usePlayerSkillsStore = defineStore('playerSkills', {
 	}),
 
 	actions: {
+		setPlayerSkills(skills: SkillStoreItem[]) {
+			this.skills = skills;
+		},
 		setSkillPoints(skill: UserFacingSkillsList, action: string) {
 			const skillIndex = this.skills.findIndex((s) => s.name === skill);
 			if (action === '+') {

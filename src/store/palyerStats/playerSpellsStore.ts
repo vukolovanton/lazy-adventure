@@ -8,17 +8,13 @@ type PlayerSpellsStore = {
 
 export const usePlayerSpellsStore = defineStore('playerSpells', {
 	state: (): PlayerSpellsStore => ({
-		spells: [
-			{
-				name: 'Rolling spell',
-				attack: 25,
-				dice: '1d6',
-				type: 'Fire',
-			},
-		],
+		spells: [],
 	}),
 
 	actions: {
+		setPlayerSpells(spells: Spell[]) {
+			this.spells = spells;
+		},
 		setNewSpell(spell: Spell) {
 			this.spells.push(spell);
 		},

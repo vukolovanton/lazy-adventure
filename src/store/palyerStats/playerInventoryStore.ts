@@ -8,16 +8,13 @@ type PlayerInventoryStore = {
 
 export const usePlayerInventoryStore = defineStore('playerInventory', {
 	state: (): PlayerInventoryStore => ({
-		inventory: [
-			{
-				name: 'Sword of the Gods',
-				count: 2,
-				weight: 1.5,
-			},
-		],
+		inventory: [],
 	}),
 
 	actions: {
+		setPlayerInventory(items: InventoryItem[]) {
+			this.inventory = items;
+		},
 		setNewInventoryItem(item: InventoryItem) {
 			this.inventory.push(item);
 		},

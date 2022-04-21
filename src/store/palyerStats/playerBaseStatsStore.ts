@@ -12,6 +12,14 @@ export const usePlayerBaseStats = defineStore('playerBaseStats', {
 	}),
 
 	actions: {
+		setPlayerBaseStats(baseStats: PlayerBaseStats) {
+			this.strength = baseStats.strength;
+			this.dexterety = baseStats.dexterety;
+			this.constitution = baseStats.constitution;
+			this.intelligence = baseStats.intelligence;
+			this.wisdom = baseStats.wisdom;
+			this.charisma = baseStats.charisma;
+		},
 		setStength(strength: number) {
 			this.strength = strength;
 		},
