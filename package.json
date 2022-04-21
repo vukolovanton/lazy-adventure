@@ -9,13 +9,16 @@
   },
   "dependencies": {
     "@types/node": "^17.0.24",
+    "@vueuse/core": "^8.3.0",
+    "axios": "^0.26.1",
     "eslint-config-prettier": "^8.5.0",
     "pinia": "^2.0.13",
     "prettier": "^2.6.2",
     "sass": "^1.50.1",
     "socket.io": "^4.4.1",
     "socket.io-client": "^4.4.1",
-    "vue": "^3.2.25"
+    "vue": "^3.2.25",
+    "vue-router": "4"
   },
   "devDependencies": {
     "@typescript-eslint/parser": "^5.19.0",

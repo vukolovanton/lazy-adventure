@@ -46,7 +46,7 @@ export interface SleightOfHand extends DexSkill {}
 export interface Stealth extends DexSkill {}
 export interface Survival extends WisSkill {}
 
-type SkillStoreItem = {
+export type SkillStoreItem = {
 	name: UserFacingSkillsList;
 	type: SkillType;
 	points: number;

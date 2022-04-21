@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import TilesEditor from '@/components/TilesEditor.vue';
+import NavBar from '@/components/NavBar.vue';
 import BlockGame from '@/components/BlockGame.vue';
-import PlayerSheet from '@/components/PlayerSheet/PlayerSheet.vue';
 </script>
 
 <template>
-	<PlayerSheet />
+	<NavBar />
+	<RouterView />
 </template>
 
 <style>
@@ -39,6 +39,11 @@ import PlayerSheet from '@/components/PlayerSheet/PlayerSheet.vue';
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
 }
 
 input {

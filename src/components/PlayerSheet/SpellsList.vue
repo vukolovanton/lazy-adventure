@@ -39,10 +39,10 @@
 </template>
 
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia';
-import { usePlayerSpellsStore } from '@/store/palyerStats/playerSpellsStore';
-import SmallTextInput from '@/components/common/SmallTextInput.vue';
 import { reactive, computed } from 'vue';
+import { storeToRefs } from 'pinia';
+import SmallTextInput from '@/components/common/SmallTextInput.vue';
+import { usePlayerSpellsStore } from '@/store/palyerStats/playerSpellsStore';
 
 const store = usePlayerSpellsStore();
 const { spells } = storeToRefs(store);

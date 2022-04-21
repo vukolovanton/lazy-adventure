@@ -1,0 +1,14 @@
+@import '@/components/common/textInputField.scss';
+
+section {
+	max-width: 20rem;
+	margin: 0 auto;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	& .container h2 {
+		margin-bottom: 40px;
+	}
+}

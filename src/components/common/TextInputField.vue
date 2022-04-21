@@ -34,39 +34,4 @@ const calculatedClass = computed(
 );
 </script>
 
-<style scoped lang="scss">
-.input-container {
-	display: flex;
-	flex-direction: column;
-	margin-bottom: 1em;
-	max-width: 10em;
-
-	& > label {
-		font-size: 0.6em;
-	}
-
-	& > input {
-		background: none;
-		border: 0;
-		border-bottom: 1px solid #ccc;
-		font-size: 1.2em;
-		font-weight: 800;
-	}
-
-	& > input.input-number {
-		font-size: 2.5em;
-		max-width: 1.7em;
-		max-height: 1.3em;
-		border-bottom: none;
-	}
-
-	& > input.exp {
-		font-size: 2.5em;
-		max-width: 5em;
-	}
-
-	// & > input.input-field {
-	//  font-size: 1.5em;
-	// }
-}
-</style>
+<style scoped lang="scss" src="@/components/common/textInputField.scss"></style>

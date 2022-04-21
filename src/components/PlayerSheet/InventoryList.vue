@@ -32,10 +32,10 @@
 </template>
 
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia';
-import { usePlayerInventoryStore } from '@/store/palyerStats/playerInventoryStore';
-import SmallTextInput from '@/components/common/SmallTextInput.vue';
 import { computed, reactive } from 'vue';
+import { storeToRefs } from 'pinia';
+import SmallTextInput from '@/components/common/SmallTextInput.vue';
+import { usePlayerInventoryStore } from '@/store/palyerStats/playerInventoryStore';
 
 const store = usePlayerInventoryStore();
 const { inventory } = storeToRefs(store);
