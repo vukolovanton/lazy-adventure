@@ -52,4 +52,6 @@ export const usePlayerAdditionalInfo = defineStore('playerAdditionalInfo', {
 			this.deathSaves[type][index] = value;
 		},
 	},
+
+	persist: true,
 });

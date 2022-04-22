@@ -1,11 +1,13 @@
 <template>
 	<section>
-		<h3>{{ player?.user.username }}</h3>
+		<h3>{{ characterName }}</h3>
 	</section>
 </template>
 
 <script lang="ts" setup>
-import AuthService from '@/utils/auth/auth.service';
+import { storeToRefs } from 'pinia';
+import { usePlayerBaseInfo } from '@/store/palyerStats/playerBaseInfoStore';
 
-const player = AuthService.getCurrentUser();
+const store = usePlayerBaseInfo();
+const { characterName } = storeToRefs(store);
 </script>

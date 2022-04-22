@@ -132,4 +132,6 @@ export const usePlayerSkillsStore = defineStore('playerSkills', {
 			this.skills[skillIndex].isLearned = isLearned;
 		},
 	},
+
+	persist: true,
 });

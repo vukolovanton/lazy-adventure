@@ -25,4 +25,6 @@ export const usePlayerInventoryStore = defineStore('playerInventory', {
 			this.inventory = newState;
 		},
 	},
+
+	persist: true,
 });

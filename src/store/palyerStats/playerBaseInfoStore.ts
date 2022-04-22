@@ -2,14 +2,16 @@ import { defineStore } from 'pinia';
 import { PlayerBaseInfo } from '@/interfaces/PlayerStats';
 
 export const usePlayerBaseInfo = defineStore('playerBaseInfo', {
-	state: (): PlayerBaseInfo => ({
-		characterName: '',
-		characterClass: '',
-		level: 1,
-		race: '',
-		aligment: '',
-		experience: 0,
-	}),
+	state: (): PlayerBaseInfo => {
+		return {
+			characterName: '',
+			characterClass: '',
+			level: 1,
+			race: '',
+			aligment: '',
+			experience: 0,
+		};
+	},
 
 	actions: {
 		setPlayerBaseInfo(baseInfo: PlayerBaseInfo) {
@@ -47,4 +49,6 @@ export const usePlayerBaseInfo = defineStore('playerBaseInfo', {
 			this.experience = experience;
 		},
 	},
+
+	persist: true,
 });

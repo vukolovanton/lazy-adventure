@@ -39,4 +39,6 @@ export const usePlayerBaseStats = defineStore('playerBaseStats', {
 			this.charisma = charisma;
 		},
 	},
+
+	persist: true,
 });

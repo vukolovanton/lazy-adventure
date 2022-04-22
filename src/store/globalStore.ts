@@ -24,4 +24,6 @@ export const useGlobalStore = defineStore('globalStore', {
 			this.isLoading = value;
 		},
 	},
+
+	persist: true,
 });

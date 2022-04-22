@@ -25,4 +25,6 @@ export const usePlayerSpellsStore = defineStore('playerSpells', {
 			this.spells = newState;
 		},
 	},
+
+	persist: true,
 });
