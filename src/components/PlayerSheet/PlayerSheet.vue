@@ -7,7 +7,7 @@
 		<SpellsList />
 		<InventoryList />
 	</div>
-	<button @click="handleSavePlayerSheet">Save</button>
+	<button @click="handleSavePlayerSheet" class="main">Save</button>
 </template>
 
 <script lang="ts" setup>
@@ -49,7 +49,7 @@ async function getPlayersSheet() {
 
 	const currentUser = AuthService.getCurrentUser();
 	if (currentUser) {
-		const response = await PlayerService.getPlayer(currentUser.id);
+		const response = await PlayerService.fetchPlayer(currentUser.id);
 		const result = await Promise.resolve(response);
 
 		setSheetToStore(result);
@@ -96,7 +96,7 @@ function handleSavePlayerSheet() {
 	display: grid;
 	grid-template-columns: 0.5fr 1.5fr 1fr;
 	grid-template-rows: min-content min-content min-content min-content;
-	gap: 1em 1em;
+	gap: 1.5em 4em;
 	grid-auto-flow: row;
 	grid-template-areas:
 		'BaseInfo BaseInfo BaseInfo'

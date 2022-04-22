@@ -13,7 +13,7 @@ class PlayerService {
 		return axios.put(API_URL + 'player', player, { headers: authHeader() });
 	}
 
-	getPlayer(id: string): Promise<Player> {
+	fetchPlayer(id: string): Promise<Player> {
 		return axios
 			.get(API_URL + 'player/' + id, { headers: authHeader() })
 			.then((response) => response.data)

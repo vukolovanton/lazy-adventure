@@ -6,12 +6,18 @@
 			:input-value="characterName"
 			@set-input-value="store.setCharacterName"
 		/>
-		<TextInputField
-			label="Class"
-			id="characterClass"
-			:input-value="characterClass"
-			@set-input-value="store.setCharacterClass"
-		/>
+		<div class="container">
+			<select name="select" @change="handleClassChange" id="characterClass">
+				<option
+					:value="cl"
+					v-for="cl in PlayerClasses"
+					:selected="cl === characterClass"
+				>
+					{{ cl }}
+				</option>
+			</select>
+			<label for="characterClass">Class</label>
+		</div>
 		<TextInputField
 			label="Race"
 			id="race"
@@ -44,10 +50,15 @@ import { storeToRefs } from 'pinia';
 import TextInputField from '@/components/common/TextInputField.vue';
 import IncrementInputField from '@/components/common/IncrementInputField.vue';
 import { usePlayerBaseInfo } from '@/store/palyerStats/playerBaseInfoStore';
+import { PlayerClasses } from '@/interfaces/PlayerStats';
 
 const store = usePlayerBaseInfo();
 const { characterName, characterClass, level, race, aligment, experience } =
 	storeToRefs(store);
+
+function handleClassChange(e: any) {
+	store.setCharacterClass(e.target.value);
+}
 
 function updateCharacterLevel(value: string) {
 	if (value === '+') {
@@ -65,5 +76,12 @@ function updateCharacterLevel(value: string) {
 	justify-content: space-between;
 	align-items: center;
 	flex-wrap: wrap;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 1em;
+	max-width: 10em;
 }
 </style>

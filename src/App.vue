@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import NavBar from '@/components/NavBar.vue';
-import BlockGame from '@/components/BlockGame.vue';
 </script>
 
 <template>
@@ -8,7 +7,7 @@ import BlockGame from '@/components/BlockGame.vue';
 	<RouterView />
 </template>
 
-<style>
+<style lang="scss">
 @font-face {
 	font-family: 'SpectralSC-Regular';
 	font-weight: 400;
@@ -66,9 +65,39 @@ button {
 	margin-right: 0.2em;
 	cursor: pointer;
 	box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 3px 0px;
+
+	&.main {
+		width: 5em;
+		background-color: black;
+		color: white;
+		font-size: 1em;
+
+		&:hover {
+			background-color: dimgray;
+		}
+	}
 }
 
 input[type='checkbox'] {
 	margin-right: 0.5em;
+}
+
+select {
+	appearance: none;
+	background-color: transparent;
+	border: none;
+	padding: 0 1em 0 0;
+	margin: 0;
+	font-family: inherit;
+	font-weight: bold;
+	font-size: 1.2em;
+	cursor: inherit;
+	line-height: inherit;
+	border-radius: 0;
+	border-bottom: 1px solid #ccc;
+}
+
+label {
+	font-size: 0.6em;
 }
 </style>

@@ -26,3 +26,18 @@ export interface PlayerBaseStats {
 	wisdom: number;
 	charisma: number;
 }
+
+export enum PlayerClasses {
+	Wizard = 'Wizard',
+	Druid = 'Druid',
+	Sorceror = 'Sorceror',
+	Warlock = 'Warlock',
+	Ranger = 'Ranger',
+	Rouge = 'Rouge',
+	Monk = 'Monk',
+	Bard = 'Bard',
+	Barbarian = 'Barbarian',
+	Paladin = 'Paladin',
+	Fighter = 'Fighter',
+	Cleric = 'Cleric',
+}
