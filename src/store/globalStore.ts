@@ -6,6 +6,7 @@ export const useGlobalStore = defineStore('globalStore', {
 		user: {
 			username: '',
 			id: '',
+			avatarSource: '',
 		},
 		isLoading: false,
 	}),
@@ -23,7 +24,9 @@ export const useGlobalStore = defineStore('globalStore', {
 		setIsLoading(value: boolean) {
 			this.isLoading = value;
 		},
+		setAvatarSource(value: string) {
+			this.user.avatarSource = value;
+		},
 	},
-
 	persist: true,
 });

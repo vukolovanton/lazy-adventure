@@ -14,3 +14,17 @@ export interface AuthResponse {
 	};
 	token: string;
 }
+
+export type SocketResponseData = {
+	id: string;
+	room: string;
+	username: string;
+	details: {
+		avatarSource: string;
+	};
+};
+
+export interface SocketResponse {
+	message: string;
+	data: SocketResponseData[];
+}

@@ -7,15 +7,15 @@
 				:style="{
 					top: `${restrictedY}px`,
 					left: `${restrictedX}px`,
+					// backgroundImage: `url(${globalUser.avatarSource})`,
 				}"
 				@mouseup="handleDrop"
-			>
-				I am draggable
-			</div>
+			></div>
 		</div>
 	</div>
 	<h3 v-for="user in state.users">
 		{{ user.username }}
+		{{ user.details.avatarSource }}
 	</h3>
 </template>
 
@@ -33,6 +33,8 @@ import { useDraggable, useElementBounding, clamp } from '@vueuse/core';
 import { storeToRefs } from 'pinia';
 import { usePlayerBaseInfo } from '@/store/palyerStats/playerBaseInfoStore';
 import { SOCKET_IO_URL, SOCKET_IO_ROOM_NAME } from '@/constants';
+import { useGlobalStore } from '@/store/globalStore';
+import { SocketResponse, SocketResponseData } from '@/interfaces/User';
 
 const state = reactive({
 	socket: {} as Socket,
@@ -41,10 +43,12 @@ const state = reactive({
 		x: 0,
 		y: 0,
 	},
-	users: [],
+	users: [] as SocketResponseData[],
 });
 
 const playerBaseInfoStore = usePlayerBaseInfo();
+const globalStore = useGlobalStore();
+const { user: globalUser } = storeToRefs(globalStore);
 const { characterName } = storeToRefs(playerBaseInfoStore);
 
 const container = ref();
@@ -77,11 +81,15 @@ onMounted(() => {
 	state.socket.emit('joinRoom', {
 		username: characterName.value,
 		room: SOCKET_IO_ROOM_NAME,
+		details: {
+			avatarSource: globalUser.value.avatarSource,
+		},
 	});
 
-	state.socket.on('joined', (response) => {
+	state.socket.on('joined', (response: SocketResponse) => {
 		console.log(response);
 		state.users = response.data;
+		console.log(state.users);
 	});
 
 	state.socket.on('left', (response) => {
@@ -127,9 +135,11 @@ onUnmounted(() => {
 .drag-item {
 	user-select: none;
 	position: fixed;
-	width: 100px;
-	height: 100px;
-	background: red;
+	width: 32px;
+	height: 32px;
 	cursor: grabbing;
+	background-position: center;
+	background-size: contain;
+	background-color: red;
 }
 </style>

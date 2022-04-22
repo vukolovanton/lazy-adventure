@@ -50,14 +50,20 @@ import { storeToRefs } from 'pinia';
 import TextInputField from '@/components/common/TextInputField.vue';
 import IncrementInputField from '@/components/common/IncrementInputField.vue';
 import { usePlayerBaseInfo } from '@/store/palyerStats/playerBaseInfoStore';
+import { useGlobalStore } from '@/store/globalStore';
 import { PlayerClasses } from '@/interfaces/PlayerStats';
+import { getAvatarSource } from '@/utils/utils';
 
 const store = usePlayerBaseInfo();
+const globalStore = useGlobalStore();
 const { characterName, characterClass, level, race, aligment, experience } =
 	storeToRefs(store);
 
 function handleClassChange(e: any) {
 	store.setCharacterClass(e.target.value);
+	if (characterClass.value) {
+		globalStore.setAvatarSource(getAvatarSource(characterClass.value));
+	}
 }
 
 function updateCharacterLevel(value: string) {
