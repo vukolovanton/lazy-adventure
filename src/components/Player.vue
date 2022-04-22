@@ -13,12 +13,12 @@
 </template>
 
 <script lang="ts" setup>
+import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { usePlayerBaseInfo } from '@/store/palyerStats/playerBaseInfoStore';
 import { usePlayerAdditionalInfo } from '@/store/palyerStats/playerAdditionalInfoStore';
 
 import { PlayerClasses } from '@/interfaces/PlayerStats';
-import { computed } from 'vue';
 
 const playerBaseInfoStore = usePlayerBaseInfo();
 const playerAdditionalInfoStore = usePlayerAdditionalInfo();
