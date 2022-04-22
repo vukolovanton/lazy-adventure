@@ -3,6 +3,7 @@
 		<RouterLink to="/" class="navbar-item">
 			<h2>Lazy Adventure</h2>
 		</RouterLink>
+		<Player />
 		<div>
 			<RouterLink to="/map-editor" class="navbar-item">Map Editor</RouterLink>
 			<RouterLink to="/stats" class="navbar-item">Stats</RouterLink>
@@ -11,13 +12,10 @@
 </template>
 
 <script lang="ts" setup>
-import { useGlobalStore } from '@/store/globalStore';
-import { storeToRefs } from 'pinia';
-
-const store = storeToRefs(useGlobalStore());
+import Player from '@/components/Player.vue';
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 nav {
 	display: flex;
 	flex-direction: row;
@@ -32,6 +30,13 @@ h2 {
 	font-size: 1.5em;
 	font-weight: 700;
 	margin: 0;
+	position: relative;
+
+	&::before {
+		content: url('src/assets/logo.svg');
+		display: inline-block;
+		transform: translateY(25%);
+	}
 }
 
 .navbar-item {

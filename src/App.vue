@@ -8,6 +8,10 @@ import NavBar from '@/components/NavBar.vue';
 </template>
 
 <style lang="scss">
+:root {
+	--accent-color: brown;
+}
+
 @font-face {
 	font-family: 'SpectralSC-Regular';
 	font-weight: 400;
