@@ -1,15 +1,22 @@
 <template>
-	<div ref="el" :style="style" style="position: fixed" class="draggable">
-		Drag me! I am at {{ x }}, {{ y }}
+	<div class="drag-wrapper">
+		<div class="drag-container" ref="container">
+			<div
+				class="drag-item"
+				ref="draggable"
+				:style="{
+					top: `${restrictedY}px`,
+					left: `${restrictedX}px`,
+				}"
+				@mouseup="handleDrop"
+			>
+				I am draggable
+			</div>
+		</div>
 	</div>
 	<h3 v-for="user in state.users">
 		{{ user.username }}
 	</h3>
-	<div>
-		<canvas ref="game" width="480" height="480" class="canvas"></canvas>
-	</div>
-	<button @click="move('left')">Left</button>
-	<button @click="move('right')">Right</button>
 </template>
 
 <script setup lang="ts">
@@ -18,17 +25,14 @@ import {
 	onBeforeMount,
 	onMounted,
 	ref,
-	watch,
 	onUnmounted,
+	computed,
 } from 'vue';
 import { io, Socket } from 'socket.io-client';
-import { useDraggable } from '@vueuse/core';
+import { useDraggable, useElementBounding, clamp } from '@vueuse/core';
 import { storeToRefs } from 'pinia';
 import { usePlayerBaseInfo } from '@/store/palyerStats/playerBaseInfoStore';
 import { SOCKET_IO_URL, SOCKET_IO_ROOM_NAME } from '@/constants';
-
-const playerBaseInfoStore = usePlayerBaseInfo();
-const { characterName } = storeToRefs(playerBaseInfoStore);
 
 const state = reactive({
 	socket: {} as Socket,
@@ -40,15 +44,28 @@ const state = reactive({
 	users: [],
 });
 
-const game = ref();
-const el = ref<HTMLElement | null>(null);
+const playerBaseInfoStore = usePlayerBaseInfo();
+const { characterName } = storeToRefs(playerBaseInfoStore);
 
-const { x, y, style } = useDraggable(el, {
-	initialValue: { x: 40, y: 40 },
-});
+const container = ref();
+const draggable = ref();
 
-function move(direction: any) {
-	state.socket.emit('move', direction);
+const { left, right, top, bottom } = useElementBounding(container);
+const { width, height } = useElementBounding(draggable);
+const { x, y } = useDraggable(draggable);
+
+const restrictedX = computed(() =>
+	clamp(left.value, x.value, right.value - width.value)
+);
+const restrictedY = computed(() =>
+	clamp(top.value, y.value, bottom.value - height.value)
+);
+
+function handleDrop() {
+	state.socket.emit('drop', {
+		x: x.value,
+		y: y.value,
+	});
 }
 
 onBeforeMount(() => {
@@ -73,13 +90,11 @@ onMounted(() => {
 	});
 	// ==
 
-	const context = game.value.getContext('2d');
-	state.context = context;
-
 	state.socket.on('position', (position) => {
 		state.position = position;
-		state.context.clearRect(0, 0, 480, 480);
-		state.context.fillRect(state.position.x, state.position.y, 32, 32);
+
+		x.value = position.x;
+		y.value = position.y;
 	});
 });
 
@@ -88,22 +103,33 @@ onUnmounted(() => {
 		username: characterName.value,
 		room: SOCKET_IO_ROOM_NAME,
 	});
+
 	state.socket.close();
 });
 </script>
 
 <style scoped>
-.canvas {
-	border: 1px solid #000;
-	background-color: aliceblue;
+.drag-wrapper {
+	/* height: 100vh;
+	background: teal;
+	display: grid;
+	place-items: center; */
 }
 
-.draggable {
+.drag-container {
+	background: white;
+	width: 500px;
+	height: 500px;
+	position: relative;
+	border: 1px solid black;
+}
+
+.drag-item {
+	user-select: none;
+	position: fixed;
 	width: 100px;
 	height: 100px;
-	background-color: #f00;
+	background: red;
 	cursor: grabbing;
-	user-select: none;
-	-webkit-user-select: none;
 }
 </style>
