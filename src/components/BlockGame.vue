@@ -2,7 +2,7 @@
 	<div ref="el" :style="style" style="position: fixed" class="draggable">
 		Drag me! I am at {{ x }}, {{ y }}
 	</div>
-	<h3 v-for="user in users">
+	<h3 v-for="user in state.users">
 		{{ user.username }}
 	</h3>
 	<div>
@@ -25,9 +25,10 @@ import { io, Socket } from 'socket.io-client';
 import { useDraggable } from '@vueuse/core';
 import { storeToRefs } from 'pinia';
 import { usePlayerBaseInfo } from '@/store/palyerStats/playerBaseInfoStore';
+import { SOCKET_IO_URL, SOCKET_IO_ROOM_NAME } from '@/constants';
 
 const playerBaseInfoStore = usePlayerBaseInfo();
-const { characterName, characterClass } = storeToRefs(playerBaseInfoStore);
+const { characterName } = storeToRefs(playerBaseInfoStore);
 
 const state = reactive({
 	socket: {} as Socket,
@@ -36,26 +37,39 @@ const state = reactive({
 		x: 0,
 		y: 0,
 	},
+	users: [],
 });
 
-const users = ref([]);
+const game = ref();
+const el = ref<HTMLElement | null>(null);
+
+const { x, y, style } = useDraggable(el, {
+	initialValue: { x: 40, y: 40 },
+});
+
+function move(direction: any) {
+	state.socket.emit('move', direction);
+}
 
 onBeforeMount(() => {
-	state.socket = io('http://localhost:3002');
+	state.socket = io(SOCKET_IO_URL);
 });
 
 onMounted(() => {
 	// == Join Room
-	state.socket.emit('joinRoom', { username: characterName.value, room: 'dev' });
+	state.socket.emit('joinRoom', {
+		username: characterName.value,
+		room: SOCKET_IO_ROOM_NAME,
+	});
 
 	state.socket.on('joined', (response) => {
 		console.log(response);
-		users.value = response.data;
+		state.users = response.data;
 	});
 
 	state.socket.on('left', (response) => {
 		console.log(response);
-		users.value = response.data;
+		state.users = response.data;
 	});
 	// ==
 
@@ -72,21 +86,10 @@ onMounted(() => {
 onUnmounted(() => {
 	state.socket.emit('leaveRoom', {
 		username: characterName.value,
-		room: 'dev',
+		room: SOCKET_IO_ROOM_NAME,
 	});
 	state.socket.close();
 });
-
-const game = ref();
-const el = ref<HTMLElement | null>(null);
-
-const { x, y, style } = useDraggable(el, {
-	initialValue: { x: 40, y: 40 },
-});
-
-function move(direction: any) {
-	state.socket.emit('move', direction);
-}
 </script>
 
 <style scoped>
