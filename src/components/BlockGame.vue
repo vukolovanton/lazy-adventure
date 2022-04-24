@@ -1,16 +1,17 @@
 <template>
 	<div class="drag-wrapper">
 		<div class="drag-container" ref="container">
-			<div
-				class="drag-item"
-				ref="draggable"
-				:style="{
-					top: `${restrictedY}px`,
-					left: `${restrictedX}px`,
-					// backgroundImage: `url(${globalUser.avatarSource})`,
-				}"
-				@mouseup="handleDrop"
-			></div>
+			<vue-resizable
+				dragSelector=".drag-item"
+				:fit-parent="true"
+				:width="64"
+				:height="64"
+				:left="state.position.x"
+				:top="state.position.y"
+				@drag:end="handleDrop"
+			>
+				<div class="drag-item"></div>
+			</vue-resizable>
 		</div>
 	</div>
 	<h3 v-for="user in state.users">
@@ -20,29 +21,19 @@
 </template>
 
 <script setup lang="ts">
-import {
-	reactive,
-	onBeforeMount,
-	onMounted,
-	ref,
-	onUnmounted,
-	computed,
-} from 'vue';
+import { reactive, onBeforeMount, onMounted, ref, onUnmounted } from 'vue';
 import { io, Socket } from 'socket.io-client';
-import { useDraggable, useElementBounding, clamp } from '@vueuse/core';
 import { storeToRefs } from 'pinia';
 import { usePlayerBaseInfo } from '@/store/palyerStats/playerBaseInfoStore';
 import { SOCKET_IO_URL, SOCKET_IO_ROOM_NAME } from '@/constants';
 import { useGlobalStore } from '@/store/globalStore';
 import { SocketResponse, SocketResponseData } from '@/interfaces/User';
+import VueResizable from '@/components/VueResizable.vue';
 
 const state = reactive({
 	socket: {} as Socket,
 	context: {},
-	position: {
-		x: 0,
-		y: 0,
-	},
+	position: {},
 	users: [] as SocketResponseData[],
 });
 
@@ -52,23 +43,13 @@ const { user: globalUser } = storeToRefs(globalStore);
 const { characterName } = storeToRefs(playerBaseInfoStore);
 
 const container = ref();
-const draggable = ref();
 
-const { left, right, top, bottom } = useElementBounding(container);
-const { width, height } = useElementBounding(draggable);
-const { x, y } = useDraggable(draggable);
-
-const restrictedX = computed(() =>
-	clamp(left.value, x.value, right.value - width.value)
-);
-const restrictedY = computed(() =>
-	clamp(top.value, y.value, bottom.value - height.value)
-);
-
-function handleDrop() {
+function handleDrop(data: { eventName: string; left: number; top: number }) {
+	console.log(data);
 	state.socket.emit('drop', {
-		x: x.value,
-		y: y.value,
+		x: data.left,
+		y: data.top,
+		userId: globalStore.user.id,
 	});
 }
 
@@ -87,9 +68,7 @@ onMounted(() => {
 	});
 
 	state.socket.on('joined', (response: SocketResponse) => {
-		console.log(response);
 		state.users = response.data;
-		console.log(state.users);
 	});
 
 	state.socket.on('left', (response) => {
@@ -99,10 +78,8 @@ onMounted(() => {
 	// ==
 
 	state.socket.on('position', (position) => {
+		console.log(position, 'position');
 		state.position = position;
-
-		x.value = position.x;
-		y.value = position.y;
 	});
 });
 

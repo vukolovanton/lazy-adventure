@@ -26,7 +26,6 @@ export const usePlayerBaseInfo = defineStore('playerBaseInfo', {
 			this.characterName = name;
 		},
 		setCharacterClass(characterClass: string) {
-			console.log(characterClass);
 			this.characterClass = characterClass;
 		},
 		setLevel(level: number) {

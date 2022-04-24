@@ -33,7 +33,6 @@ export function useSocket(context) {
 	});
 
 	state.socket.on('joined', (response) => {
-		console.log(response);
 		state.users = response.data;
 	});
 

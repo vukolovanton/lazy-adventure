@@ -7,12 +7,22 @@
 		<div>
 			<RouterLink to="/map-editor" class="navbar-item">Map Editor</RouterLink>
 			<RouterLink to="/stats" class="navbar-item">Stats</RouterLink>
+			<span @click="handleLogout">Logout</span>
 		</div>
 	</nav>
 </template>
 
 <script lang="ts" setup>
+import { useRouter } from 'vue-router';
 import Player from '@/components/Player.vue';
+import AuthService from '@/utils/auth/auth.service';
+
+const router = useRouter();
+
+function handleLogout() {
+	AuthService.logout();
+	router.push('/');
+}
 </script>
 
 <style scoped lang="scss">
