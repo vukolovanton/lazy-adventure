@@ -3,9 +3,9 @@
 		<div class="drag-container" ref="container">
 			<vue-resizable
 				:key="user.details.userId"
-				v-for="(user, index) in state.users"
+				v-for="user in state.users"
 				:customIndex="user.details.userId"
-				dragSelector=".drag-item-1"
+				dragSelector=".drag-item"
 				:fit-parent="true"
 				:width="64"
 				:height="64"
@@ -15,8 +15,10 @@
 				:disableAttributes="['w', 'h']"
 			>
 				<div
-					class="drag-item-1"
-					:style="{ backgroundImage: user.details.avatarSource }"
+					class="drag-item"
+					:style="{
+						backgroundImage: 'url(' + user.details.avatarSource + ')',
+					}"
 				>
 					{{ user.username }}
 				</div>
@@ -25,7 +27,6 @@
 	</div>
 	<h3 v-for="user in state.users">
 		{{ user.username }}
-		{{ user.details.avatarSource }}
 	</h3>
 </template>
 
@@ -114,10 +115,7 @@ function handleDrop(data: { left: number; top: number; index: string }) {
 	border: 1px solid black;
 }
 
-.drag-item-1,
-.drag-item-2,
-.drag-item-3,
-.drag-item-4 {
+.drag-item {
 	user-select: none;
 	position: fixed;
 	width: 32px;
@@ -125,6 +123,5 @@ function handleDrop(data: { left: number; top: number; index: string }) {
 	cursor: grabbing;
 	background-position: center;
 	background-size: contain;
-	background-color: red;
 }
 </style>

@@ -30,6 +30,8 @@ import { usePlayerBaseStats } from '@/store/palyerStats/playerBaseStatsStore';
 import { usePlayerSkillsStore } from '@/store/palyerStats/playerSkillsStore';
 import { usePlayerSpellsStore } from '@/store/palyerStats/playerSpellsStore';
 import { usePlayerInventoryStore } from '@/store/palyerStats/playerInventoryStore';
+import { useGlobalStore } from '@/store/globalStore';
+import { getAvatarSource } from '@/utils/utils';
 
 const playerBaseInfoStore = usePlayerBaseInfo();
 const playerAdditionalInfoStore = usePlayerAdditionalInfo();
@@ -37,8 +39,10 @@ const playerBaseStatsStore = usePlayerBaseStats();
 const playerSkillsStore = usePlayerSkillsStore();
 const playerSpellsStore = usePlayerSpellsStore();
 const playerInventoryStore = usePlayerInventoryStore();
+const globalStore = useGlobalStore();
 
 const isLoading = ref(false);
+const currentUser = AuthService.getCurrentUser();
 
 onMounted(() => {
 	getPlayersSheet();
@@ -46,8 +50,6 @@ onMounted(() => {
 
 async function getPlayersSheet() {
 	isLoading.value = true;
-
-	const currentUser = AuthService.getCurrentUser();
 
 	if (currentUser) {
 		const response = await PlayerService.fetchPlayer(currentUser.user.id);
@@ -67,19 +69,22 @@ function setSheetToStore(player: Player) {
 		playerSkillsStore.setPlayerSkills(player.skills);
 		playerSpellsStore.setPlayerSpells(player.spells);
 		playerInventoryStore.setPlayerInventory(player.inventory);
+
+		globalStore.setAvatarSource(
+			getAvatarSource(player.baseInfo.characterClass)
+		);
 	}
 
 	isLoading.value = false;
 }
 
 function handleSavePlayerSheet() {
-	const user = AuthService.getCurrentUser();
-	if (!user) {
+	if (!currentUser) {
 		return;
 	}
 
 	const player: Player = {
-		userId: user.id,
+		userId: currentUser.user.id,
 		baseInfo: playerBaseInfoStore.$state,
 		additionalInfo: playerAdditionalInfoStore.$state,
 		baseStats: playerBaseStatsStore.$state,
