@@ -1,35 +1,33 @@
 <template>
-	<div class="container">
+	<div class="container" @click="redirectToHome">
 		<div>
 			<img :src="avatarSrc" width="64" height="64" v-if="avatarSrc" />
 		</div>
 		<div class="stats">
 			<h3>{{ characterName }}</h3>
-			<span class="hitPoints">
-				{{ currentHitPoints }} / {{ maximumHitPoints }}
-			</span>
 		</div>
 	</div>
 </template>
 
 <script lang="ts" setup>
 import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { usePlayerBaseInfo } from '@/store/palyerStats/playerBaseInfoStore';
-import { usePlayerAdditionalInfo } from '@/store/palyerStats/playerAdditionalInfoStore';
 import { getAvatarSource } from '@/utils/utils';
 
-const playerBaseInfoStore = usePlayerBaseInfo();
-const playerAdditionalInfoStore = usePlayerAdditionalInfo();
+const router = useRouter();
 
+const playerBaseInfoStore = usePlayerBaseInfo();
 const { characterName, characterClass } = storeToRefs(playerBaseInfoStore);
-const { currentHitPoints, maximumHitPoints } = storeToRefs(
-	playerAdditionalInfoStore
-);
 
 const avatarSrc = computed(() => {
 	return getAvatarSource(characterClass.value);
 });
+
+function redirectToHome() {
+	router.push('/');
+}
 </script>
 
 <style scoped lang="scss">
@@ -38,6 +36,7 @@ const avatarSrc = computed(() => {
 	justify-content: space-between;
 	align-items: center;
 	flex-wrap: wrap;
+	cursor: pointer;
 }
 
 .stats {
@@ -45,10 +44,5 @@ const avatarSrc = computed(() => {
 	flex-direction: column;
 	justify-content: flex-start;
 	margin-left: 1em;
-}
-
-.hitPoints {
-	font-size: 0.8rem;
-	color: var(--accent-color);
 }
 </style>

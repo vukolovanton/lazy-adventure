@@ -1,3 +1,6 @@
+import { InventoryItem } from './PlayerInventory';
+import { Spell } from './PlayerSpells';
+
 export interface User {
 	username: string;
 	password: string;
@@ -21,6 +24,18 @@ export type SocketResponseData = {
 	details: {
 		avatarSource: string;
 		userId: string;
+		stats: {
+			characterClass: string;
+			level: string;
+			initiative: string;
+			speed: string;
+			currentHitPoints: string;
+			maximumHitPoints: string;
+			temporaryHitPoints: string;
+			hitDice: string;
+			inventory: InventoryItem[];
+			spells: Spell[];
+		};
 	};
 };
 

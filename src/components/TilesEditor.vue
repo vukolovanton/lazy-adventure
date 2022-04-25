@@ -14,12 +14,24 @@
 						ref="tilesetSource"
 						src="../assets/TileEditorSpritesheet.2x_2.png"
 					/>
-					<div ref="tilesetSelection" class="tileset-container_selection"></div>
+					<div
+						ref="tilesetSelection"
+						class="tileset-container_selection"
+						:style="{
+							width: `${GRID_SIZE.TILE}px`,
+							height: `${GRID_SIZE.TILE}px`,
+						}"
+					></div>
 				</div>
 			</aside>
 		</div>
 		<div class="canvas-container">
-			<canvas ref="canvas" class="canvas" width="480" height="480" />
+			<canvas
+				ref="canvas"
+				class="canvas"
+				:width="GRID_SIZE.WIDTH"
+				:height="GRID_SIZE.HEIGHT"
+			/>
 		</div>
 	</section>
 </template>
@@ -27,6 +39,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
 import { useTilesEditor } from '../utils/useTilesEditor';
+import { GRID_SIZE } from '@/constants';
 
 const canvas = ref();
 const tilesetSource = ref();
@@ -63,7 +76,5 @@ canvas {
 	outline: 3px solid cyan;
 	left: 0;
 	top: 0;
-	width: 32px;
-	height: 32px;
 }
 </style>
