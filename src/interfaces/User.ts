@@ -21,10 +21,12 @@ export type SocketResponseData = {
 	username: string;
 	details: {
 		avatarSource: string;
+		userId: string;
 	};
 };
 
 export interface SocketResponse {
+	roomUserId: string;
 	message: string;
 	data: SocketResponseData[];
 }

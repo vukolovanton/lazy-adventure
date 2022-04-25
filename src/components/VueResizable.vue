@@ -29,6 +29,10 @@ const CALC_MASK = {
 export default {
 	name: 'VResizable',
 	props: {
+		customIndex: {
+			default: undefined,
+			type: [Number, String],
+		},
 		width: {
 			default: undefined,
 			type: [Number, String],
@@ -230,6 +234,7 @@ export default {
 				top: this.t,
 				width: this.w,
 				height: this.h,
+				index: this.customIndex,
 				...additionalOptions,
 			});
 		},
@@ -333,6 +338,7 @@ export default {
 				this.emitEvent(eventName);
 			}
 		},
+		// Drag start
 		handleDown(event) {
 			if (
 				event.target.closest &&
@@ -365,6 +371,7 @@ export default {
 				}
 			}
 		},
+		// Drag end
 		handleUp() {
 			if (this.resizeState !== 0) {
 				this.resizeState = 0;

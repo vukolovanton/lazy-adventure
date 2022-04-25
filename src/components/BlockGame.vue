@@ -2,15 +2,19 @@
 	<div class="drag-wrapper">
 		<div class="drag-container" ref="container">
 			<vue-resizable
-				dragSelector=".drag-item"
+				:key="user.details.userId"
+				v-for="(user, index) in state.users"
+				:customIndex="user.details.userId"
+				dragSelector=".drag-item-1"
 				:fit-parent="true"
 				:width="64"
 				:height="64"
-				:left="state.position.x"
-				:top="state.position.y"
+				:left="state.position[user.details.userId].x"
+				:top="state.position[user.details.userId].y"
 				@drag:end="handleDrop"
+				:disableAttributes="['w', 'h']"
 			>
-				<div class="drag-item"></div>
+				<div class="drag-item-1">{{ user.username }}</div>
 			</vue-resizable>
 		</div>
 	</div>
@@ -29,29 +33,23 @@ import { SOCKET_IO_URL, SOCKET_IO_ROOM_NAME } from '@/constants';
 import { useGlobalStore } from '@/store/globalStore';
 import { SocketResponse, SocketResponseData } from '@/interfaces/User';
 import VueResizable from '@/components/VueResizable.vue';
+import VueDrag from '@/components/temp/VueDrag.vue';
+
+const globalStore = useGlobalStore();
+const { user: userFromRef } = storeToRefs(globalStore);
 
 const state = reactive({
 	socket: {} as Socket,
 	context: {},
 	position: {},
 	users: [] as SocketResponseData[],
+	selector: ['drag-item-1', 'drag-item-2', 'drag-item-3', 'drag-item-4'],
 });
 
 const playerBaseInfoStore = usePlayerBaseInfo();
-const globalStore = useGlobalStore();
-const { user: globalUser } = storeToRefs(globalStore);
 const { characterName } = storeToRefs(playerBaseInfoStore);
 
 const container = ref();
-
-function handleDrop(data: { eventName: string; left: number; top: number }) {
-	console.log(data);
-	state.socket.emit('drop', {
-		x: data.left,
-		y: data.top,
-		userId: globalStore.user.id,
-	});
-}
 
 onBeforeMount(() => {
 	state.socket = io(SOCKET_IO_URL);
@@ -63,7 +61,7 @@ onMounted(() => {
 		username: characterName.value,
 		room: SOCKET_IO_ROOM_NAME,
 		details: {
-			avatarSource: globalUser.value.avatarSource,
+			userId: globalStore.user.id,
 		},
 	});
 
@@ -72,13 +70,11 @@ onMounted(() => {
 	});
 
 	state.socket.on('left', (response) => {
-		console.log(response);
 		state.users = response.data;
 	});
 	// ==
 
 	state.socket.on('position', (position) => {
-		console.log(position, 'position');
 		state.position = position;
 	});
 });
@@ -91,25 +87,33 @@ onUnmounted(() => {
 
 	state.socket.close();
 });
+
+function handleDrop(data: { left: number; top: number; index: string }) {
+	state.socket.emit('drop', {
+		x: data.left,
+		y: data.top,
+		userId: data.index,
+	});
+}
 </script>
 
 <style scoped>
 .drag-wrapper {
-	/* height: 100vh;
-	background: teal;
-	display: grid;
-	place-items: center; */
+	position: relative;
 }
 
 .drag-container {
 	background: white;
 	width: 500px;
 	height: 500px;
-	position: relative;
+	/* position: relative; */
 	border: 1px solid black;
 }
 
-.drag-item {
+.drag-item-1,
+.drag-item-2,
+.drag-item-3,
+.drag-item-4 {
 	user-select: none;
 	position: fixed;
 	width: 32px;
