@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia';
 import { InventoryItem } from '@/interfaces/PlayerInventory';
 import { trimString } from '@/utils/utils';
+import { StoreIds } from '@/constants';
 
 type PlayerInventoryStore = {
 	inventory: InventoryItem[];
 };
 
-export const usePlayerInventoryStore = defineStore('playerInventory', {
+export const usePlayerInventoryStore = defineStore(StoreIds.PlayerInventory, {
 	state: (): PlayerInventoryStore => ({
 		inventory: [],
 	}),

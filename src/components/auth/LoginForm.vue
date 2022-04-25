@@ -60,16 +60,17 @@ async function handleAuth() {
 			const result = await Promise.resolve(response);
 			if (result) {
 				store.setIsLoading(false);
-				router.push('/');
+				router.push('/stats');
 			}
 		} else {
 			// Login
 			const response = AuthService.login(user);
 
 			const result = await Promise.resolve(response);
+
 			if (result) {
 				store.setIsLoading(false);
-				router.push('/');
+				router.push('/stats');
 			}
 		}
 

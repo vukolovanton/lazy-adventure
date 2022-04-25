@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia';
 import { Spell } from '@/interfaces/PlayerSpells';
 import { trimString } from '@/utils/utils';
+import { StoreIds } from '@/constants';
 
 type PlayerSpellsStore = {
 	spells: Spell[];
 };
 
-export const usePlayerSpellsStore = defineStore('playerSpells', {
+export const usePlayerSpellsStore = defineStore(StoreIds.PlayerSpells, {
 	state: (): PlayerSpellsStore => ({
 		spells: [],
 	}),

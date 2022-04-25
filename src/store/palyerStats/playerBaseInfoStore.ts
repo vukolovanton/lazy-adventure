@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia';
 import { PlayerBaseInfo } from '@/interfaces/PlayerStats';
+import { StoreIds } from '@/constants';
 
-export const usePlayerBaseInfo = defineStore('playerBaseInfo', {
+export const usePlayerBaseInfo = defineStore(StoreIds.PlayerBaseInfo, {
 	state: (): PlayerBaseInfo => {
 		return {
 			characterName: '',

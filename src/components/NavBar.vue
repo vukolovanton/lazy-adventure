@@ -21,7 +21,7 @@ const router = useRouter();
 
 function handleLogout() {
 	AuthService.logout();
-	router.push('/');
+	router.push('/login');
 }
 </script>
 

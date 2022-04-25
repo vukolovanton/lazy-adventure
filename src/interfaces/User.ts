@@ -5,12 +5,11 @@ export interface User {
 }
 
 export interface AuthResponse {
-	id: string;
 	user: {
 		username: string;
 		password?: string;
 		isAdmin?: boolean;
-		id?: string;
+		id: string;
 	};
 	token: string;
 }

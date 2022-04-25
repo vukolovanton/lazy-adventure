@@ -14,7 +14,12 @@
 				@drag:end="handleDrop"
 				:disableAttributes="['w', 'h']"
 			>
-				<div class="drag-item-1">{{ user.username }}</div>
+				<div
+					class="drag-item-1"
+					:style="{ backgroundImage: user.details.avatarSource }"
+				>
+					{{ user.username }}
+				</div>
 			</vue-resizable>
 		</div>
 	</div>
@@ -33,10 +38,8 @@ import { SOCKET_IO_URL, SOCKET_IO_ROOM_NAME } from '@/constants';
 import { useGlobalStore } from '@/store/globalStore';
 import { SocketResponse, SocketResponseData } from '@/interfaces/User';
 import VueResizable from '@/components/VueResizable.vue';
-import VueDrag from '@/components/temp/VueDrag.vue';
 
 const globalStore = useGlobalStore();
-const { user: userFromRef } = storeToRefs(globalStore);
 
 const state = reactive({
 	socket: {} as Socket,
@@ -61,6 +64,7 @@ onMounted(() => {
 		username: characterName.value,
 		room: SOCKET_IO_ROOM_NAME,
 		details: {
+			avatarSource: globalStore.user.avatarSource,
 			userId: globalStore.user.id,
 		},
 	});

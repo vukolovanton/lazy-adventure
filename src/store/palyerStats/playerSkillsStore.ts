@@ -6,8 +6,9 @@ import {
 	UserFacingSkillsList,
 	SkillStoreItem,
 } from '@/interfaces/PlayerSkills';
+import { StoreIds } from '@/constants';
 
-export const usePlayerSkillsStore = defineStore('playerSkills', {
+export const usePlayerSkillsStore = defineStore(StoreIds.PlayerSkills, {
 	state: (): PlayerSkillsStore => ({
 		skills: [
 			{

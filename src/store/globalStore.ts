@@ -1,6 +1,7 @@
+import { StoreIds } from '@/constants';
 import { defineStore } from 'pinia';
 
-export const useGlobalStore = defineStore('globalStore', {
+export const useGlobalStore = defineStore(StoreIds.GlobalStore, {
 	state: () => ({
 		isEditable: false,
 		user: {

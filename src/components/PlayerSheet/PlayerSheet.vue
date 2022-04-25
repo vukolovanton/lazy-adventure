@@ -48,8 +48,9 @@ async function getPlayersSheet() {
 	isLoading.value = true;
 
 	const currentUser = AuthService.getCurrentUser();
+
 	if (currentUser) {
-		const response = await PlayerService.fetchPlayer(currentUser.id);
+		const response = await PlayerService.fetchPlayer(currentUser.user.id);
 		const result = await Promise.resolve(response);
 
 		setSheetToStore(result);
