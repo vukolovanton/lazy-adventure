@@ -10,6 +10,9 @@ import NavBar from '@/components/NavBar.vue';
 <style lang="scss">
 :root {
 	--accent-color: brown;
+	--game-field-background-color: #f4f8f9;
+	--background-grid: linear-gradient(to right, grey 1px, transparent 1px),
+		linear-gradient(to bottom, grey 1px, transparent 1px);
 }
 
 @font-face {

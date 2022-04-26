@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 
 import BaseInfo from './BaseInfo.vue';
 import AdditionalInfo from './AdditionalInfo.vue';
@@ -95,6 +95,10 @@ function handleSavePlayerSheet() {
 
 	PlayerService.savePlayer(player);
 }
+
+onBeforeUnmount(() => {
+	handleSavePlayerSheet();
+});
 </script>
 
 <style>

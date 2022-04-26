@@ -3,6 +3,7 @@ import {
 	TilesSelection,
 	TilesCoordinates,
 } from '@/interfaces/TilesEditorInterfaces';
+import { GRID_SIZE } from '@/constants';
 
 interface TilesStoreInterface {
 	isMouseDown: boolean;
@@ -17,11 +18,14 @@ export const useTilesEditorStore = defineStore('tilesEditorStore', {
 		isMouseDown: false,
 		selection: [5, 2],
 		currentLayer: 0,
-		layers: [{ '1-1': [2 - 2] }],
-		sizeOfCrop: 32,
+		layers: [{ '1-1': [2 - 2] }, {}, {}],
+		sizeOfCrop: GRID_SIZE.TILE,
 	}),
 
 	actions: {
+		setCurrentLayer(value: number) {
+			this.currentLayer = value;
+		},
 		setIsMouseDown(value: boolean) {
 			this.isMouseDown = value;
 		},
@@ -33,7 +37,7 @@ export const useTilesEditorStore = defineStore('tilesEditorStore', {
 		},
 		clearLayers() {
 			this.layers.splice(0, this.layers.length);
-			this.layers.push({});
+			this.layers.push({}, {}, {});
 		},
 		deleteLayers(key: string) {
 			const newLayersRef = this.layers.slice();

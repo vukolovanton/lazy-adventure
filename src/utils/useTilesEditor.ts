@@ -45,7 +45,7 @@ export function useTilesEditor(
 		let key = `${clicked[0]}-${clicked[1]}`;
 
 		if (mouseEvent.shiftKey) {
-			// store.deleteLayers(key);
+			store.deleteLayers(key);
 		} else {
 			store.setLayers(store.currentLayer, key, [
 				store.selection[0],
@@ -57,6 +57,7 @@ export function useTilesEditor(
 	}
 
 	function clearCanvas() {
+		store.setCurrentLayer(0);
 		store.clearLayers();
 		draw();
 	}

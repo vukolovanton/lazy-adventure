@@ -160,10 +160,9 @@ function handleDrop(data: { left: number; top: number; index: string }) {
 }
 
 .drag-container {
-	background: white;
+	background-color: var(--game-field-background-color);
 	border: 1px solid black;
-	background-image: linear-gradient(to right, grey 1px, transparent 1px),
-		linear-gradient(to bottom, grey 1px, transparent 1px);
+	background-image: var(--background-grid);
 }
 
 .drag-item {
