@@ -58,15 +58,10 @@ import { GRID_SIZE } from '@/constants';
 import { useTilesEditorStore } from '@/store/tilesEditorStore';
 
 const canvas = ref();
-const tilesetSrc = ref('tileset_1.png');
 const tilesetSource = ref();
 const tilesetSelection = ref();
 
 const store = useTilesEditorStore();
-
-function handleChangeTileset(e: any) {
-	tilesetSrc.value = e.target.value;
-}
 
 function handleChangeCurrentLayer(e: any) {
 	store.setCurrentLayer(Number(e.target.value));
