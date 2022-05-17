@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia';
 import { usePlayerBaseInfo } from '@/store/palyerStats/playerBaseInfoStore';
 import { SOCKET_IO_URL, SOCKET_IO_ROOM_NAME } from '@/constants';
 
-export function useSocket(context) {
+export function useSocket(context: any) {
 	const playerBaseInfoStore = usePlayerBaseInfo();
 	const { characterName } = storeToRefs(playerBaseInfoStore);
 

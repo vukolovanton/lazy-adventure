@@ -1,6 +1,7 @@
+import { Ref } from 'vue';
 import { useTilesEditorStore } from '@/store/tilesEditorStore';
 import { useEventListener } from './useEventListener';
-import { Ref } from 'vue';
+import TilesService from '@/utils/tiles.service';
 
 export function useTilesEditor(
 	canvas: Ref<HTMLCanvasElement>,
@@ -62,13 +63,21 @@ export function useTilesEditor(
 		draw();
 	}
 
-	function exportCanvas() {
-		const data = canvas.value.toDataURL('image/png');
-		const image = new Image();
-		image.src = data;
+	async function exportCanvas() {
+		const promise = new Promise((resolve) => {
+			canvas.value.toBlob((blob) => {
+				const file = new File([blob!], 'tileset.png');
+				resolve(file);
+			});
+		});
 
-		const w = window.open('about:blank', 'image from canvas');
-		w?.document.write(image.outerHTML);
+		promise
+			.then((f: any) => {
+				return TilesService.saveTile(f);
+			})
+			.then((response) => {
+				console.log(response);
+			});
 	}
 
 	// EVENT LISTENERS

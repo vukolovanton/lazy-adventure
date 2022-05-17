@@ -1,13 +1,17 @@
 <template>
 	<section class="container">
 		<div class="drag-wrapper">
+			<TilesSelector />
+
 			<div
+				id="gameField"
 				class="drag-container"
 				ref="container"
 				:style="{
 					width: `${GRID_SIZE.WIDTH}px`,
 					height: `${GRID_SIZE.HEIGHT}px`,
-					backgroundSize: `${GRID_SIZE.TILE}px ${GRID_SIZE.TILE}px`,
+					backgroundImage: `var(--background-grid), url('${selectedTileUrl}')`,
+					backgroundSize: `${GRID_SIZE.TILE}px ${GRID_SIZE.TILE}px, ${GRID_SIZE.TILE}px ${GRID_SIZE.TILE}px, auto`,
 				}"
 			>
 				<vue-resizable
@@ -18,8 +22,8 @@
 					:fit-parent="true"
 					:width="GRID_SIZE.TILE"
 					:height="GRID_SIZE.TILE"
-					:left="state.position[user.details.userId].x"
-					:top="state.position[user.details.userId].y"
+					:left="state.position[user.details.userId]?.x || 0"
+					:top="state.position[user.details.userId]?.y || 0"
 					@drag:end="handleDrop"
 					:disableAttributes="['w', 'h']"
 				>
@@ -43,19 +47,26 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, onBeforeMount, onMounted, ref, onUnmounted } from 'vue';
+import {
+	reactive,
+	onBeforeMount,
+	onMounted,
+	ref,
+	onUnmounted,
+	watch,
+} from 'vue';
 import { io, Socket } from 'socket.io-client';
-import { storeToRefs } from 'pinia';
 import { SOCKET_IO_URL, SOCKET_IO_ROOM_NAME } from '@/constants';
-import { usePlayerBaseInfo } from '@/store/palyerStats/playerBaseInfoStore';
-import { usePlayerAdditionalInfo } from '@/store/palyerStats/playerAdditionalInfoStore';
-import { usePlayerInventoryStore } from '@/store/palyerStats/playerInventoryStore';
-import { usePlayerSpellsStore } from '@/store/palyerStats/playerSpellsStore';
 import { useGlobalStore } from '@/store/globalStore';
 import { SocketResponse, SocketResponseData } from '@/interfaces/User';
 import VueResizable from '@/components/VueResizable.vue';
 import { GRID_SIZE } from '@/constants';
 import ConnectedPlayer from '@/components/ConnectedPlayer.vue';
+import TilesSelector from './Main/TilesSelector.vue';
+import { useBlockGameStores } from '@/utils/useBlockGameStores';
+
+// === State
+const container = ref();
 
 const state = reactive({
 	socket: {} as Socket,
@@ -65,32 +76,23 @@ const state = reactive({
 	selector: ['drag-item-1', 'drag-item-2', 'drag-item-3', 'drag-item-4'],
 });
 
-// === Stores
 const globalStore = useGlobalStore();
-
-const playerBaseInfoStore = usePlayerBaseInfo();
-const { characterName, characterClass, level } =
-	storeToRefs(playerBaseInfoStore);
-
-const inventoryStore = usePlayerInventoryStore();
-const { inventory } = storeToRefs(inventoryStore);
-
-const spellsStore = usePlayerSpellsStore();
-const { spells } = storeToRefs(spellsStore);
-
-const store = usePlayerAdditionalInfo();
-const {
-	initiative,
-	speed,
-	currentHitPoints,
-	maximumHitPoints,
-	temporaryHitPoints,
-	hitDice,
-} = storeToRefs(store);
+const { stats, characterName, selectedTileUrl } = useBlockGameStores();
 // ===
 
-const container = ref();
+watch(selectedTileUrl, (newValue) => {
+	console.log(newValue);
+});
 
+function handleDrop(data: { left: number; top: number; index: string }) {
+	state.socket.emit('drop', {
+		x: data.left,
+		y: data.top,
+		userId: data.index,
+	});
+}
+
+// === Events
 onBeforeMount(() => {
 	state.socket = io(SOCKET_IO_URL);
 });
@@ -103,18 +105,7 @@ onMounted(() => {
 		details: {
 			avatarSource: globalStore.user.avatarSource,
 			userId: globalStore.user.id,
-			stats: {
-				characterClass: characterClass.value,
-				level: level.value,
-				initiative: initiative.value,
-				speed: speed.value,
-				currentHitPoints: currentHitPoints.value,
-				maximumHitPoints: maximumHitPoints.value,
-				temporaryHitPoints: temporaryHitPoints.value,
-				hitDice: hitDice.value,
-				inventory: inventory.value,
-				spells: spells.value,
-			},
+			stats,
 		},
 	});
 
@@ -140,14 +131,7 @@ onUnmounted(() => {
 
 	state.socket.close();
 });
-
-function handleDrop(data: { left: number; top: number; index: string }) {
-	state.socket.emit('drop', {
-		x: data.left,
-		y: data.top,
-		userId: data.index,
-	});
-}
+// ===
 </script>
 
 <style scoped lang="scss">
@@ -160,9 +144,11 @@ function handleDrop(data: { left: number; top: number; index: string }) {
 }
 
 .drag-container {
-	background-color: var(--game-field-background-color);
 	border: 1px solid black;
-	background-image: var(--background-grid);
+
+	background-color: var(--game-field-background-color);
+	// background-image: var(--background-grid),
+	// 	url('http://localhost:3001/public/file-1652796561391.png');
 }
 
 .drag-item {
