@@ -37,7 +37,6 @@ export function useSocket(context: any) {
 	});
 
 	state.socket.on('left', (response) => {
-		console.log(response);
 		state.users = response.data;
 	});
 	// ==

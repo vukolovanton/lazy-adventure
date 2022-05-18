@@ -10,7 +10,7 @@
 				:style="{
 					width: `${GRID_SIZE.WIDTH}px`,
 					height: `${GRID_SIZE.HEIGHT}px`,
-					backgroundImage: `var(--background-grid), url('${selectedTileUrl}')`,
+					backgroundImage: `var(--background-grid), url('${state.backgroundSrc}')`,
 					backgroundSize: `${GRID_SIZE.TILE}px ${GRID_SIZE.TILE}px, ${GRID_SIZE.TILE}px ${GRID_SIZE.TILE}px, auto`,
 				}"
 			>
@@ -74,6 +74,7 @@ const state = reactive({
 	position: {},
 	users: [] as SocketResponseData[],
 	selector: ['drag-item-1', 'drag-item-2', 'drag-item-3', 'drag-item-4'],
+	backgroundSrc: '',
 });
 
 const globalStore = useGlobalStore();
@@ -81,7 +82,9 @@ const { stats, characterName, selectedTileUrl } = useBlockGameStores();
 // ===
 
 watch(selectedTileUrl, (newValue) => {
-	console.log(newValue);
+	state.socket.emit('src', {
+		src: newValue,
+	});
 });
 
 function handleDrop(data: { left: number; top: number; index: string }) {
@@ -120,6 +123,10 @@ onMounted(() => {
 
 	state.socket.on('position', (position) => {
 		state.position = position;
+	});
+
+	state.socket.on('newSrc', ({ src }) => {
+		state.backgroundSrc = src.src;
 	});
 });
 
