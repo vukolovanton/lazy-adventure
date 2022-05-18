@@ -20,7 +20,15 @@
 						<label for="currentLayer">Current layer</label>
 					</div>
 					<button class="clear-button">Clear canvas</button>
-					<button class="export-button">Export image</button>
+					<button class="export-button" :disabled="!isFilled">
+						Export image
+					</button>
+					<SmallTextInput
+						label="Map name"
+						id="tileName"
+						:input-value="store.mapName"
+						@set-input-value="setTileName"
+					/>
 				</div>
 			</header>
 			<aside>
@@ -52,10 +60,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useTilesEditor } from '../utils/useTilesEditor';
 import { GRID_SIZE } from '@/constants';
 import { useTilesEditorStore } from '@/store/tilesEditorStore';
+import SmallTextInput from '@/components/common/SmallTextInput.vue';
 
 const canvas = ref();
 const tilesetSource = ref();
@@ -66,6 +75,14 @@ const store = useTilesEditorStore();
 function handleChangeCurrentLayer(e: any) {
 	store.setCurrentLayer(Number(e.target.value));
 }
+
+function setTileName(value: string) {
+	store.setMapName(value);
+}
+
+const isFilled = computed(() => {
+	return store.mapName.trim() !== '';
+});
 
 onMounted(() => {
 	if (canvas.value) {

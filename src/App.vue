@@ -102,6 +102,12 @@ select {
 	line-height: inherit;
 	border-radius: 0;
 	border-bottom: 1px solid #ccc;
+
+	&.small {
+		font-size: 0.8em;
+		border: none;
+		margin-left: 0.5em;
+	}
 }
 
 label {

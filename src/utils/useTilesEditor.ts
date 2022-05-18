@@ -2,6 +2,7 @@ import { Ref } from 'vue';
 import { useTilesEditorStore } from '@/store/tilesEditorStore';
 import { useEventListener } from './useEventListener';
 import TilesService from '@/utils/tiles.service';
+import { storeToRefs } from 'pinia';
 
 export function useTilesEditor(
 	canvas: Ref<HTMLCanvasElement>,
@@ -10,6 +11,7 @@ export function useTilesEditor(
 	context: CanvasRenderingContext2D
 ) {
 	const store = useTilesEditorStore();
+	const { mapName } = storeToRefs(store);
 
 	function getCoordinates(e: any): Array<number> {
 		const { x, y } = e.target.getBoundingClientRect();
@@ -66,7 +68,7 @@ export function useTilesEditor(
 	async function exportCanvas() {
 		const promise = new Promise((resolve) => {
 			canvas.value.toBlob((blob) => {
-				const file = new File([blob!], 'tileset.png');
+				const file = new File([blob!], mapName.value);
 				resolve(file);
 			});
 		});
@@ -76,6 +78,7 @@ export function useTilesEditor(
 				return TilesService.saveTile(f);
 			})
 			.then((response) => {
+				store.setMapName('');
 				console.log(response);
 			});
 	}

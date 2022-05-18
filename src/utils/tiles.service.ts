@@ -10,7 +10,11 @@ class TilesService {
 		formData.append('file', tileset);
 
 		return axios.post(API_URL + 'files', formData, {
-			headers: { ...authHeader(), 'Content-Type': 'multipart/form-data' },
+			headers: {
+				...authHeader(),
+				'Content-Type': 'multipart/form-data',
+				'X-File-Name': 'Somebodyoncetoldme',
+			},
 		});
 	}
 

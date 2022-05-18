@@ -12,6 +12,7 @@ interface TilesStoreInterface {
 	layers: Array<TilesCoordinates>;
 	sizeOfCrop: number;
 	selectedTileUrl: string | null;
+	mapName: string;
 }
 
 export const useTilesEditorStore = defineStore('tilesEditorStore', {
@@ -22,6 +23,7 @@ export const useTilesEditorStore = defineStore('tilesEditorStore', {
 		layers: [{ '1-1': [2 - 2] }, {}, {}],
 		sizeOfCrop: GRID_SIZE.TILE,
 		selectedTileUrl: null,
+		mapName: '',
 	}),
 
 	actions: {
@@ -48,6 +50,9 @@ export const useTilesEditorStore = defineStore('tilesEditorStore', {
 		},
 		setSelectedTileUrl(tileUrl: string) {
 			this.selectedTileUrl = tileUrl;
+		},
+		setMapName(mapName: string) {
+			this.mapName = mapName;
 		},
 	},
 });

@@ -1,11 +1,13 @@
 <template>
 	<div>
+		<label>Map:</label>
 		<select
+			class="small"
 			name="select"
 			id="backgroundSelection"
 			@change="handleBackgroundChange"
 		>
-			<option selected disabled>Tile to display</option>
+			<option selected disabled>Select map...</option>
 			<option v-for="tile in state.tiles" :value="tile.url">
 				{{ tile.name }}
 			</option>
@@ -18,10 +20,8 @@ import { onMounted, reactive } from 'vue';
 import TilesService from '@/utils/tiles.service';
 import { TilesSources } from '@/interfaces/TilesEditorInterfaces';
 import { useTilesEditorStore } from '@/store/tilesEditorStore';
-import { storeToRefs } from 'pinia';
 
 const store = useTilesEditorStore();
-const { selectedTileUrl } = storeToRefs(store);
 
 const state = reactive({
 	tiles: [] as TilesSources[],
@@ -30,7 +30,6 @@ const state = reactive({
 onMounted(() => {
 	TilesService.fetchAllAvailableileTiles().then((tiles) => {
 		state.tiles = tiles;
-		console.log(tiles);
 	});
 });
 
