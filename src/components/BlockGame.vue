@@ -41,6 +41,8 @@
 			</div>
 		</div>
 		<div class="connected-users-container">
+			<RollDice :socket="state.socket" />
+
 			<ConnectedPlayer :users="state.users" />
 		</div>
 	</section>
@@ -64,6 +66,8 @@ import { GRID_SIZE } from '@/constants';
 import ConnectedPlayer from '@/components/ConnectedPlayer.vue';
 import TilesSelector from './Main/TilesSelector.vue';
 import { useBlockGameStores } from '@/utils/useBlockGameStores';
+import RollDice from './Main/RollDice.vue';
+import DicePreview from './Main/DicePreview.vue';
 
 // === State
 const container = ref();

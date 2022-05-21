@@ -4,6 +4,10 @@ export function trimString(str: string) {
 	return str.split(' ').join('').toLocaleLowerCase();
 }
 
+export function randomIntFromInterval(min: number, max: number) {
+	return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 export function getAvatarSource(playerClass: string) {
 	switch (playerClass) {
 		case PlayerClasses.Wizard:
