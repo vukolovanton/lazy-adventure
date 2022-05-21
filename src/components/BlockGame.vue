@@ -35,7 +35,9 @@
 							height: `${GRID_SIZE.TILE}px`,
 						}"
 					>
-						{{ user.username }}
+						<span>
+							{{ user.username }}
+						</span>
 					</div>
 				</vue-resizable>
 			</div>
@@ -156,10 +158,7 @@ onUnmounted(() => {
 
 .drag-container {
 	border: 1px solid black;
-
 	background-color: var(--game-field-background-color);
-	// background-image: var(--background-grid),
-	// 	url('http://localhost:3001/public/file-1652796561391.png');
 }
 
 .drag-item {
@@ -168,6 +167,15 @@ onUnmounted(() => {
 	cursor: grabbing;
 	background-position: center;
 	background-size: contain;
+
+	& span {
+		position: absolute;
+		top: 35px;
+		transform: translateX(-20%);
+		background-color: rgba(255, 255, 255, 0.9);
+		font-size: 8px;
+		padding: 0 10px;
+	}
 }
 
 .connected-users-container {

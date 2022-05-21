@@ -24,12 +24,7 @@
 				v-if="user.details.stats.inventory.length > 0"
 				class="item"
 			>
-				<span>
-					{{ item.name }}
-				</span>
-				<span>
-					{{ item.weight }}
-				</span>
+				<span> {{ item.count }}x {{ item.name }}</span>
 			</div>
 
 			<h4>Spells:</h4>

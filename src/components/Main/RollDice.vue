@@ -71,6 +71,12 @@ function handleRotate() {
 .container {
 	display: flex;
 	align-items: center;
-	margin-bottom: 1em;
+	align-content: center;
+	margin-bottom: 2em;
+	margin-top: 2em;
+
+	& button {
+		margin-left: 1em;
+	}
 }
 </style>

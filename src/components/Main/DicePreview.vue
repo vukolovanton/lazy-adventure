@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="dice-container">
 		<div id="dice">
 			<div class="front face">{{ props.value }}</div>
 			<div class="back face">{{ props.value }}</div>
@@ -20,16 +20,16 @@ $width: 50px;
 $height: 50px;
 $transform: 25px;
 
-.container {
+.dice-container {
 	display: flex;
 	justify-content: center;
-	margin-top: 50px;
-	margin-bottom: 50px;
 	perspective: 1000px;
 	-webkit-perspective: 1000px;
 	perspective-origin: 50%;
 	-webkit-perspective-origin: 50%;
+	margin-left: 2em;
 }
+
 #dice {
 	height: $width;
 	width: $height;
