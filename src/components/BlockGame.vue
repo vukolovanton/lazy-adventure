@@ -2,6 +2,13 @@
 	<section class="container">
 		<div class="drag-wrapper">
 			<TilesSelector />
+			<MonsterCreation
+				:name="state.monster.name"
+				:hitPoints="state.monster.hitPoints"
+				:handleSetMonsterName="handleSetMonsterName"
+				:handleSetMonsterHitPoints="handleSetMonsterHitPoints"
+				:handleAddMonster="handleAddMonster"
+			/>
 
 			<div
 				id="gameField"
@@ -45,7 +52,10 @@
 		<div class="connected-users-container">
 			<RollDice :socket="state.socket" />
 
-			<ConnectedPlayer :users="state.users" />
+			<ConnectedPlayer
+				:users="state.users"
+				:handleDeleteMonster="handleDeleteMonster"
+			/>
 		</div>
 	</section>
 </template>
@@ -65,11 +75,11 @@ import { useGlobalStore } from '@/store/globalStore';
 import { SocketResponse, SocketResponseData } from '@/interfaces/User';
 import VueResizable from '@/components/VueResizable.vue';
 import { GRID_SIZE } from '@/constants';
-import ConnectedPlayer from '@/components/ConnectedPlayer.vue';
+import ConnectedPlayer from '@/components/Main/ConnectedPlayer.vue';
 import TilesSelector from './Main/TilesSelector.vue';
 import { useBlockGameStores } from '@/utils/useBlockGameStores';
 import RollDice from './Main/RollDice.vue';
-import DicePreview from './Main/DicePreview.vue';
+import MonsterCreation from './Main/MonsterCreation.vue';
 
 // === State
 const container = ref();
@@ -81,6 +91,10 @@ const state = reactive({
 	users: [] as SocketResponseData[],
 	selector: ['drag-item-1', 'drag-item-2', 'drag-item-3', 'drag-item-4'],
 	backgroundSrc: '',
+	monster: {
+		hitPoints: 0,
+		name: '',
+	},
 });
 
 const globalStore = useGlobalStore();
@@ -101,6 +115,43 @@ function handleDrop(data: { left: number; top: number; index: string }) {
 	});
 }
 
+function handleSetMonsterHitPoints(value: number) {
+	state.monster.hitPoints = value;
+}
+
+function handleSetMonsterName(value: string) {
+	state.monster.name = value;
+}
+
+function handleDeleteMonster(id: string) {
+	handleSetMonsterHitPoints(0);
+	handleSetMonsterName('');
+
+	state.socket.emit('removeMonster', {
+		userId: id,
+	});
+}
+
+function handleAddMonster() {
+	const tempId = Date.now().toString();
+
+	state.socket.emit('joinRoom', {
+		username: state.monster.name,
+		room: SOCKET_IO_ROOM_NAME,
+		details: {
+			avatarSource: 'src/assets/characters/wizard-m.png',
+			userId: tempId,
+			stats: {
+				maximumHitPoints: state.monster.hitPoints,
+				currentHitPoints: state.monster.hitPoints,
+				isPlayer: false,
+			},
+		},
+	});
+
+	handleSetMonsterHitPoints(0);
+}
+
 // === Events
 onBeforeMount(() => {
 	state.socket = io(SOCKET_IO_URL);
@@ -114,7 +165,10 @@ onMounted(() => {
 		details: {
 			avatarSource: globalStore.user.avatarSource,
 			userId: globalStore.user.id,
-			stats,
+			stats: {
+				...stats,
+				isPlayer: true,
+			},
 		},
 	});
 
