@@ -1,52 +1,55 @@
 <template>
-	<section class="container">
-		<div class="drag-wrapper">
-			<TilesSelector />
-			<MonsterCreation
-				:name="state.monster.name"
-				:hitPoints="state.monster.hitPoints"
-				:handleSetMonsterName="handleSetMonsterName"
-				:handleSetMonsterHitPoints="handleSetMonsterHitPoints"
-				:handleAddMonster="handleAddMonster"
-			/>
-
-			<div
-				id="gameField"
-				class="drag-container"
-				ref="container"
-				:style="{
-					width: `${GRID_SIZE.WIDTH}px`,
-					height: `${GRID_SIZE.HEIGHT}px`,
-					backgroundImage: `var(--background-grid), url('${state.backgroundSrc}')`,
-					backgroundSize: `${GRID_SIZE.TILE}px ${GRID_SIZE.TILE}px, ${GRID_SIZE.TILE}px ${GRID_SIZE.TILE}px, auto`,
-				}"
-			>
-				<vue-resizable
-					:key="user.details.userId"
-					v-for="user in state.users"
-					:customIndex="user.details.userId"
-					dragSelector=".drag-item"
-					:fit-parent="true"
-					:width="GRID_SIZE.TILE"
-					:height="GRID_SIZE.TILE"
-					:left="state.position[user.details.userId]?.x || 0"
-					:top="state.position[user.details.userId]?.y || 0"
-					@drag:end="handleDrop"
-					:disableAttributes="['w', 'h']"
+	<section class="main-container">
+		<div class="gamefield-wrapper">
+			<div class="additional-controls">
+				<TilesSelector />
+				<MonsterCreation
+					:name="state.monster.name"
+					:hitPoints="state.monster.hitPoints"
+					:handleSetMonsterName="handleSetMonsterName"
+					:handleSetMonsterHitPoints="handleSetMonsterHitPoints"
+					:handleAddMonster="handleAddMonster"
+				/>
+			</div>
+			<div class="drag-wrapper">
+				<div
+					id="gameField"
+					class="drag-container"
+					ref="container"
+					:style="{
+						width: `${GRID_SIZE.WIDTH}px`,
+						height: `${GRID_SIZE.HEIGHT}px`,
+						backgroundImage: `var(--background-grid), url('${state.backgroundSrc}')`,
+						backgroundSize: `${GRID_SIZE.TILE}px ${GRID_SIZE.TILE}px, ${GRID_SIZE.TILE}px ${GRID_SIZE.TILE}px, auto`,
+					}"
 				>
-					<div
-						class="drag-item"
-						:style="{
-							backgroundImage: 'url(' + user.details.avatarSource + ')',
-							width: `${GRID_SIZE.TILE}px`,
-							height: `${GRID_SIZE.TILE}px`,
-						}"
+					<vue-resizable
+						:key="user.details.userId"
+						v-for="user in state.users"
+						:customIndex="user.details.userId"
+						dragSelector=".drag-item"
+						:fit-parent="true"
+						:width="GRID_SIZE.TILE"
+						:height="GRID_SIZE.TILE"
+						:left="state.position[user.details.userId]?.x || 0"
+						:top="state.position[user.details.userId]?.y || 0"
+						@drag:end="handleDrop"
+						:disableAttributes="['w', 'h']"
 					>
-						<span>
-							{{ user.username }}
-						</span>
-					</div>
-				</vue-resizable>
+						<div
+							class="drag-item"
+							:style="{
+								backgroundImage: 'url(' + user.details.avatarSource + ')',
+								width: `${GRID_SIZE.TILE}px`,
+								height: `${GRID_SIZE.TILE}px`,
+							}"
+						>
+							<span>
+								{{ user.username }}
+							</span>
+						</div>
+					</vue-resizable>
+				</div>
 			</div>
 		</div>
 		<div class="connected-users-container">
@@ -55,6 +58,7 @@
 			<ConnectedPlayer
 				:users="state.users"
 				:handleDeleteMonster="handleDeleteMonster"
+				:handleUpdateMonsterHitPoints="handleUpdateMonsterHitPoints"
 			/>
 		</div>
 	</section>
@@ -123,10 +127,14 @@ function handleSetMonsterName(value: string) {
 	state.monster.name = value;
 }
 
-function handleDeleteMonster(id: string) {
-	handleSetMonsterHitPoints(0);
-	handleSetMonsterName('');
+function handleUpdateMonsterHitPoints(value: any, id: string) {
+	state.socket.emit('updateMonsterHitPoints', {
+		currentHitPoints: value,
+		userId: id,
+	});
+}
 
+function handleDeleteMonster(id: string) {
 	state.socket.emit('removeMonster', {
 		userId: id,
 	});
@@ -150,6 +158,7 @@ function handleAddMonster() {
 	});
 
 	handleSetMonsterHitPoints(0);
+	handleSetMonsterName('');
 }
 
 // === Events
@@ -188,6 +197,14 @@ onMounted(() => {
 	state.socket.on('newSrc', ({ src }) => {
 		state.backgroundSrc = src.src;
 	});
+
+	state.socket.on('updateMonsterHealth', (data) => {
+		const monsterToUpdateIndex = state.users.findIndex(
+			(user) => user.details.userId === data.details.userId
+		);
+		state.users[monsterToUpdateIndex].details.stats.currentHitPoints =
+			data.details.currentHitPoints;
+	});
 });
 
 onUnmounted(() => {
@@ -202,12 +219,23 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="scss">
-.container {
+.main-container {
 	display: flex;
+	justify-content: space-between;
+	padding: 4em 2em;
 }
+
+.additional-controls {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.gamefield-wrapper {
+}
+
 .drag-wrapper {
 	position: relative;
-	width: 1000px;
 }
 
 .drag-container {

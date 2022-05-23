@@ -1,13 +1,13 @@
 <template>
-	<div>
+	<div class="container">
 		<SmallTextInput
-			label="Monster Name"
+			label="Name"
 			id="monsterName"
 			:input-value="props.name"
 			@set-input-value="props.handleSetMonsterName"
 		/>
 		<SmallTextInput
-			label="Monster Hit Points"
+			label="Hit Points"
 			id="monsterHitPoints"
 			:input-value="props.hitPoints"
 			@set-input-value="props.handleSetMonsterHitPoints"
@@ -27,3 +27,11 @@ const props = defineProps([
 	'handleAddMonster',
 ]);
 </script>
+
+<style lang="scss">
+.container {
+	display: flex;
+	align-items: flex-start;
+	gap: 1em;
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
-	<div v-for="user in props.users" class="connected-player-wrapper">
-		<div v-if="user.details.stats.isPlayer">
+	<div v-for="user in props.users">
+		<div v-if="user.details.stats.isPlayer" class="connected-player-wrapper">
 			<div class="base-info">
 				<h3>
 					{{ user.username }}
@@ -43,13 +43,18 @@
 			v-else
 			:user="user"
 			:handleDeleteMonster="handleDeleteMonster"
+			:handleUpdateMonsterHitPoints="handleUpdateMonsterHitPoints"
 		/>
 	</div>
 </template>
 
 <script lang="ts" setup>
 import ActiveMonsters from './ActiveMonsters.vue';
-const props = defineProps(['users', 'handleDeleteMonster']);
+const props = defineProps([
+	'users',
+	'handleDeleteMonster',
+	'handleUpdateMonsterHitPoints',
+]);
 </script>
 
 <style lang="scss" scoped>
