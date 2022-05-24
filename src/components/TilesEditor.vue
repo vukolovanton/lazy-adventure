@@ -1,50 +1,47 @@
 <template>
-	<section class="tiles-editor-container">
+	<div class="controlls border">
 		<div>
-			<header>
-				<div class="controlls">
-					<div>
-						<select
-							name="currentLayer"
-							@change="handleChangeCurrentLayer"
-							id="currentLayer"
-						>
-							<option
-								v-for="item in [0, 1, 2]"
-								:value="item"
-								:selected="store.currentLayer === item"
-							>
-								{{ item }}
-							</option>
-						</select>
-						<label for="currentLayer">Current layer</label>
-					</div>
-					<button class="clear-button">Clear canvas</button>
-					<button class="export-button" :disabled="!isFilled">
-						Export image
-					</button>
-					<SmallTextInput
-						label="Map name"
-						id="tileName"
-						:input-value="store.mapName"
-						@set-input-value="setTileName"
-					/>
-				</div>
-			</header>
-			<aside>
-				<div class="tileset-container">
-					<img ref="tilesetSource" src="src/assets/tileset.png" />
-					<div
-						ref="tilesetSelection"
-						class="tileset-container_selection"
-						:style="{
-							width: `${GRID_SIZE.TILE}px`,
-							height: `${GRID_SIZE.TILE}px`,
-						}"
-					></div>
-				</div>
-			</aside>
+			<select
+				name="currentLayer"
+				@change="handleChangeCurrentLayer"
+				id="currentLayer"
+			>
+				<option
+					v-for="item in [0, 1, 2]"
+					:value="item"
+					:selected="store.currentLayer === item"
+				>
+					{{ item }}
+				</option>
+			</select>
+			<label for="currentLayer">Current layer</label>
 		</div>
+		<SmallTextInput
+			label="Map name"
+			id="tileName"
+			:input-value="store.mapName"
+			@set-input-value="setTileName"
+		/>
+		<button class="clear-button">Clear canvas</button>
+		<button class="export-button main" :disabled="!isFilled">
+			Export image
+		</button>
+	</div>
+	<section class="tiles-editor-container">
+		<aside>
+			<div class="tileset-container">
+				<img ref="tilesetSource" src="src/assets/tileset.png" />
+				<div
+					ref="tilesetSelection"
+					class="tileset-container_selection"
+					:style="{
+						width: `${GRID_SIZE.TILE}px`,
+						height: `${GRID_SIZE.TILE}px`,
+					}"
+				></div>
+			</div>
+		</aside>
+
 		<div class="canvas-container">
 			<canvas
 				ref="canvas"
@@ -98,13 +95,14 @@ onMounted(() => {
 	justify-content: flex-start;
 	gap: 2em;
 	align-items: center;
+	margin-top: 3em;
 }
 .tiles-editor-container {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	margin-top: 3em;
+	margin-top: 2em;
 }
 
 .canvas-container {

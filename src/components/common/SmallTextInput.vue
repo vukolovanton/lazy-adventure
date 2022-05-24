@@ -36,7 +36,6 @@ const calculatedClass = computed(
 .input-container {
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 1em;
 	max-width: 5em;
 
 	& > label {

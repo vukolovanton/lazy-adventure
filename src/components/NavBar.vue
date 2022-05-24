@@ -7,7 +7,7 @@
 		<div>
 			<RouterLink to="/map-editor" class="navbar-item">Map Editor</RouterLink>
 			<RouterLink to="/stats" class="navbar-item">Stats</RouterLink>
-			<span @click="handleLogout">Logout</span>
+			<span @click="handleLogout" class="navbar-item">Logout</span>
 		</div>
 	</nav>
 </template>

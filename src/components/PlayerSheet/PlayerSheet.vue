@@ -1,4 +1,7 @@
 <template>
+	<div class="save-button-container">
+		<button @click="handleSavePlayerSheet" class="main">Save</button>
+	</div>
 	<div class="player-sheet-container">
 		<BaseInfo />
 		<AdditionalInfo />
@@ -7,7 +10,6 @@
 		<SpellsList />
 		<InventoryList />
 	</div>
-	<button @click="handleSavePlayerSheet" class="main">Save</button>
 </template>
 
 <script lang="ts" setup>
@@ -102,6 +104,11 @@ onBeforeUnmount(() => {
 </script>
 
 <style>
+.save-button-container {
+	margin-top: 2em;
+	margin-bottom: 2em;
+	text-align: center;
+}
 .player-sheet-container {
 	display: grid;
 	grid-template-columns: 0.5fr 1.5fr 1fr;

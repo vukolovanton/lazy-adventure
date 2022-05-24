@@ -75,10 +75,14 @@ button {
 	margin-left: 0.2em;
 	margin-right: 0.2em;
 	cursor: pointer;
-	box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 3px 0px;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 3px 0px;
+
+	&:hover {
+		box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 1px 0px;
+	}
 
 	&.main {
-		width: 5em;
+		min-width: 5em;
 		background-color: black;
 		color: white;
 		font-size: 1em;

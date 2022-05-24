@@ -262,7 +262,7 @@ onUnmounted(() => {
 
 .drag-item {
 	user-select: none;
-	position: fixed;
+	position: absolute;
 	cursor: grabbing;
 	background-position: center;
 	background-size: contain;
