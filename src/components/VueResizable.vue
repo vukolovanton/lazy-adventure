@@ -334,7 +334,7 @@ export default {
 				}
 				this.mouseX = eventX;
 				this.mouseY = eventY;
-				const eventName = !this.dragState ? 'resize:move' : 'drag:move';
+				const eventName = 'drag:move';
 				this.emitEvent(eventName);
 			}
 		},
@@ -365,7 +365,7 @@ export default {
 					this.resizeState = ELEMENT_MASK[elClass].bit;
 					this.parent.height = this.$el.parentElement.clientHeight;
 					this.parent.width = this.$el.parentElement.clientWidth;
-					const eventName = !this.dragState ? 'resize:start' : 'drag:start';
+					const eventName = 'drag:start';
 					this.emitEvent(eventName);
 					break;
 				}
@@ -376,7 +376,7 @@ export default {
 			if (this.resizeState !== 0) {
 				this.resizeState = 0;
 				document.body.style.cursor = '';
-				const eventName = !this.dragState ? 'resize:end' : 'drag:end';
+				const eventName = 'drag:end';
 				this.emitEvent(eventName);
 				this.dragState = false;
 			}
@@ -388,117 +388,5 @@ export default {
 <style scoped>
 .resizable-component {
 	position: relative;
-}
-.resizable-component > .resizable-r {
-	display: block;
-	position: absolute;
-	z-index: 90;
-	touch-action: none;
-	user-select: none;
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	cursor: e-resize;
-	width: 12px;
-	right: -6px;
-	top: 0;
-	height: 100%;
-}
-.resizable-component > .resizable-rb {
-	display: block;
-	position: absolute;
-	touch-action: none;
-	user-select: none;
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	cursor: se-resize;
-	width: 12px;
-	height: 12px;
-	right: -6px;
-	bottom: -6px;
-	z-index: 91;
-}
-.resizable-component > .resizable-b {
-	display: block;
-	position: absolute;
-	z-index: 90;
-	touch-action: none;
-	user-select: none;
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	cursor: s-resize;
-	height: 12px;
-	bottom: -6px;
-	width: 100%;
-	left: 0;
-}
-.resizable-component > .resizable-lb {
-	display: block;
-	position: absolute;
-	touch-action: none;
-	user-select: none;
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	cursor: sw-resize;
-	width: 12px;
-	height: 12px;
-	left: -6px;
-	bottom: -6px;
-	z-index: 91;
-}
-.resizable-component > .resizable-l {
-	display: block;
-	position: absolute;
-	z-index: 90;
-	touch-action: none;
-	user-select: none;
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	cursor: w-resize;
-	width: 12px;
-	left: -6px;
-	height: 100%;
-	top: 0;
-}
-.resizable-component > .resizable-lt {
-	display: block;
-	position: absolute;
-	touch-action: none;
-	user-select: none;
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	cursor: nw-resize;
-	width: 12px;
-	height: 12px;
-	left: -6px;
-	top: -6px;
-	z-index: 91;
-}
-.resizable-component > .resizable-t {
-	display: block;
-	position: absolute;
-	z-index: 90;
-	touch-action: none;
-	user-select: none;
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	cursor: n-resize;
-	height: 12px;
-	top: -6px;
-	width: 100%;
-	left: 0;
-}
-.resizable-component > .resizable-rt {
-	display: block;
-	position: absolute;
-	touch-action: none;
-	user-select: none;
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	cursor: ne-resize;
-	width: 12px;
-	height: 12px;
-	right: -6px;
-	top: -6px;
-	z-index: 91;
 }
 </style>
