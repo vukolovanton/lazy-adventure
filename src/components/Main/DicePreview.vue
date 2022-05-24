@@ -28,6 +28,7 @@ $transform: 25px;
 	perspective-origin: 50%;
 	-webkit-perspective-origin: 50%;
 	margin-left: 2em;
+	box-shadow: rgba(0, 0, 0, 0.7) 10px 9px 15px -5px;
 }
 
 #dice {
@@ -41,7 +42,7 @@ $transform: 25px;
 	background-color: black;
 	height: $width;
 	width: $height;
-	border: 2px solid gray;
+	border: 2px solid var(--accent-color);
 	box-sizing: border-box;
 	position: absolute;
 	display: flex;

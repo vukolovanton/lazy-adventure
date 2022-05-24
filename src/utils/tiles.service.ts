@@ -1,6 +1,8 @@
 import { TilesSources } from '@/interfaces/TilesEditorInterfaces';
 import axios from 'axios';
+import { handleError } from 'vue';
 import authHeader from './auth/auth-header';
+import { errorHandler } from './utils';
 
 const API_URL = 'http://localhost:3001/api/v1/';
 
@@ -25,7 +27,19 @@ class TilesService {
 			})
 			.then((response) => {
 				return response.data;
-			});
+			})
+			.catch(errorHandler);
+	}
+
+	fetchMonstersList(): Promise<TilesSources[]> {
+		return axios
+			.get(API_URL + 'files/monsters', {
+				headers: authHeader(),
+			})
+			.then((response) => {
+				return response.data;
+			})
+			.catch(errorHandler);
 	}
 
 	// fetchPlayer(id: string): Promise<Player> {

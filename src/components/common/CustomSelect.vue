@@ -1,0 +1,9 @@
+<template>
+	<details>
+		<summary>Monster:</summary>
+		<div>
+			<span>One</span>
+			<span>Two</span>
+		</div>
+	</details>
+</template>

@@ -1,5 +1,6 @@
 import { Player } from '@/interfaces/Player';
 import axios from 'axios';
+import { errorHandler } from '../utils';
 import authHeader from './auth-header';
 
 const API_URL = 'http://localhost:3001/api/v1/';
@@ -17,7 +18,7 @@ class PlayerService {
 		return axios
 			.get(API_URL + 'player/' + id, { headers: authHeader() })
 			.then((response) => response.data)
-			.catch((e) => alert(e));
+			.catch(errorHandler);
 	}
 
 	// getModeratorBoard() {

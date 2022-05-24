@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="roll-dice-container border">
 		<select @change="handleDiceChange">
 			<option v-for="dice in dices">{{ dice }}</option>
 		</select>
@@ -68,12 +68,11 @@ function handleRotate() {
 </script>
 
 <style scoped lang="scss">
-.container {
+.roll-dice-container {
 	display: flex;
 	align-items: center;
 	align-content: center;
 	margin-bottom: 2em;
-	margin-top: 2em;
 
 	& button {
 		margin-left: 1em;

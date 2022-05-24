@@ -31,7 +31,7 @@ import { usePlayerSkillsStore } from '@/store/palyerStats/playerSkillsStore';
 import { usePlayerSpellsStore } from '@/store/palyerStats/playerSpellsStore';
 import { usePlayerInventoryStore } from '@/store/palyerStats/playerInventoryStore';
 import { useGlobalStore } from '@/store/globalStore';
-import { getAvatarSource } from '@/utils/utils';
+import { errorHandler, getAvatarSource } from '@/utils/utils';
 
 const playerBaseInfoStore = usePlayerBaseInfo();
 const playerAdditionalInfoStore = usePlayerAdditionalInfo();
@@ -93,7 +93,7 @@ function handleSavePlayerSheet() {
 		inventory: playerInventoryStore.$state.inventory,
 	};
 
-	PlayerService.savePlayer(player);
+	PlayerService.savePlayer(player).catch(errorHandler);
 }
 
 onBeforeUnmount(() => {

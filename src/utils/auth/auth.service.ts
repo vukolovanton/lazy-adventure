@@ -2,6 +2,7 @@ import axios from 'axios';
 import { User, AuthResponse } from '@/interfaces/User';
 import { useGlobalStore } from '@/store/globalStore';
 import { StoreIds } from '@/constants';
+import { handleError } from 'vue';
 
 const API_URL = 'http://localhost:3001/api/v1/users/';
 
@@ -22,7 +23,8 @@ class AuthService {
 				}
 
 				return response.data;
-			});
+			})
+			.catch((e) => alert(e));
 	}
 
 	logout() {

@@ -3,18 +3,11 @@
 		<div class="gamefield-wrapper">
 			<div class="additional-controls">
 				<TilesSelector />
-				<MonsterCreation
-					:name="state.monster.name"
-					:hitPoints="state.monster.hitPoints"
-					:handleSetMonsterName="handleSetMonsterName"
-					:handleSetMonsterHitPoints="handleSetMonsterHitPoints"
-					:handleAddMonster="handleAddMonster"
-				/>
 			</div>
 			<div class="drag-wrapper">
 				<div
 					id="gameField"
-					class="drag-container"
+					class="drag-container border border-4"
 					ref="container"
 					:style="{
 						width: `${GRID_SIZE.WIDTH}px`,
@@ -55,6 +48,17 @@
 		<div class="connected-users-container">
 			<RollDice :socket="state.socket" />
 
+			<MonsterCreation
+				:isFilled="isFilled"
+				:type="state.monster.type"
+				:name="state.monster.name"
+				:hitPoints="state.monster.hitPoints"
+				:handleSetMonsterName="handleSetMonsterName"
+				:handleSetMonsterHitPoints="handleSetMonsterHitPoints"
+				:handleAddMonster="handleAddMonster"
+				:handleSetMonsterType="handleSetMonsterType"
+			/>
+
 			<ConnectedPlayer
 				:users="state.users"
 				:handleDeleteMonster="handleDeleteMonster"
@@ -72,6 +76,7 @@ import {
 	ref,
 	onUnmounted,
 	watch,
+	computed,
 } from 'vue';
 import { io, Socket } from 'socket.io-client';
 import { SOCKET_IO_URL, SOCKET_IO_ROOM_NAME } from '@/constants';
@@ -98,6 +103,8 @@ const state = reactive({
 	monster: {
 		hitPoints: 0,
 		name: '',
+		avatarSource: '',
+		type: 'Monster',
 	},
 });
 
@@ -109,6 +116,15 @@ watch(selectedTileUrl, (newValue) => {
 	state.socket.emit('src', {
 		src: newValue,
 	});
+});
+
+const isFilled = computed(() => {
+	return (
+		state.monster.avatarSource !== '' &&
+		state.monster.name !== '' &&
+		state.monster.hitPoints !== 0 &&
+		state.monster.type !== ''
+	);
 });
 
 function handleDrop(data: { left: number; top: number; index: string }) {
@@ -125,6 +141,11 @@ function handleSetMonsterHitPoints(value: number) {
 
 function handleSetMonsterName(value: string) {
 	state.monster.name = value;
+}
+
+function handleSetMonsterType(url: string, type: string) {
+	state.monster.avatarSource = url;
+	state.monster.type = type;
 }
 
 function handleUpdateMonsterHitPoints(value: any, id: string) {
@@ -147,7 +168,7 @@ function handleAddMonster() {
 		username: state.monster.name,
 		room: SOCKET_IO_ROOM_NAME,
 		details: {
-			avatarSource: 'src/assets/characters/wizard-m.png',
+			avatarSource: state.monster.avatarSource,
 			userId: tempId,
 			stats: {
 				maximumHitPoints: state.monster.hitPoints,
@@ -222,7 +243,7 @@ onUnmounted(() => {
 .main-container {
 	display: flex;
 	justify-content: space-between;
-	padding: 4em 2em;
+	padding: 2em 2em;
 }
 
 .additional-controls {
@@ -231,15 +252,11 @@ onUnmounted(() => {
 	justify-content: space-between;
 }
 
-.gamefield-wrapper {
-}
-
 .drag-wrapper {
 	position: relative;
 }
 
 .drag-container {
-	border: 1px solid black;
 	background-color: var(--game-field-background-color);
 }
 

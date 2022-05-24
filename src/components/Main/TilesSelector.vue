@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="border border-1">
 		<label>Map:</label>
 		<select
 			class="small"

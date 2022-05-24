@@ -1,4 +1,5 @@
 import { PlayerClasses } from '@/interfaces/PlayerStats';
+import { AxiosError } from 'axios';
 
 export function trimString(str: string) {
 	return str.split(' ').join('').toLocaleLowerCase();
@@ -6,6 +7,13 @@ export function trimString(str: string) {
 
 export function randomIntFromInterval(min: number, max: number) {
 	return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+export function errorHandler(e: AxiosError) {
+	console.log(e.message);
+	if (e.message === 'Request failed with status code 401') {
+		alert(e + '\n\nPlease log in again.');
+	}
 }
 
 export function getAvatarSource(playerClass: string) {

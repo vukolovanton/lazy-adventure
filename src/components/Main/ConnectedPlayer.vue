@@ -1,6 +1,9 @@
 <template>
 	<div v-for="user in props.users">
-		<div v-if="user.details.stats.isPlayer" class="connected-player-wrapper">
+		<div
+			v-if="user.details.stats.isPlayer"
+			class="connected-player-wrapper border border-1"
+		>
 			<div class="base-info">
 				<h3>
 					{{ user.username }}
