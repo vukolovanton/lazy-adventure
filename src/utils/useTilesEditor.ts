@@ -65,6 +65,16 @@ export function useTilesEditor(
 		draw();
 	}
 
+	function saveTempCanvas() {
+		store.setTempLayers();
+	}
+
+	function loadTempCanvas() {
+		store.setFullLayers(store.tempLayers);
+		draw();
+		saveTempCanvas();
+	}
+
 	async function exportCanvas() {
 		const promise = new Promise((resolve) => {
 			canvas.value.toBlob((blob) => {
@@ -112,5 +122,7 @@ export function useTilesEditor(
 	});
 
 	useEventListener('.clear-button', 'click', clearCanvas);
+	useEventListener('.save-temp-button', 'click', saveTempCanvas);
+	useEventListener('.load-temp-button', 'click', loadTempCanvas);
 	useEventListener('.export-button', 'click', exportCanvas);
 }

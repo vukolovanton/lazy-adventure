@@ -10,6 +10,7 @@ interface TilesStoreInterface {
 	selection: TilesSelection;
 	currentLayer: number;
 	layers: Array<TilesCoordinates>;
+	tempLayers: Array<TilesCoordinates>;
 	sizeOfCrop: number;
 	selectedTileUrl: string | null;
 	mapName: string;
@@ -21,6 +22,7 @@ export const useTilesEditorStore = defineStore('tilesEditorStore', {
 		selection: [5, 2],
 		currentLayer: 0,
 		layers: [{ '1-1': [2 - 2] }, {}, {}],
+		tempLayers: [],
 		sizeOfCrop: GRID_SIZE.TILE,
 		selectedTileUrl: null,
 		mapName: '',
@@ -38,6 +40,13 @@ export const useTilesEditorStore = defineStore('tilesEditorStore', {
 		},
 		setLayers(layer: number, key: string, data: Array<number>) {
 			this.layers[layer][key] = data;
+		},
+		setFullLayers(layers: Array<TilesCoordinates>) {
+			this.layers = layers;
+		},
+		setTempLayers() {
+			const t = JSON.parse(JSON.stringify(this.layers));
+			this.tempLayers = t;
 		},
 		clearLayers() {
 			this.layers.splice(0, this.layers.length);

@@ -23,6 +23,10 @@
 			@set-input-value="setTileName"
 		/>
 		<button class="clear-button">Clear canvas</button>
+		<button class="save-temp-button">Save temporary changes</button>
+		<button class="load-temp-button" :disabled="!isHasTempLayers">
+			Load temporary changes
+		</button>
 		<button class="export-button main" :disabled="!isFilled">
 			Export image
 		</button>
@@ -79,6 +83,10 @@ function setTileName(value: string) {
 
 const isFilled = computed(() => {
 	return store.mapName.trim() !== '';
+});
+
+const isHasTempLayers = computed(() => {
+	return store.tempLayers.length > 0;
 });
 
 onMounted(() => {
