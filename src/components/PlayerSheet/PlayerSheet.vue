@@ -56,7 +56,6 @@ async function getPlayersSheet() {
 	if (currentUser) {
 		const response = await PlayerService.fetchPlayer(currentUser.user.id);
 		const result = await Promise.resolve(response);
-
 		setSheetToStore(result);
 	}
 
@@ -73,7 +72,7 @@ function setSheetToStore(player: Player) {
 		playerInventoryStore.setPlayerInventory(player.inventory);
 
 		globalStore.setAvatarSource(
-			getAvatarSource(player.baseInfo.characterClass)
+			getAvatarSource(player.baseInfo.characterClass, player.baseInfo.gender)
 		);
 	}
 

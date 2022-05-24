@@ -5,6 +5,7 @@ export interface PlayerBaseInfo {
 	race: string;
 	aligment: string;
 	experience: number;
+	gender: 'f' | 'm';
 }
 
 export interface PlayerAdditionalInfo {
@@ -30,7 +31,7 @@ export interface PlayerBaseStats {
 export enum PlayerClasses {
 	Wizard = 'Wizard',
 	Druid = 'Druid',
-	Sorceror = 'Sorceror',
+	Sorcerer = 'Sorcerer',
 	Warlock = 'Warlock',
 	Ranger = 'Ranger',
 	Rouge = 'Rouge',

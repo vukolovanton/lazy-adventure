@@ -89,7 +89,6 @@ export function useTilesEditor(
 			})
 			.then((response) => {
 				store.setMapName('');
-				console.log(response);
 			});
 	}
 

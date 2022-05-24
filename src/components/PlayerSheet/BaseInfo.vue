@@ -30,6 +30,15 @@
 			:input-value="aligment"
 			@set-input-value="store.setAligment"
 		/>
+		<div class="container">
+			<select name="select" @change="handleChangeGender" id="gender">
+				<option :value="g" v-for="g in ['f', 'm']" :selected="g === gender">
+					{{ g === 'f' ? 'Feemale' : 'Male' }}
+				</option>
+			</select>
+			<label for="characterClass">Gender</label>
+		</div>
+
 		<IncrementInputField
 			label="Level"
 			:value="level"
@@ -56,14 +65,30 @@ import { getAvatarSource } from '@/utils/utils';
 
 const store = usePlayerBaseInfo();
 const globalStore = useGlobalStore();
-const { characterName, characterClass, level, race, aligment, experience } =
-	storeToRefs(store);
+const {
+	characterName,
+	characterClass,
+	level,
+	race,
+	aligment,
+	experience,
+	gender,
+} = storeToRefs(store);
 
 function handleClassChange(e: any) {
 	store.setCharacterClass(e.target.value);
 	if (characterClass.value) {
-		globalStore.setAvatarSource(getAvatarSource(characterClass.value));
+		globalStore.setAvatarSource(
+			getAvatarSource(characterClass.value, gender.value)
+		);
 	}
+}
+
+function handleChangeGender(e: any) {
+	store.setGender(e.target.value);
+	globalStore.setAvatarSource(
+		getAvatarSource(characterClass.value, e.target.value)
+	);
 }
 
 function updateCharacterLevel(value: string) {

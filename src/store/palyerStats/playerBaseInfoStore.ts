@@ -11,6 +11,7 @@ export const usePlayerBaseInfo = defineStore(StoreIds.PlayerBaseInfo, {
 			race: '',
 			aligment: '',
 			experience: 0,
+			gender: 'm',
 		};
 	},
 
@@ -47,6 +48,9 @@ export const usePlayerBaseInfo = defineStore(StoreIds.PlayerBaseInfo, {
 		},
 		setExperience(experience: number) {
 			this.experience = experience;
+		},
+		setGender(gender: 'f' | 'm') {
+			this.gender = gender;
 		},
 	},
 

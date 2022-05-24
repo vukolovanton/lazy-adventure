@@ -19,10 +19,11 @@ import { getAvatarSource } from '@/utils/utils';
 const router = useRouter();
 
 const playerBaseInfoStore = usePlayerBaseInfo();
-const { characterName, characterClass } = storeToRefs(playerBaseInfoStore);
+const { characterName, characterClass, gender } =
+	storeToRefs(playerBaseInfoStore);
 
 const avatarSrc = computed(() => {
-	return getAvatarSource(characterClass.value);
+	return getAvatarSource(characterClass.value, gender.value);
 });
 
 function redirectToHome() {

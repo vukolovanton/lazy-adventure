@@ -274,6 +274,7 @@ onUnmounted(() => {
 		background-color: rgba(255, 255, 255, 0.9);
 		font-size: 8px;
 		padding: 0 10px;
+		width: max-content;
 	}
 }
 

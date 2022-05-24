@@ -10,50 +10,37 @@ export function randomIntFromInterval(min: number, max: number) {
 }
 
 export function errorHandler(e: AxiosError) {
-	console.log(e.message);
 	if (e.message === 'Request failed with status code 401') {
 		alert(e + '\n\nPlease log in again.');
 	}
 }
 
-export function getAvatarSource(playerClass: string) {
+export function getAvatarSource(playerClass: string, gender: 'f' | 'm') {
 	switch (playerClass) {
 		case PlayerClasses.Wizard:
-			return 'src/assets/characters/wizard-m.png';
-			break;
+			return `src/assets/characters/wizard-${gender}.png`;
 		case PlayerClasses.Druid:
-			return 'src/assets/characters/druid-m.png';
-			break;
-		case PlayerClasses.Sorceror:
-			return 'src/assets/characters/sorceror-m.png';
-			break;
+			return `src/assets/characters/druid-${gender}.png`;
+		case PlayerClasses.Sorcerer:
+			return `src/assets/characters/sorcerer-${gender}.png`;
 		case PlayerClasses.Warlock:
-			return 'src/assets/characters/warlock-m.png';
-			break;
+			return `src/assets/characters/warlock-${gender}.png`;
 		case PlayerClasses.Ranger:
-			return 'src/assets/characters/ranger-m.png';
-			break;
+			return `src/assets/characters/ranger-${gender}.png`;
 		case PlayerClasses.Rouge:
-			return 'src/assets/characters/rouge-m.png';
-			break;
+			return `src/assets/characters/rouge-${gender}.png`;
 		case PlayerClasses.Monk:
-			return 'src/assets/characters/monk-m.png';
-			break;
+			return `src/assets/characters/monk-${gender}.png`;
 		case PlayerClasses.Bard:
-			return 'src/assets/characters/bard-m.png';
-			break;
+			return `src/assets/characters/bard-${gender}.png`;
 		case PlayerClasses.Barbarian:
-			return 'src/assets/characters/barbarian-m.png';
-			break;
+			return `src/assets/characters/barbarian-${gender}.png`;
 		case PlayerClasses.Paladin:
-			return 'src/assets/characters/paladin-m.png';
-			break;
+			return `src/assets/characters/paladin-${gender}.png`;
 		case PlayerClasses.Fighter:
-			return 'src/assets/characters/fighter-m.png';
-			break;
+			return `src/assets/characters/fighter-${gender}.png`;
 		case PlayerClasses.Cleric:
-			return 'src/assets/characters/cleric-m.png';
-			break;
+			return `src/assets/characters/cleric-${gender}.png`;
 
 		default:
 			return '';
