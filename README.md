@@ -4,6 +4,24 @@ Helps you to create adventures. Build **Lazy Adventure** on your local machine a
 ## Goals
 **Lazy Adventure** is a tiny tool that helps you to play roleplay games like DnD online. This instrument allows you to create character, make a pixel art custom map, and use all of this in real time.
 
+## Installation
+To run project locally you need to have NodeJS and npm / pnpm installed.
+
+Project contains to main parts: backend and frontend. Backend is builded with NodeJS and Socket.io and available here https://github.com/vukolovanton/lazy-adventure-backend
+
+Create folder on your machine and open terminal in it.
+```
+git clone https://github.com/vukolovanton/lazy-adventure.git
+git clone https://github.com/vukolovanton/lazy-adventure-backend.git
+
+cd lazy-adventure
+npm install
+npm run dev
+cd ../
+cd lazy-adventure-backend
+npm install
+npm run dev
+```
 
 ### Application parts FAQ
 - **Stats Editor**
