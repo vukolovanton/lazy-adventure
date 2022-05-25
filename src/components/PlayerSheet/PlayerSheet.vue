@@ -94,7 +94,9 @@ function handleSavePlayerSheet() {
 		inventory: playerInventoryStore.$state.inventory,
 	};
 
-	PlayerService.savePlayer(player).catch(errorHandler);
+	PlayerService.savePlayer(player)
+		.then(() => globalStore.setIsSuccess('Player sheet saved successfully'))
+		.catch(errorHandler);
 }
 
 onBeforeUnmount(() => {

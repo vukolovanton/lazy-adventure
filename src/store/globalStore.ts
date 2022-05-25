@@ -10,6 +10,8 @@ export const useGlobalStore = defineStore(StoreIds.GlobalStore, {
 			avatarSource: '',
 		},
 		isLoading: false,
+		isSuccess: Date.now(),
+		successMessage: '',
 	}),
 
 	actions: {
@@ -27,6 +29,15 @@ export const useGlobalStore = defineStore(StoreIds.GlobalStore, {
 		},
 		setAvatarSource(value: string) {
 			this.user.avatarSource = value;
+		},
+		setIsSuccess(message?: string) {
+			if (message) {
+				this.successMessage = message;
+			}
+			this.isSuccess = Date.now();
+		},
+		setSuccessMessage(message: string) {
+			this.successMessage = message;
 		},
 	},
 	persist: true,

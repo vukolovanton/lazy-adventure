@@ -90,6 +90,11 @@ button {
 		&:hover {
 			background-color: dimgray;
 		}
+
+		&:disabled {
+			background-color: #ccc;
+			cursor: default;
+		}
 	}
 }
 

@@ -1,8 +1,9 @@
-import { Ref } from 'vue';
+import { handleError, Ref } from 'vue';
 import { useTilesEditorStore } from '@/store/tilesEditorStore';
 import { useEventListener } from './useEventListener';
 import TilesService from '@/utils/tiles.service';
 import { storeToRefs } from 'pinia';
+import { useGlobalStore } from '@/store/globalStore';
 
 export function useTilesEditor(
 	canvas: Ref<HTMLCanvasElement>,
@@ -11,6 +12,7 @@ export function useTilesEditor(
 	context: CanvasRenderingContext2D
 ) {
 	const store = useTilesEditorStore();
+	const globalStore = useGlobalStore();
 	const { mapName } = storeToRefs(store);
 
 	function getCoordinates(e: any): Array<number> {
@@ -89,7 +91,9 @@ export function useTilesEditor(
 			})
 			.then((response) => {
 				store.setMapName('');
-			});
+				globalStore.setIsSuccess('Map saved successfully');
+			})
+			.catch((e) => alert(e));
 	}
 
 	// EVENT LISTENERS
