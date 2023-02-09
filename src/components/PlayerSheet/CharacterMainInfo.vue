@@ -67,8 +67,6 @@ import { getAvatarSource } from '@/utils/utils';
 const store = useCharacterMainInfo();
 const globalStore = useGlobalStore();
 const {
-    characterId,
-    userId,
     name,
     characterClass,
     level,

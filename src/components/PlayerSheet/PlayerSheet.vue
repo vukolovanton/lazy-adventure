@@ -4,7 +4,7 @@
 	</div>
 	<div class="player-sheet-container">
 		<CharacterMainInfo />
-<!--		<CharacterAdditionalInfo />-->
+		<CharacterAdditionalInfo />
 		<BaseStats />
 		<SkillList />
 		<SpellsList />
@@ -28,18 +28,18 @@ import PlayerService from '@/utils/auth/player.service';
 
 import { useCharacterMainInfo } from '@/store/palyerStats/characterMainInfoStore';
 import { useCharacterBaseStatsStore } from '@/store/palyerStats/characterBaseStatsStore';
-import { usePlayerBaseStats } from '@/store/palyerStats/playerBaseStatsStore';
 import { useCharacterSkillsStore } from '@/store/palyerStats/characterSkillsStore';
 import { usePlayerSpellsStore } from '@/store/palyerStats/playerSpellsStore';
 import { usePlayerInventoryStore } from '@/store/palyerStats/playerInventoryStore';
 import { useGlobalStore } from '@/store/globalStore';
 import { errorHandler, getAvatarSource } from '@/utils/utils';
 import {CharacterSheet} from "@/interfaces/CharacterSheet";
+import {useCharacterHitPointsStore} from "@/store/palyerStats/characterHitPointsStore";
 
 const characterMainInfo = useCharacterMainInfo();
 const characterBaseStats = useCharacterBaseStatsStore();
-const playerBaseStatsStore = usePlayerBaseStats();
 const characterSkills = useCharacterSkillsStore();
+const characterHitPoints = useCharacterHitPointsStore();
 const playerSpellsStore = usePlayerSpellsStore();
 const playerInventoryStore = usePlayerInventoryStore();
 const globalStore = useGlobalStore();
@@ -48,10 +48,10 @@ const isLoading = ref(false);
 const currentUser = AuthService.getCurrentUser();
 
 onMounted(() => {
-	getPlayersSheet();
+	getCharacterSheet();
 });
 
-async function getPlayersSheet() {
+async function getCharacterSheet() {
 	isLoading.value = true;
 
 	if (currentUser) {
@@ -66,7 +66,7 @@ function setSheetToStore(character: CharacterSheet) {
 	if (Object.keys(character).length > 0) {
 		characterMainInfo.setCharacterMainInfo(character);
 		characterBaseStats.setCharacterBaseStats(character);
-//		playerBaseStatsStore.setPlayerBaseStats(player.baseStats);
+        characterHitPoints.setCharacterHitPoints(character.hitPoints);
 		characterSkills.setPlayerSkills(character.skills, character.proficiency);
 //		playerSpellsStore.setPlayerSpells(player.spells);
 //		playerInventoryStore.setPlayerInventory(player.inventory);
@@ -88,7 +88,7 @@ function handleSavePlayerSheet() {
 		userId: currentUser.user.id,
 		baseInfo: characterMainInfo.$state,
 		additionalInfo: characterBaseStats.$state,
-		baseStats: playerBaseStatsStore.$state,
+//		baseStats: playerBaseStatsStore.$state,
 		skills: characterSkills.$state.skills,
 		spells: playerSpellsStore.$state.spells,
 		inventory: playerInventoryStore.$state.inventory,
@@ -117,7 +117,7 @@ onBeforeUnmount(() => {
 	gap: 1.5em 4em;
 	grid-auto-flow: row;
 	grid-template-areas:
-		'BaseInfo BaseInfo BaseInfo'
+		'BaseInfo BaseInfo SkillList'
 		'BaseStats AdditionalInfo SkillList'
 		'BaseStats SpellsList InventoryList'
 		'BaseStats SpellsList InventoryList';
