@@ -1,4 +1,5 @@
 export const SOCKET_IO_URL = 'http://localhost:3002';
+export const GLOBAL_API_URL = 'http://localhost:8080/api'
 export const SOCKET_IO_ROOM_NAME = 'dev';
 export const GRID_SIZE = {
 	WIDTH: 864,

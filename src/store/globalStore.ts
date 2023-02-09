@@ -5,9 +5,9 @@ export const useGlobalStore = defineStore(StoreIds.GlobalStore, {
 	state: () => ({
 		isEditable: false,
 		user: {
-			username: '',
-			id: '',
+			email: '',
 			avatarSource: '',
+            userId: '',
 		},
 		isLoading: false,
 		isSuccess: Date.now(),
@@ -18,8 +18,8 @@ export const useGlobalStore = defineStore(StoreIds.GlobalStore, {
 		setIsEditable(value: boolean) {
 			this.isEditable = value;
 		},
-		setUsername(value: string) {
-			this.user.username = value;
+		setEmail(value: string) {
+			this.user.email = value;
 		},
 		setUserId(value: string) {
 			this.user.id = value;

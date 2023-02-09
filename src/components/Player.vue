@@ -13,17 +13,17 @@
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { usePlayerBaseInfo } from '@/store/palyerStats/playerBaseInfoStore';
+import { useCharacterMainInfo } from '@/store/palyerStats/characterMainInfoStore';
 import { getAvatarSource } from '@/utils/utils';
 
 const router = useRouter();
 
-const playerBaseInfoStore = usePlayerBaseInfo();
+const playerBaseInfoStore = useCharacterMainInfo();
 const { characterName, characterClass, gender } =
 	storeToRefs(playerBaseInfoStore);
 
 const avatarSrc = computed(() => {
-	return getAvatarSource(characterClass.value, gender.value);
+//	return getAvatarSource(characterClass.value, gender.value);
 });
 
 function redirectToHome() {

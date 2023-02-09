@@ -3,8 +3,8 @@
 		<button @click="handleSavePlayerSheet" class="main">Save</button>
 	</div>
 	<div class="player-sheet-container">
-		<BaseInfo />
-		<AdditionalInfo />
+		<CharacterMainInfo />
+<!--		<CharacterAdditionalInfo />-->
 		<BaseStats />
 		<SkillList />
 		<SpellsList />
@@ -15,8 +15,8 @@
 <script lang="ts" setup>
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 
-import BaseInfo from './BaseInfo.vue';
-import AdditionalInfo from './AdditionalInfo.vue';
+import CharacterMainInfo from './CharacterMainInfo.vue';
+import CharacterAdditionalInfo from './CharacterAdditionalInfo.vue';
 import BaseStats from './BaseStats.vue';
 import SkillList from './SkillsList.vue';
 import SpellsList from './SpellsList.vue';
@@ -26,17 +26,18 @@ import { Player } from '@/interfaces/Player';
 import AuthService from '@/utils/auth/auth.service';
 import PlayerService from '@/utils/auth/player.service';
 
-import { usePlayerBaseInfo } from '@/store/palyerStats/playerBaseInfoStore';
-import { usePlayerAdditionalInfo } from '@/store/palyerStats/playerAdditionalInfoStore';
+import { useCharacterMainInfo } from '@/store/palyerStats/characterMainInfoStore';
+import { useCharacterBaseStatsStore } from '@/store/palyerStats/characterBaseStatsStore';
 import { usePlayerBaseStats } from '@/store/palyerStats/playerBaseStatsStore';
 import { usePlayerSkillsStore } from '@/store/palyerStats/playerSkillsStore';
 import { usePlayerSpellsStore } from '@/store/palyerStats/playerSpellsStore';
 import { usePlayerInventoryStore } from '@/store/palyerStats/playerInventoryStore';
 import { useGlobalStore } from '@/store/globalStore';
 import { errorHandler, getAvatarSource } from '@/utils/utils';
+import {CharacterSheet} from "@/interfaces/CharacterSheet";
 
-const playerBaseInfoStore = usePlayerBaseInfo();
-const playerAdditionalInfoStore = usePlayerAdditionalInfo();
+const characterMainInfo = useCharacterMainInfo();
+const characterBaseStats = useCharacterBaseStatsStore();
 const playerBaseStatsStore = usePlayerBaseStats();
 const playerSkillsStore = usePlayerSkillsStore();
 const playerSpellsStore = usePlayerSpellsStore();
@@ -54,26 +55,25 @@ async function getPlayersSheet() {
 	isLoading.value = true;
 
 	if (currentUser) {
-		const response = await PlayerService.fetchPlayer(currentUser.user.id);
-		const result = await Promise.resolve(response);
-		setSheetToStore(result);
+		const response = await PlayerService.fetchCharacterSheet("57");
+		setSheetToStore(response);
 	}
 
 	isLoading.value = false;
 }
 
-function setSheetToStore(player: Player) {
-	if (Object.keys(player).length > 0) {
-		playerBaseInfoStore.setPlayerBaseInfo(player.baseInfo);
-		playerAdditionalInfoStore.setPlayerAdditionalInfo(player.additionalInfo);
-		playerBaseStatsStore.setPlayerBaseStats(player.baseStats);
-		playerSkillsStore.setPlayerSkills(player.skills);
-		playerSpellsStore.setPlayerSpells(player.spells);
-		playerInventoryStore.setPlayerInventory(player.inventory);
+function setSheetToStore(character: CharacterSheet) {
+	if (Object.keys(character).length > 0) {
+		characterMainInfo.setCharacterMainInfo(character);
+		characterBaseStats.setCharacterBaseStats(character);
+//		playerBaseStatsStore.setPlayerBaseStats(player.baseStats);
+//		playerSkillsStore.setPlayerSkills(player.skills);
+//		playerSpellsStore.setPlayerSpells(player.spells);
+//		playerInventoryStore.setPlayerInventory(player.inventory);
 
-		globalStore.setAvatarSource(
-			getAvatarSource(player.baseInfo.characterClass, player.baseInfo.gender)
-		);
+//		globalStore.setAvatarSource(
+//			getAvatarSource(player.baseInfo.characterClass, player.baseInfo.gender)
+//		);
 	}
 
 	isLoading.value = false;
@@ -86,8 +86,8 @@ function handleSavePlayerSheet() {
 
 	const player: Player = {
 		userId: currentUser.user.id,
-		baseInfo: playerBaseInfoStore.$state,
-		additionalInfo: playerAdditionalInfoStore.$state,
+		baseInfo: characterMainInfo.$state,
+		additionalInfo: characterBaseStats.$state,
 		baseStats: playerBaseStatsStore.$state,
 		skills: playerSkillsStore.$state.skills,
 		spells: playerSpellsStore.$state.spells,

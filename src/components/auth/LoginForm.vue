@@ -65,7 +65,6 @@ async function handleAuth() {
 			const response = await AuthService.login(user);
             if (response?.jwtToken) {
                 const result = await AuthService.getUserInfo();
-
                 if (result) {
     				store.setIsLoading(false);
     				await router.push('/stats');

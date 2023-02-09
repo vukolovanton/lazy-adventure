@@ -1,5 +1,5 @@
 <template>
-	<section class="AdditionalInfo">
+	<section class="CharacterAdditionalInfo">
 		<div class="inner-container">
 			<TextInputField
 				type="number"
@@ -83,9 +83,9 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia';
 import TextInputField from '@/components/common/TextInputField.vue';
-import { usePlayerAdditionalInfo } from '@/store/palyerStats/playerAdditionalInfoStore';
+import { useCharacterBaseStatsStore } from '@/store/palyerStats/characterBaseStatsStore';
 
-const store = usePlayerAdditionalInfo();
+const store = useCharacterBaseStatsStore();
 const {
 	armorClass,
 	initiative,

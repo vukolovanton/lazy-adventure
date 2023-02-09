@@ -165,7 +165,7 @@ function handleAddMonster() {
 	const tempId = Date.now().toString();
 
 	state.socket.emit('joinRoom', {
-		username: state.monster.name,
+		email: state.monster.name,
 		room: SOCKET_IO_ROOM_NAME,
 		details: {
 			avatarSource: state.monster.avatarSource,
@@ -190,7 +190,7 @@ onBeforeMount(() => {
 onMounted(() => {
 	// === Join Room
 	state.socket.emit('joinRoom', {
-		username: characterName.value,
+		email: characterName.value,
 		room: SOCKET_IO_ROOM_NAME,
 		details: {
 			avatarSource: globalStore.user.avatarSource,
@@ -230,7 +230,7 @@ onMounted(() => {
 
 onUnmounted(() => {
 	state.socket.emit('leaveRoom', {
-		username: characterName.value,
+		email: characterName.value,
 		room: SOCKET_IO_ROOM_NAME,
 	});
 

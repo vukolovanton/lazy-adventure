@@ -1,6 +1,6 @@
 import { storeToRefs } from 'pinia';
-import { usePlayerBaseInfo } from '@/store/palyerStats/playerBaseInfoStore';
-import { usePlayerAdditionalInfo } from '@/store/palyerStats/playerAdditionalInfoStore';
+import { useCharacterMainInfo } from '@/store/palyerStats/characterMainInfoStore';
+import { useCharacterBaseStatsStore } from '@/store/palyerStats/characterBaseStatsStore';
 import { usePlayerInventoryStore } from '@/store/palyerStats/playerInventoryStore';
 import { usePlayerSpellsStore } from '@/store/palyerStats/playerSpellsStore';
 import { useGlobalStore } from '@/store/globalStore';
@@ -9,7 +9,7 @@ import { useTilesEditorStore } from '@/store/tilesEditorStore';
 export function useBlockGameStores() {
 	const globalStore = useGlobalStore();
 
-	const playerBaseInfoStore = usePlayerBaseInfo();
+	const playerBaseInfoStore = useCharacterMainInfo();
 	const { characterName, characterClass, level } =
 		storeToRefs(playerBaseInfoStore);
 
@@ -22,7 +22,7 @@ export function useBlockGameStores() {
 	const tilesStore = useTilesEditorStore();
 	const { selectedTileUrl } = storeToRefs(tilesStore);
 
-	const store = usePlayerAdditionalInfo();
+	const store = useCharacterBaseStatsStore();
 	const {
 		initiative,
 		speed,

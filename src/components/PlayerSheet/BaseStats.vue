@@ -5,14 +5,14 @@
 			label="Strength"
 			id="strength"
 			:input-value="strength"
-			@set-input-value="store.setStength"
+			@set-input-value="store.setStrength"
 		/>
 		<TextInputField
 			type="number"
-			label="Dexterety"
-			id="dexterety"
-			:input-value="dexterety"
-			@set-input-value="store.setDexterety"
+			label="Dexterity"
+			id="dexterity"
+			:input-value="dexterity"
+			@set-input-value="store.setDexterity"
 		/>
 		<TextInputField
 			type="number"
@@ -48,9 +48,15 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia';
 import TextInputField from '@/components/common/TextInputField.vue';
-import { usePlayerBaseStats } from '@/store/palyerStats/playerBaseStatsStore';
+import {useCharacterBaseStatsStore} from "@/store/palyerStats/characterBaseStatsStore";
 
-const store = usePlayerBaseStats();
-const { strength, dexterety, constitution, intelligence, wisdom, charisma } =
-	storeToRefs(store);
+const store = useCharacterBaseStatsStore();
+const {
+    strength,
+    dexterity,
+    constitution,
+    intelligence,
+    wisdom,
+    charisma
+} = storeToRefs(store);
 </script>

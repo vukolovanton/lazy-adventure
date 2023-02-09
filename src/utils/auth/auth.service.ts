@@ -15,13 +15,13 @@ class AuthService {
             if (response) {
                 if (response.data) {
                     const store = useGlobalStore();
-                    store.setUsername(response.data.email);
+                    store.setEmail(response.data.email);
                     store.setUserId(response.data.userId);
                     
                     localStorage.setItem("user", JSON.stringify({
-                        username: response.data.email,
+                        email: response.data.email,
                         password: response.data.password,
-                        id: response.data.userId,
+                        userId: response.data.userId,
                     }))
 
                     return true;
@@ -63,8 +63,8 @@ class AuthService {
 					localStorage.setItem('user', JSON.stringify(response.data));
 
 					const store = useGlobalStore();
-					store.setUsername(response.data.user.username);
-					store.setUserId(response.data.user.id);
+					store.setEmail(response.data.user.username);
+					store.setUserId(response.data.userId);
 				}
 
 				return response.data;
