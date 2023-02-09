@@ -1,6 +1,6 @@
 import {defineStore} from 'pinia';
 import {
-    PlayerSkillsStore,
+    CharacterSkillsStore,
     SkillStoreItem,
     SkillType,
     UserFacingSkillsListObject,
@@ -8,8 +8,8 @@ import {
 import {StoreIds} from '@/constants';
 import {CharacterSheetProficiency, CharacterSheetSkills} from "@/interfaces/CharacterSheet";
 
-export const usePlayerSkillsStore = defineStore(StoreIds.PlayerSkills, {
-	state: (): PlayerSkillsStore => ({
+export const useCharacterSkillsStore = defineStore(StoreIds.PlayerSkills, {
+	state: (): CharacterSkillsStore => ({
 		skills: [],
 	}),
 

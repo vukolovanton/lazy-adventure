@@ -44,31 +44,10 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
 import { storeToRefs } from 'pinia';
-import { usePlayerSkillsStore } from '@/store/palyerStats/playerSkillsStore';
+import { useCharacterSkillsStore } from '@/store/palyerStats/characterSkillsStore';
 
-const store = usePlayerSkillsStore();
+const store = useCharacterSkillsStore();
 const { skills } = storeToRefs(store);
-
-//const {
-//    acrobatics,
-//    animalHandling,
-//    arcana,
-//    athletics,
-//    deception,
-//    history,
-//    insight,
-//    intimidation,
-//    investigation,
-//    medicine,
-//    nature,
-//    perception,
-//    performance,
-//    persuasion,
-//    religion,
-//    sleightOfHand,
-//    stealth,
-//    survival
-//} = storeToRefs(store);
 
 const filter = ref('all');
 const filteredSkills = computed(() => {

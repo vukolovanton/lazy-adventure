@@ -53,7 +53,7 @@ export type SkillStoreItem = {
 	isLearned: boolean;
 };
 
-export interface PlayerSkillsStore {
+export interface CharacterSkillsStore {
 	skills: SkillStoreItem[];
 }
 

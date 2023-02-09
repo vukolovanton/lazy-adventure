@@ -29,7 +29,7 @@ import PlayerService from '@/utils/auth/player.service';
 import { useCharacterMainInfo } from '@/store/palyerStats/characterMainInfoStore';
 import { useCharacterBaseStatsStore } from '@/store/palyerStats/characterBaseStatsStore';
 import { usePlayerBaseStats } from '@/store/palyerStats/playerBaseStatsStore';
-import { usePlayerSkillsStore } from '@/store/palyerStats/playerSkillsStore';
+import { useCharacterSkillsStore } from '@/store/palyerStats/characterSkillsStore';
 import { usePlayerSpellsStore } from '@/store/palyerStats/playerSpellsStore';
 import { usePlayerInventoryStore } from '@/store/palyerStats/playerInventoryStore';
 import { useGlobalStore } from '@/store/globalStore';
@@ -39,7 +39,7 @@ import {CharacterSheet} from "@/interfaces/CharacterSheet";
 const characterMainInfo = useCharacterMainInfo();
 const characterBaseStats = useCharacterBaseStatsStore();
 const playerBaseStatsStore = usePlayerBaseStats();
-const playerSkillsStore = usePlayerSkillsStore();
+const characterSkills = useCharacterSkillsStore();
 const playerSpellsStore = usePlayerSpellsStore();
 const playerInventoryStore = usePlayerInventoryStore();
 const globalStore = useGlobalStore();
@@ -67,7 +67,7 @@ function setSheetToStore(character: CharacterSheet) {
 		characterMainInfo.setCharacterMainInfo(character);
 		characterBaseStats.setCharacterBaseStats(character);
 //		playerBaseStatsStore.setPlayerBaseStats(player.baseStats);
-		playerSkillsStore.setPlayerSkills(character.skills, character.proficiency);
+		characterSkills.setPlayerSkills(character.skills, character.proficiency);
 //		playerSpellsStore.setPlayerSpells(player.spells);
 //		playerInventoryStore.setPlayerInventory(player.inventory);
 
@@ -89,7 +89,7 @@ function handleSavePlayerSheet() {
 		baseInfo: characterMainInfo.$state,
 		additionalInfo: characterBaseStats.$state,
 		baseStats: playerBaseStatsStore.$state,
-		skills: playerSkillsStore.$state.skills,
+		skills: characterSkills.$state.skills,
 		spells: playerSpellsStore.$state.spells,
 		inventory: playerInventoryStore.$state.inventory,
 	};
