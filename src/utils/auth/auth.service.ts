@@ -1,27 +1,48 @@
 import axios from 'axios';
 import { User, AuthResponse } from '@/interfaces/User';
 import { useGlobalStore } from '@/store/globalStore';
-import { StoreIds } from '@/constants';
-import { handleError } from 'vue';
+import authHeader from "@/utils/auth/auth-header";
 
-const API_URL = 'http://localhost:3001/api/v1/users/';
+const API_URL_REGISTER = 'http://localhost:8080/api/auth/register/';
+const API_URL_LOGIN = 'http://localhost:8080/api/auth/login/';
+const USER_INFO_URL = 'http://localhost:8080/api/user/info/';
 
 class AuthService {
+    getUserInfo() {
+        return axios
+        .get(USER_INFO_URL, { headers: authHeader() })
+        .then((response) => {
+            if (response) {
+                if (response.data) {
+                    const store = useGlobalStore();
+                    store.setUsername(response.data.email);
+                    store.setUserId(response.data.userId);
+                    
+                    localStorage.setItem("user", JSON.stringify({
+                        username: response.data.email,
+                        password: response.data.password,
+                        id: response.data.userId,
+                    }))
+
+                    return true;
+                }
+            }
+            return false;
+        })
+        .catch((e) => alert(e));
+    }
+
 	login(user: User) {
 		return axios
-			.post(API_URL + 'login', {
-				username: user.username,
+			.post(API_URL_LOGIN, {
+				email: user.email,
 				password: user.password,
 			})
 			.then((response) => {
-				if (response.data.token) {
-					localStorage.setItem('user', JSON.stringify(response.data));
+				if (response.data.jwtToken) {
+                    localStorage.setItem('token', JSON.stringify(response.data.jwtToken));
 
-					const store = useGlobalStore();
-					store.setUsername(response.data.user.username);
-					store.setUserId(response.data.user.id);
 				}
-
 				return response.data;
 			})
 			.catch((e) => alert(e));
@@ -33,8 +54,8 @@ class AuthService {
 
 	register(user: User) {
 		return axios
-			.post(API_URL + 'register', {
-				username: user.username,
+			.post(API_URL_REGISTER + 'register', {
+				email: user.email,
 				password: user.password,
 			})
 			.then((response) => {

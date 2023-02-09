@@ -5,11 +5,11 @@
 			<div class="input-container">
 				<input
 					spellcheck="false"
-					type="text"
-					id="username"
-					v-model="username"
+					type="email"
+					id="email"
+					v-model="email"
 				/>
-				<label for="username">Username</label>
+				<label for="email">email</label>
 			</div>
 			<div class="input-container">
 				<input
@@ -38,13 +38,13 @@ import { AxiosResponse } from 'axios';
 const router = useRouter();
 const store = useGlobalStore();
 
-const username = ref('');
+const email = ref('');
 const password = ref('');
 const checked = ref(false);
 
 async function handleAuth() {
 	const user = {
-		username: username.value,
+		email: email.value,
 		password: password.value,
 	};
 
@@ -53,29 +53,29 @@ async function handleAuth() {
 	try {
 		if (checked.value) {
 			// Register
-			const response: AxiosResponse<AuthResponse> = await AuthService.register(
-				user
-			);
+			const response: AxiosResponse<AuthResponse> | void = await AuthService.register(user);
+			const result = Promise.resolve(response);
 
-			const result = await Promise.resolve(response);
 			if (result) {
 				store.setIsLoading(false);
 				router.push('/stats');
 			}
 		} else {
 			// Login
-			const response = AuthService.login(user);
+			const response = await AuthService.login(user);
+            if (response?.jwtToken) {
+                const result = await AuthService.getUserInfo();
 
-			const result = await Promise.resolve(response);
-
-			if (result) {
-				store.setIsLoading(false);
-				router.push('/stats');
-			}
+                if (result) {
+    				store.setIsLoading(false);
+    				await router.push('/stats');
+    			}
+            }
 		}
 
 		store.setIsLoading(false);
 	} catch (e) {
+    console.log('eeeee')
 		store.setIsLoading(false);
 		alert(e);
 	}

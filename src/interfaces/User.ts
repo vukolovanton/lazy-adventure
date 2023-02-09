@@ -2,9 +2,9 @@ import { InventoryItem } from './PlayerInventory';
 import { Spell } from './PlayerSpells';
 
 export interface User {
-	username: string;
+	email: string;
 	password: string;
-	isAdmin?: boolean;
+	isDm?: boolean;
 }
 
 export interface AuthResponse {
