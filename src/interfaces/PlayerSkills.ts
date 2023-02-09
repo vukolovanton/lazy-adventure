@@ -47,7 +47,7 @@ export interface Stealth extends DexSkill {}
 export interface Survival extends WisSkill {}
 
 export type SkillStoreItem = {
-	name: UserFacingSkillsList;
+    name: typeof UserFacingSkillsListObject;
 	type: SkillType;
 	points: number;
 	isLearned: boolean;
@@ -104,4 +104,24 @@ export enum UserFacingSkillsList {
 	SLEIGHT_OF_HAND = 'Sleight Of Hand',
 	STEALTH = 'Stealth',
 	SURVIVAL = 'Survival',
+}
+
+export const UserFacingSkillsListObject = {
+    [SkillsList.ACROBATICS]: 'Acrobatics',
+    [SkillsList.ARCANA]: 'Arcana',
+    [SkillsList.ATHLETICS]: 'Athletics',
+    [SkillsList.DECEPTION]: 'Deception',
+    [SkillsList.HISTORY]: 'History',
+    [SkillsList.INSIGHT]: 'Insight',
+    [SkillsList.INTIMIDATION]: 'Intimidation',
+    [SkillsList.INVESTIGATION]: 'Investigation',
+    [SkillsList.MEDICINE]: 'Medicine',
+    [SkillsList.NATURE]: 'Nature',
+    [SkillsList.PERCEPTION]: 'Perception',
+    [SkillsList.PERFORMANCE]: 'Performance',
+    [SkillsList.PERSUASION]: 'Persuasion',
+    [SkillsList.RELIGION]: 'Religion',
+    [SkillsList.SLEIGHT_OF_HAND]: 'Sleight Of Hand',
+    [SkillsList.STEALTH]: 'Stealth',
+    [SkillsList.SURVIVAL]: 'Survival',
 }

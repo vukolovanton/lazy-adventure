@@ -67,7 +67,7 @@ function setSheetToStore(character: CharacterSheet) {
 		characterMainInfo.setCharacterMainInfo(character);
 		characterBaseStats.setCharacterBaseStats(character);
 //		playerBaseStatsStore.setPlayerBaseStats(player.baseStats);
-//		playerSkillsStore.setPlayerSkills(player.skills);
+		playerSkillsStore.setPlayerSkills(character.skills, character.proficiency);
 //		playerSpellsStore.setPlayerSpells(player.spells);
 //		playerInventoryStore.setPlayerInventory(player.inventory);
 

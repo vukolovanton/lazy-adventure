@@ -15,4 +15,5 @@ export enum StoreIds {
 	PlayerInventory = 'PlayerInventory',
 	PlayerSkills = 'PlayerSkills',
 	PlayerSpells = 'PlayerSpells',
+    CharacterSkills = 'CharacterSkills',
 }

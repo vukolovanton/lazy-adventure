@@ -49,6 +49,27 @@ import { usePlayerSkillsStore } from '@/store/palyerStats/playerSkillsStore';
 const store = usePlayerSkillsStore();
 const { skills } = storeToRefs(store);
 
+//const {
+//    acrobatics,
+//    animalHandling,
+//    arcana,
+//    athletics,
+//    deception,
+//    history,
+//    insight,
+//    intimidation,
+//    investigation,
+//    medicine,
+//    nature,
+//    perception,
+//    performance,
+//    persuasion,
+//    religion,
+//    sleightOfHand,
+//    stealth,
+//    survival
+//} = storeToRefs(store);
+
 const filter = ref('all');
 const filteredSkills = computed(() => {
 	if (filter.value === 'all') {
