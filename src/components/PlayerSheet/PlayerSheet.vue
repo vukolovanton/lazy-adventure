@@ -40,6 +40,7 @@ import {useCharacterSavingThrowsStore} from "@/store/palyerStats/characterSaving
 import SavingThrows from "@/components/PlayerSheet/SavingThrows.vue";
 import {useCharacterAttacksStore} from "@/store/palyerStats/characterAttacks";
 import Attacks from "@/components/PlayerSheet/Attacks.vue";
+import {useCharacterSpellsStore} from "@/store/palyerStats/characterSpellsStore";
 
 const characterMainInfo = useCharacterMainInfo();
 const characterBaseStats = useCharacterBaseStatsStore();
@@ -48,7 +49,8 @@ const characterHitPoints = useCharacterHitPointsStore();
 const characterSavingThrows = useCharacterSavingThrowsStore();
 const playerSpellsStore = usePlayerSpellsStore();
 const playerInventoryStore = usePlayerInventoryStore();
-const attacksStore = useCharacterAttacksStore();
+const characterAttacksStore = useCharacterAttacksStore();
+const characterSpellsStore = useCharacterSpellsStore();
 const globalStore = useGlobalStore();
 
 const isLoading = ref(false);
@@ -76,11 +78,8 @@ function setSheetToStore(character: CharacterSheet) {
         characterHitPoints.setCharacterHitPoints(character.hitPoints);
         characterSavingThrows.setCharacterSavingThrows(character.savingThrows, character.proficiency);
 		characterSkills.setPlayerSkills(character.skills, character.proficiency);
-        attacksStore.setCharacterAttacks(character.attacks);
-
-//		playerSpellsStore.setPlayerSpells(player.spells);
-//		playerInventoryStore.setPlayerInventory(player.inventory);
-
+        characterAttacksStore.setCharacterAttacks(character.attacks);
+        characterSpellsStore.setCharacterSpells(character.spells);
 //		globalStore.setAvatarSource(
 //			getAvatarSource(player.baseInfo.characterClass, player.baseInfo.gender)
 //		);

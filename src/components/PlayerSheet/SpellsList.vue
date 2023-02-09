@@ -2,36 +2,22 @@
 	<section class="SpellsList">
 		<h3>Spells</h3>
 		<div v-for="spell in spells" class="spells-list">
-			<span>{{ spell.name }}</span>
-			<span>{{ spell.attack }}</span>
-			<span>{{ spell.dice }}</span>
-			<span>{{ spell.type }}</span>
+			<span>{{ spell.spellLevel }}</span>
+			<span>{{ spell.spellName }}</span>
 			<button @click="store.removeSpell(spell)">X</button>
 		</div>
 		<div class="spells-input">
 			<SmallTextInput
-				label="Name"
+				label="Spell Level"
+				id="spellLevel"
+				:input-value="newSpell.spellLevel"
+				@set-input-value="setSpellLevel"
+			/>
+			<SmallTextInput
+				label="Spell Name"
 				id="spellName"
 				:input-value="newSpell.name"
 				@set-input-value="setSpellName"
-			/>
-			<SmallTextInput
-				label="Attack"
-				id="spellAttack"
-				:input-value="newSpell.attack"
-				@set-input-value="setSpellAttack"
-			/>
-			<SmallTextInput
-				label="Dice"
-				id="spellDice"
-				:input-value="newSpell.dice"
-				@set-input-value="setSpellDice"
-			/>
-			<SmallTextInput
-				label="Type"
-				id="spellType"
-				:input-value="newSpell.type"
-				@set-input-value="setSpellType"
 			/>
 		</div>
 		<button @click="handleSaveNewSpell" :disabled="!isFilled">Add</button>
@@ -42,44 +28,28 @@
 import { reactive, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import SmallTextInput from '@/components/common/SmallTextInput.vue';
-import { usePlayerSpellsStore } from '@/store/palyerStats/playerSpellsStore';
+import {useCharacterSpellsStore} from "@/store/palyerStats/characterSpellsStore";
 
-const store = usePlayerSpellsStore();
+const store = useCharacterSpellsStore();
 const { spells } = storeToRefs(store);
 const newSpell = reactive({
-	name: '',
-	attack: 0,
-	dice: '',
-	type: '',
+	spellName: '',
+    spellLevel: 0,
 });
 
 const isFilled = computed(() => {
 	return (
-		newSpell.attack > 0 &&
-		newSpell.name.trim() !== '' &&
-		newSpell.dice.trim() !== '' &&
-		newSpell.type.trim() !== ''
+		newSpell.spellLevel > 0 &&
+		newSpell.spellName.trim() !== ''
 	);
 });
 
-function handleRemove() {
-	store.removeSpell(newSpell);
-}
-
 function setSpellName(value: string) {
-	newSpell.name = value;
+	newSpell.spellName = value;
 }
 
-function setSpellAttack(value: string) {
-	newSpell.attack = Number(value);
-}
-
-function setSpellDice(value: string) {
-	newSpell.dice = value;
-}
-
-function setSpellType(value: string) {
-	newSpell.type = value;
+function setSpellLevel(value: string) {
+	newSpell.spellLevel = Number(value);
 }
 
 function handleSaveNewSpell() {
@@ -88,10 +58,8 @@ function handleSaveNewSpell() {
 	const t = { ...newSpell };
 	store.setNewSpell(t);
 
-	newSpell.name = '';
-	newSpell.attack = 0;
-	newSpell.dice = '';
-	newSpell.type = '';
+	newSpell.spellName = '';
+	newSpell.spellLevel = 0;
 }
 </script>
 
