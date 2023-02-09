@@ -53,8 +53,18 @@ export type SkillStoreItem = {
 	isLearned: boolean;
 };
 
+export type SavingThrowStoreItem = {
+    name: string;
+    points: number;
+    isProficient: boolean;
+};
+
 export interface CharacterSkillsStore {
 	skills: SkillStoreItem[];
+}
+
+export interface CharacterSavingThrowsStore {
+    savingThrows: SavingThrowStoreItem[];
 }
 
 export enum SkillType {

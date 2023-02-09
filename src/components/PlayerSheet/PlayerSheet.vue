@@ -7,6 +7,7 @@
 		<CharacterAdditionalInfo />
 		<BaseStats />
 		<SkillList />
+        <SavingThrows />
 		<SpellsList />
 		<InventoryList />
 	</div>
@@ -35,11 +36,14 @@ import { useGlobalStore } from '@/store/globalStore';
 import { errorHandler, getAvatarSource } from '@/utils/utils';
 import {CharacterSheet} from "@/interfaces/CharacterSheet";
 import {useCharacterHitPointsStore} from "@/store/palyerStats/characterHitPointsStore";
+import {useCharacterSavingThrowsStore} from "@/store/palyerStats/characterSavingThrows";
+import SavingThrows from "@/components/PlayerSheet/SavingThrows.vue";
 
 const characterMainInfo = useCharacterMainInfo();
 const characterBaseStats = useCharacterBaseStatsStore();
 const characterSkills = useCharacterSkillsStore();
 const characterHitPoints = useCharacterHitPointsStore();
+const characterSavingThrows = useCharacterSavingThrowsStore();
 const playerSpellsStore = usePlayerSpellsStore();
 const playerInventoryStore = usePlayerInventoryStore();
 const globalStore = useGlobalStore();
@@ -67,7 +71,9 @@ function setSheetToStore(character: CharacterSheet) {
 		characterMainInfo.setCharacterMainInfo(character);
 		characterBaseStats.setCharacterBaseStats(character);
         characterHitPoints.setCharacterHitPoints(character.hitPoints);
+        characterSavingThrows.setCharacterSavingThrows(character.savingThrows, character.proficiency);
 		characterSkills.setPlayerSkills(character.skills, character.proficiency);
+
 //		playerSpellsStore.setPlayerSpells(player.spells);
 //		playerInventoryStore.setPlayerInventory(player.inventory);
 

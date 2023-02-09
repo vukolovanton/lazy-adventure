@@ -1,5 +1,14 @@
 <template>
 	<section class="SkillList">
+		<div class="filter">
+            <TextInputField
+                    type="number"
+                    label="Proficiency Bonus"
+                    id="proficiencyBonus"
+                    :input-value="proficiencyBonus"
+                    @set-input-value="characterBaseStatsStore.setProficiencyBonus"
+            />
+		</div>
 		<div v-for="skill in skills" class="skills-container">
 			<input
 				type="checkbox"
@@ -23,9 +32,14 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia';
 import { useCharacterSkillsStore } from '@/store/palyerStats/characterSkillsStore';
+import { useCharacterBaseStatsStore } from '@/store/palyerStats/characterBaseStatsStore';
+import TextInputField from "@/components/common/TextInputField.vue";
 
+const characterBaseStatsStore = useCharacterBaseStatsStore();
 const store = useCharacterSkillsStore();
 const { skills } = storeToRefs(store);
+
+const { proficiencyBonus } = storeToRefs(characterBaseStatsStore);
 
 //const filter = ref('all');
 //const filteredSkills = computed(() => {

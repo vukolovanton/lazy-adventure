@@ -89,8 +89,6 @@ import {useCharacterHitPointsStore} from "@/store/palyerStats/characterHitPoints
 const characterBaseStatsStore = useCharacterBaseStatsStore();
 const characterHitPointsStore = useCharacterHitPointsStore();
 const {
-    charisma,
-    proficiencyBonus,
     armorClass,
     initiative,
     speed,

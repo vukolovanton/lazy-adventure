@@ -34,11 +34,11 @@ export const useCharacterSkillsStore = defineStore(StoreIds.PlayerSkills, {
 			this.skills = result;
 		},
         setSkillPoints(skill: typeof UserFacingSkillsListObject, action: string) {
-			const skillIndex = this.skills.findIndex((s) => s.name === skill);
+            const index = this.skills.findIndex((s) => s.name === skill);
 			if (action === '+') {
-				this.skills[skillIndex].points++;
+                this.skills[index].points++;
 			} else if (action === '-') {
-				this.skills[skillIndex].points--;
+                this.skills[index].points--;
 			}
 		},
         setIsLearned(skill: typeof UserFacingSkillsListObject, isLearned: boolean) {

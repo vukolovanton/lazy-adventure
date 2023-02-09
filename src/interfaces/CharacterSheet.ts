@@ -93,6 +93,12 @@ export interface CharacterSheetProficiency {
     sleightOfHand: boolean;
     stealth: boolean;
     survival:boolean;
+    strength: boolean;
+    dexterity: boolean;
+    constitution: boolean;
+    intelligence: boolean;
+    wisdom: boolean;
+    charisma: boolean;
 }
 
 export interface CharacterSheetSavingThrows {
