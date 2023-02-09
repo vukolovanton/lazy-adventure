@@ -18,4 +18,5 @@ export enum StoreIds {
     CharacterSkills = 'CharacterSkills',
     CharacterHitPoints = 'CharacterHitPoints',
     CharacterSavingThrows = 'CharacterSavingThrows',
+    CharacterAttacks = 'CharacterAttacks',
 }

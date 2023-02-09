@@ -9,7 +9,7 @@
 		<SkillList />
         <SavingThrows />
 		<SpellsList />
-		<InventoryList />
+		<Attacks />
 	</div>
 </template>
 
@@ -38,6 +38,8 @@ import {CharacterSheet} from "@/interfaces/CharacterSheet";
 import {useCharacterHitPointsStore} from "@/store/palyerStats/characterHitPointsStore";
 import {useCharacterSavingThrowsStore} from "@/store/palyerStats/characterSavingThrows";
 import SavingThrows from "@/components/PlayerSheet/SavingThrows.vue";
+import {useCharacterAttacksStore} from "@/store/palyerStats/characterAttacks";
+import Attacks from "@/components/PlayerSheet/Attacks.vue";
 
 const characterMainInfo = useCharacterMainInfo();
 const characterBaseStats = useCharacterBaseStatsStore();
@@ -46,6 +48,7 @@ const characterHitPoints = useCharacterHitPointsStore();
 const characterSavingThrows = useCharacterSavingThrowsStore();
 const playerSpellsStore = usePlayerSpellsStore();
 const playerInventoryStore = usePlayerInventoryStore();
+const attacksStore = useCharacterAttacksStore();
 const globalStore = useGlobalStore();
 
 const isLoading = ref(false);
@@ -73,6 +76,7 @@ function setSheetToStore(character: CharacterSheet) {
         characterHitPoints.setCharacterHitPoints(character.hitPoints);
         characterSavingThrows.setCharacterSavingThrows(character.savingThrows, character.proficiency);
 		characterSkills.setPlayerSkills(character.skills, character.proficiency);
+        attacksStore.setCharacterAttacks(character.attacks);
 
 //		playerSpellsStore.setPlayerSpells(player.spells);
 //		playerInventoryStore.setPlayerInventory(player.inventory);
@@ -125,8 +129,8 @@ onBeforeUnmount(() => {
 	grid-template-areas:
 		'BaseInfo BaseInfo SkillList'
 		'BaseStats AdditionalInfo SkillList'
-		'BaseStats SpellsList InventoryList'
-		'BaseStats SpellsList InventoryList';
+		'BaseStats SpellsList Attacks'
+		'BaseStats SpellsList Attacks';
 	max-width: 70vw;
 	margin: 0 auto;
 }
@@ -135,8 +139,8 @@ onBeforeUnmount(() => {
 	grid-area: SpellsList;
 }
 
-.InventoryList {
-	grid-area: InventoryList;
+.Attacks {
+	grid-area: Attacks;
 }
 
 .BaseInfo {
