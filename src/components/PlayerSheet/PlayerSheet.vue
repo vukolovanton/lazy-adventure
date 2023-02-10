@@ -21,20 +21,16 @@ import CharacterAdditionalInfo from './CharacterAdditionalInfo.vue';
 import BaseStats from './BaseStats.vue';
 import SkillList from './SkillsList.vue';
 import SpellsList from './SpellsList.vue';
-import InventoryList from './InventoryList.vue';
 
-import { Player } from '@/interfaces/Player';
 import AuthService from '@/utils/auth/auth.service';
-import PlayerService from '@/utils/auth/player.service';
+import PlayerService from '@/utils/auth/characterService';
 
 import { useCharacterMainInfo } from '@/store/palyerStats/characterMainInfoStore';
 import { useCharacterBaseStatsStore } from '@/store/palyerStats/characterBaseStatsStore';
 import { useCharacterSkillsStore } from '@/store/palyerStats/characterSkillsStore';
-import { usePlayerSpellsStore } from '@/store/palyerStats/playerSpellsStore';
-import { usePlayerInventoryStore } from '@/store/palyerStats/playerInventoryStore';
 import { useGlobalStore } from '@/store/globalStore';
 import { errorHandler, getAvatarSource } from '@/utils/utils';
-import {CharacterSheet} from "@/interfaces/CharacterSheet";
+import {CharacterSheet, CharacterSheetStore} from "@/interfaces/CharacterSheet";
 import {useCharacterHitPointsStore} from "@/store/palyerStats/characterHitPointsStore";
 import {useCharacterSavingThrowsStore} from "@/store/palyerStats/characterSavingThrows";
 import SavingThrows from "@/components/PlayerSheet/SavingThrows.vue";
@@ -47,13 +43,12 @@ const characterBaseStats = useCharacterBaseStatsStore();
 const characterSkills = useCharacterSkillsStore();
 const characterHitPoints = useCharacterHitPointsStore();
 const characterSavingThrows = useCharacterSavingThrowsStore();
-const playerSpellsStore = usePlayerSpellsStore();
-const playerInventoryStore = usePlayerInventoryStore();
-const characterAttacksStore = useCharacterAttacksStore();
-const characterSpellsStore = useCharacterSpellsStore();
+const characterAttacks = useCharacterAttacksStore();
+const characterSpells = useCharacterSpellsStore();
 const globalStore = useGlobalStore();
 
 const isLoading = ref(false);
+const characterRef = ref(null);
 const currentUser = AuthService.getCurrentUser();
 
 onMounted(() => {
@@ -64,8 +59,9 @@ async function getCharacterSheet() {
 	isLoading.value = true;
 
 	if (currentUser) {
-		const response = await PlayerService.fetchCharacterSheet("57");
+		const response = await PlayerService.fetchCharacterByCharacterId("57");
 		setSheetToStore(response);
+        characterRef.value = response;
 	}
 
 	isLoading.value = false;
@@ -78,8 +74,8 @@ function setSheetToStore(character: CharacterSheet) {
         characterHitPoints.setCharacterHitPoints(character.hitPoints);
         characterSavingThrows.setCharacterSavingThrows(character.savingThrows, character.proficiency);
 		characterSkills.setPlayerSkills(character.skills, character.proficiency);
-        characterAttacksStore.setCharacterAttacks(character.attacks);
-        characterSpellsStore.setCharacterSpells(character.spells);
+        characterAttacks.setCharacterAttacks(character.attacks);
+        characterSpells.setCharacterSpells(character.spells);
 //		globalStore.setAvatarSource(
 //			getAvatarSource(player.baseInfo.characterClass, player.baseInfo.gender)
 //		);
@@ -93,17 +89,25 @@ function handleSavePlayerSheet() {
 		return;
 	}
 
-	const player: Player = {
-		userId: currentUser.user.id,
-		baseInfo: characterMainInfo.$state,
-		additionalInfo: characterBaseStats.$state,
-//		baseStats: playerBaseStatsStore.$state,
-		skills: characterSkills.$state.skills,
-		spells: playerSpellsStore.$state.spells,
-		inventory: playerInventoryStore.$state.inventory,
-	};
+    const character = {
+        characterId: characterRef.value.characterId,
+        userId: currentUser.userId,
+        name: characterMainInfo.$state.name,
+        characterClass: characterMainInfo.$state.characterClass,
+        level: characterMainInfo.$state.level,
+        background: characterMainInfo.$state.background,
+        race: characterMainInfo.$state.race,
+        alignment: characterMainInfo.$state.alignment,
+        exp: characterMainInfo.$state.exp,
+        baseStats: characterBaseStats.$state,
+        hitPoints: characterHitPoints.$state,
+        skills: characterSkills.$state.skills,
+        savingThrows: characterSavingThrows.$state,
+        attacks: characterAttacks.$state.attacks,
+        spells: characterSpells.$state,
+    }
 
-	PlayerService.savePlayer(player)
+	PlayerService.updateCharacter(character)
 		.then(() => globalStore.setIsSuccess('Player sheet saved successfully'))
 		.catch(errorHandler);
 }

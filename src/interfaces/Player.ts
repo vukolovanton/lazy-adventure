@@ -9,6 +9,7 @@ import {
 
 export interface Player {
 	userId: string;
+    characterId: number;
 	baseInfo: PlayerBaseInfo;
 	additionalInfo: PlayerAdditionalInfo;
 	baseStats: PlayerBaseStats;

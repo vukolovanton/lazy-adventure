@@ -8,13 +8,9 @@ export interface User {
 }
 
 export interface AuthResponse {
-	user: {
-		username: string;
-		password?: string;
-		isAdmin?: boolean;
-		id: string;
-	};
-	token: string;
+    email: string;
+    password: string;
+    userId: number;
 }
 
 export type SocketResponseData = {

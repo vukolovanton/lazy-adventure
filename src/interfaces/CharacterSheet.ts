@@ -1,3 +1,5 @@
+import {CharacterSavingThrowsStore, CharacterSkillsStore} from "@/interfaces/PlayerSkills";
+
 export interface CharacterSheet {
     characterId: number;
     userId: number;
@@ -15,6 +17,11 @@ export interface CharacterSheet {
     savingThrows: CharacterSheetSavingThrows;
     attacks: CharacterSheetAttacks[];
     spells: CharacterSheetSpells[];
+}
+
+export interface CharacterSheetStore extends Omit<CharacterSheet, "savingThrows" | "proficiency" | "skills"> {
+    savingThrows: CharacterSavingThrowsStore;
+    skills: CharacterSkillsStore;
 }
 
 export interface CharacterSheetMain {
