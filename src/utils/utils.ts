@@ -5,6 +5,11 @@ export function trimString(str: string) {
 	return str.split(' ').join('').toLocaleLowerCase();
 }
 
+export function capitalizeFirstLetterAndTrimSpaces(string: string) {
+    const t = string.charAt(0).toLowerCase() + string.slice(1);
+    return t.replace(/ +/g, "");
+}
+
 export function randomIntFromInterval(min: number, max: number) {
 	return Math.floor(Math.random() * (max - min + 1) + min);
 }

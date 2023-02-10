@@ -21,7 +21,7 @@ export const useCharacterSkillsStore = defineStore(StoreIds.PlayerSkills, {
                 const skillName= skill[0];
                 const skillValue= skill[1];
                 const skillProficiency = proficiency[skillName];
-
+                
                 if (skillName !== 'characterId') {
                     result.push({
                         name: UserFacingSkillsListObject[skillName],

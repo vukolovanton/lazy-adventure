@@ -78,6 +78,7 @@ export enum SkillType {
 
 export enum SkillsList {
 	ACROBATICS = 'acrobatics',
+    ANIMAL_HANDLING = 'animalHandling',
 	ARCANA = 'arcana',
 	ATHLETICS = 'athletics',
 	DECEPTION = 'deception',
@@ -98,6 +99,7 @@ export enum SkillsList {
 
 export enum UserFacingSkillsList {
 	ACROBATICS = 'Acrobatics',
+    ANIMAL_HANDLING = 'Animal Handling',
 	ARCANA = 'Arcana',
 	ATHLETICS = 'Athletics',
 	DECEPTION = 'Deception',
@@ -118,6 +120,7 @@ export enum UserFacingSkillsList {
 
 export const UserFacingSkillsListObject = {
     [SkillsList.ACROBATICS]: 'Acrobatics',
+    [SkillsList.ANIMAL_HANDLING]: 'Animal Handling',
     [SkillsList.ARCANA]: 'Arcana',
     [SkillsList.ATHLETICS]: 'Athletics',
     [SkillsList.DECEPTION]: 'Deception',

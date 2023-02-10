@@ -102,19 +102,19 @@ function handleSavePlayerSheet() {
         baseStats: characterBaseStats.$state,
         hitPoints: characterHitPoints.$state,
         skills: characterSkills.$state.skills,
-        savingThrows: characterSavingThrows.$state,
+        savingThrows: characterSavingThrows.$state.savingThrows,
         attacks: characterAttacks.$state.attacks,
         spells: characterSpells.$state,
     }
 
 	PlayerService.updateCharacter(character)
-		.then(() => globalStore.setIsSuccess('Player sheet saved successfully'))
+		.then(() => globalStore.setIsSuccess('Character sheet saved successfully'))
 		.catch(errorHandler);
 }
 
-onBeforeUnmount(() => {
-	handleSavePlayerSheet();
-});
+//onBeforeUnmount(() => {
+//	handleSavePlayerSheet();
+//});
 </script>
 
 <style>
