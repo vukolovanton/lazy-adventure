@@ -13,8 +13,8 @@
 			<input
 				type="checkbox"
 				:id="skill.name"
-				:checked="skill.isLearned"
-				@change="store.setIsLearned(skill.name, $event.target?.checked)"
+				:checked="skill.isProficient"
+				@change="store.setIsProficient(skill.name, $event.target?.checked)"
 			/>
 			<label :for="skill.name">{{ skill.name }}</label>
 			<div class="skills-controlls">

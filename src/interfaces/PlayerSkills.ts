@@ -50,7 +50,7 @@ export type SkillStoreItem = {
     name: typeof UserFacingSkillsListObject;
 	type: SkillType;
 	points: number;
-	isLearned: boolean;
+	isProficient: boolean;
 };
 
 export type SavingThrowStoreItem = {

@@ -27,7 +27,7 @@ export const useCharacterSkillsStore = defineStore(StoreIds.PlayerSkills, {
                         name: UserFacingSkillsListObject[skillName],
                         type: SkillType.CHA,
                         points: skillValue,
-                        isLearned: skillProficiency
+                        isProficient: skillProficiency
                     } as SkillStoreItem)
                 }
             })
@@ -41,9 +41,9 @@ export const useCharacterSkillsStore = defineStore(StoreIds.PlayerSkills, {
                 this.skills[index].points--;
 			}
 		},
-        setIsLearned(skill: typeof UserFacingSkillsListObject, isLearned: boolean) {
+        setIsProficient(skill: typeof UserFacingSkillsListObject, isProficient: boolean) {
 			const skillIndex = this.skills.findIndex((s) => s.name === skill);
-			this.skills[skillIndex].isLearned = isLearned;
+            this.skills[skillIndex].isProficient = isProficient;
 		},
 	},
 
