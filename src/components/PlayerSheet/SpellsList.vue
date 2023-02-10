@@ -19,6 +19,13 @@
 				:input-value="newSpell.name"
 				@set-input-value="setSpellName"
 			/>
+			<input
+				type="checkbox"
+				id="cantrip"
+				:checked="newSpell.cantrip"
+				@change="setIsCantrip($event.target?.checked)"
+			/>
+            <label for="scantrip">Cantrip</label>
 		</div>
 		<button @click="handleSaveNewSpell" :disabled="!isFilled">Add</button>
 	</section>
@@ -35,6 +42,7 @@ const { spells } = storeToRefs(store);
 const newSpell = reactive({
 	spellName: '',
     spellLevel: 0,
+    cantrip: false,
 });
 
 const isFilled = computed(() => {
@@ -52,6 +60,11 @@ function setSpellLevel(value: string) {
 	newSpell.spellLevel = Number(value);
 }
 
+function setIsCantrip(value: boolean) {
+console.log(value)
+    newSpell.cantrip = value;
+}
+
 function handleSaveNewSpell() {
 	if (!isFilled) return;
 
@@ -60,6 +73,7 @@ function handleSaveNewSpell() {
 
 	newSpell.spellName = '';
 	newSpell.spellLevel = 0;
+    newSpell.cantrip = false;
 }
 </script>
 

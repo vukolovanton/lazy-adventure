@@ -29,21 +29,21 @@
                     label="Current Hit Points"
                     id="currentHitPoints"
                     :input-value="currentHitPoints"
-                    @set-input-value="characterBaseStatsStore.setCurrentHitPoints"
+                    @set-input-value="characterHitPointsStore.setCurrentHitPoints"
             />
             <TextInputField
                     type="number"
                     label="Maximum Hit Points"
                     id="hitPointMaximum"
                     :input-value="hitPointMaximum"
-                    @set-input-value="characterBaseStatsStore.setHitPointsMaximum"
+                    @set-input-value="characterHitPointsStore.setHitPointsMaximum"
             />
             <TextInputField
                     type="number"
                     label="Temporary Hit Points"
                     id="temporaryHitPoints"
                     :input-value="temporaryHitPoints"
-                    @set-input-value="characterBaseStatsStore.setTemporaryHitPoints"
+                    @set-input-value="characterHitPointsStore.setTemporaryHitPoints"
             />
         </div>
 
@@ -52,30 +52,8 @@
                     label="Hit Dice"
                     id="hitDice"
                     :input-value="hitDice"
-                    @set-input-value="characterBaseStatsStore.setHitDice"
+                    @set-input-value="characterHitPointsStore.setHitDice"
             />
-<!--            <div>-->
-<!--                <div>-->
-<!--                    <input-->
-<!--                            v-for="(success, index) in successes"-->
-<!--                            type="checkbox"-->
-<!--                            value="success"-->
-<!--                            :checked="success"-->
-<!--                            @change="characterBaseStatsStore.setDeathSaves(0, index, $event.target?.checked)"-->
-<!--                    />-->
-<!--                    <span>Successes</span>-->
-<!--                </div>-->
-<!--                <div>-->
-<!--                    <input-->
-<!--                            v-for="(failure, index) in failures"-->
-<!--                            type="checkbox"-->
-<!--                            :value="failure"-->
-<!--                            :checked="failure"-->
-<!--                            @change="characterBaseStatsStore.setDeathSaves(1, index, $event.target?.checked)"-->
-<!--                    />-->
-<!--                    <span>Failures</span>-->
-<!--                </div>-->
-<!--            </div>-->
         </div>
     </section>
 </template>
@@ -99,21 +77,11 @@ const {
     temporaryHitPoints,
     hitDice,
 } = storeToRefs(characterHitPointsStore);
-
-//const successes = deathSaves.value[0];
-//const failures = deathSaves.value[1];
 </script>
 
 <style lang="scss" scoped>
 .inner-container {
   display: flex;
   justify-content: space-between;
-
-  // & .checkbox-container {
-  // 	display: flex;
-  // 	flex-direction: column;
-  // 	align-items: flex-start;
-  // 	margin-right: 1rem;
-  // }
 }
 </style>

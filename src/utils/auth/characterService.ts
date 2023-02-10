@@ -3,7 +3,6 @@ import {
     lowerFirstLetterAndTrimSpaces,
     errorHandler,
     updateCharacterDynamicProperty,
-    updateCharacterStaticProperty
 } from '../utils';
 import authHeader from './auth-header';
 import {GLOBAL_API_URL} from "@/constants";
@@ -14,7 +13,7 @@ import {
     CharacterSheetSpells
 } from "@/interfaces/CharacterSheet";
 
-function onReject(err) {
+function onReject(err: Error) {
     alert(err)
 }
 
@@ -24,25 +23,23 @@ class CharacterService {
     }
 
     async updateCharacter(character: CharacterSheetStore) {
-        const {clone, attacks, spells} = this.convertStoreModelToApi(character)
-        const [one, two, three] = await Promise.all([
+        const {clone, attacks, spells} = this.convertStoreModelToApi(character);
+        await Promise.all([
             this.updateCharacterInfo(clone).catch(onReject),
             this.updateCharacterAttacks(attacks).catch(onReject),
             this.updateCharacterSpells(spells).catch(onReject)
-        ])
-
-//        return axios.patch(GLOBAL_API_URL + '/character', this.convertStoreModelToApi(character), {headers: authHeader()});
+        ]);
     }
 
-    updateCharacterInfo(character: CharacterSheet) {
+    private updateCharacterInfo(character: CharacterSheet) {
         return axios.patch(GLOBAL_API_URL + '/character', character, {headers: authHeader()});
     }
 
-    updateCharacterAttacks(attacks) {
+    private updateCharacterAttacks(attacks: CharacterSheetAttacks[]) {
         return axios.patch(GLOBAL_API_URL + '/character/attacks', attacks, {headers: authHeader()});
     }
 
-    updateCharacterSpells(spells) {
+    private updateCharacterSpells(spells: CharacterSheetSpells[]) {
         return axios.patch(GLOBAL_API_URL + '/character/spells', spells, {headers: authHeader()});
     }
 
@@ -57,7 +54,7 @@ class CharacterService {
             .catch(errorHandler)
     }
 
-    convertStoreModelToApi(character: CharacterSheetStore): {
+    private convertStoreModelToApi(character: CharacterSheetStore): {
         clone: CharacterSheet,
         attacks: CharacterSheetAttacks[],
         spells: CharacterSheetSpells[]
@@ -91,8 +88,6 @@ class CharacterService {
 
         delete clone.attacks;
         delete clone.spells;
-
-//        console.log({character, clone})
 
         return {clone, attacks, spells};
     }
