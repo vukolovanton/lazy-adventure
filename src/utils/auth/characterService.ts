@@ -1,17 +1,49 @@
 import axios, {AxiosResponse} from 'axios';
-import {capitalizeFirstLetterAndTrimSpaces, errorHandler} from '../utils';
+import {
+    lowerFirstLetterAndTrimSpaces,
+    errorHandler,
+    updateCharacterDynamicProperty,
+    updateCharacterStaticProperty
+} from '../utils';
 import authHeader from './auth-header';
 import {GLOBAL_API_URL} from "@/constants";
-import {CharacterSheet, CharacterSheetStore} from "@/interfaces/CharacterSheet";
+import {
+    CharacterSheet,
+    CharacterSheetStore,
+    CharacterSheetAttacks,
+    CharacterSheetSpells
+} from "@/interfaces/CharacterSheet";
 
+function onReject(err) {
+    alert(err)
+}
 
 class CharacterService {
     saveCharacter(character: CharacterSheet) {
         return axios.patch(GLOBAL_API_URL + '/character', character, {headers: authHeader()});
     }
 
-    updateCharacter(character: CharacterSheetStore) {
-        return axios.patch(GLOBAL_API_URL + '/character', this.convertStoreModelToApi(character), {headers: authHeader()});
+    async updateCharacter(character: CharacterSheetStore) {
+        const {clone, attacks, spells} = this.convertStoreModelToApi(character)
+        const [one, two, three] = await Promise.all([
+            this.updateCharacterInfo(clone).catch(onReject),
+            this.updateCharacterAttacks(attacks).catch(onReject),
+            this.updateCharacterSpells(spells).catch(onReject)
+        ])
+
+//        return axios.patch(GLOBAL_API_URL + '/character', this.convertStoreModelToApi(character), {headers: authHeader()});
+    }
+
+    updateCharacterInfo(character: CharacterSheet) {
+        return axios.patch(GLOBAL_API_URL + '/character', character, {headers: authHeader()});
+    }
+
+    updateCharacterAttacks(attacks) {
+        return axios.patch(GLOBAL_API_URL + '/character/attacks', attacks, {headers: authHeader()});
+    }
+
+    updateCharacterSpells(spells) {
+        return axios.patch(GLOBAL_API_URL + '/character/spells', spells, {headers: authHeader()});
     }
 
     fetchCharacterByCharacterId(characterId: string): Promise<AxiosResponse<CharacterSheet> | void> {
@@ -25,23 +57,25 @@ class CharacterService {
             .catch(errorHandler)
     }
 
-    convertStoreModelToApi(character: CharacterSheetStore): CharacterSheet {
+    convertStoreModelToApi(character: CharacterSheetStore): {
+        clone: CharacterSheet,
+        attacks: CharacterSheetAttacks[],
+        spells: CharacterSheetSpells[]
+    } {
         const clone = JSON.parse(JSON.stringify(character));
-        delete clone.attacks;
-        delete clone.spells;
-        delete clone.skills;
 
         const proficiency = {};
         const skills = {};
         character.skills.forEach(skill => {
-            proficiency[capitalizeFirstLetterAndTrimSpaces(skill.name)] = skill.isProficient;
-            skills[capitalizeFirstLetterAndTrimSpaces(skill.name)] = skill.points;
+            skills[lowerFirstLetterAndTrimSpaces(skill.name)] = skill.points;
+            proficiency[lowerFirstLetterAndTrimSpaces(skill.name)] = skill.isProficient;
         })
-        
+
         proficiency.characterId = clone.characterId;
         skills.characterId = clone.characterId;
         clone.proficiency = proficiency;
         clone.skills = skills;
+
 
         const savingThrows = {};
         character.savingThrows.forEach(savingThrow => {
@@ -51,7 +85,16 @@ class CharacterService {
         savingThrows.characterId = clone.characterId;
         clone.savingThrows = savingThrows;
 
-        return clone;
+
+        const attacks = updateCharacterDynamicProperty(character.attacks, character.characterId);
+        const spells = updateCharacterDynamicProperty(character.spells, character.characterId);
+
+        delete clone.attacks;
+        delete clone.spells;
+
+//        console.log({character, clone})
+
+        return {clone, attacks, spells};
     }
 }
 

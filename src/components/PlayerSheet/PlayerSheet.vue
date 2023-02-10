@@ -104,7 +104,7 @@ function handleSavePlayerSheet() {
         skills: characterSkills.$state.skills,
         savingThrows: characterSavingThrows.$state.savingThrows,
         attacks: characterAttacks.$state.attacks,
-        spells: characterSpells.$state,
+        spells: characterSpells.$state.spells,
     }
 
 	PlayerService.updateCharacter(character)

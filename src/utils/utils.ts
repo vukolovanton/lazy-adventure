@@ -5,7 +5,7 @@ export function trimString(str: string) {
 	return str.split(' ').join('').toLocaleLowerCase();
 }
 
-export function capitalizeFirstLetterAndTrimSpaces(string: string) {
+export function lowerFirstLetterAndTrimSpaces(string: string) {
     const t = string.charAt(0).toLowerCase() + string.slice(1);
     return t.replace(/ +/g, "");
 }
@@ -49,6 +49,16 @@ export function getAvatarSource(playerClass: string, gender: 'f' | 'm') {
 
 		default:
 			return '';
-			break;
 	}
+}
+
+export function updateCharacterDynamicProperty<T>(items: T[], id: number): T[] {
+    const updated: T | [] = [];
+    items.forEach(item => {
+        updated.push({
+            ...item,
+            characterId: id,
+        })
+    });
+    return updated;
 }
