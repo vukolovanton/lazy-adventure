@@ -83,9 +83,9 @@ function setSheetToStore(character: CharacterSheet) {
 		characterSkills.setPlayerSkills(character.skills, character.proficiency);
         characterAttacks.setCharacterAttacks(character.attacks);
         characterSpells.setCharacterSpells(character.spells);
-//		globalStore.setAvatarSource(
-//			getAvatarSource(player.baseInfo.characterClass, player.baseInfo.gender)
-//		);
+		globalStore.setAvatarSource(
+			getAvatarSource(character.characterClass, character.gender)
+		);
 	}
 
 	isLoading.value = false;
@@ -97,9 +97,8 @@ function handleSavePlayerSheet() {
 	}
 
     const character = {
-        characterId: characterRef.value.characterId,
-        userId: currentUser.userId,
         name: characterMainInfo.$state.name,
+        gender: characterMainInfo.$state.gender,
         characterClass: characterMainInfo.$state.characterClass,
         level: characterMainInfo.$state.level,
         background: characterMainInfo.$state.background,

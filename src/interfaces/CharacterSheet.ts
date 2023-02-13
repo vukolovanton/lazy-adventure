@@ -2,6 +2,7 @@ import {CharacterSavingThrowsStore, CharacterSkillsStore} from "@/interfaces/Pla
 
 export interface CharacterSheet {
     name: string;
+    gender: 'm' | 'f';
     characterClass: string;
     level: number;
     background: string;
@@ -23,7 +24,6 @@ export interface CharacterSheetStore extends Omit<CharacterSheet, "savingThrows"
 }
 
 export interface CharacterSheetMain {
-    userId: number;
     name: string;
     characterClass: string;
     level: number;
@@ -31,6 +31,7 @@ export interface CharacterSheetMain {
     race: string;
     alignment: string;
     exp: number;
+    gender: 'f' | 'm'
 }
 
 export interface CharacterSheetBaseStats {

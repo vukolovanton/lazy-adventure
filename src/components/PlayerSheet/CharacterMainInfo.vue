@@ -30,14 +30,14 @@
 			:input-value="alignment"
 			@set-input-value="store.setAlignment"
 		/>
-<!--		<div class="container">-->
-<!--			<select name="select" @change="handleChangeGender" id="gender">-->
-<!--				<option :value="g" v-for="g in ['f', 'm']" :selected="g === gender">-->
-<!--					{{ g === 'f' ? 'Feemale' : 'Male' }}-->
-<!--				</option>-->
-<!--			</select>-->
-<!--			<label for="characterClass">Gender</label>-->
-<!--		</div>-->
+		<div class="container">
+			<select name="select" @change="handleChangeGender" id="gender">
+				<option :value="g" v-for="g in ['f', 'm']" :selected="g === gender">
+					{{ g === 'f' ? 'Feemale' : 'Male' }}
+				</option>
+			</select>
+			<label for="characterClass">Gender</label>
+		</div>
 
 		<TextInputField
 			label="Level"
@@ -73,24 +73,25 @@ const {
     background,
     race,
     alignment,
-    exp
+    exp,
+    gender
 } = storeToRefs(store);
 
 function handleClassChange(e: any) {
 	store.setCharacterClass(e.target.value);
 	if (characterClass.value) {
-//		globalStore.setAvatarSource(
-//			getAvatarSource(characterClass.value, gender.value)
-//		);
+		globalStore.setAvatarSource(
+			getAvatarSource(characterClass.value, gender.value)
+		);
 	}
 }
 
-//function handleChangeGender(e: any) {
-//	store.setGender(e.target.value);
-//	globalStore.setAvatarSource(
-//		getAvatarSource(characterClass.value, e.target.value)
-//	);
-//}
+function handleChangeGender(e: any) {
+	store.setGender(e.target.value);
+	globalStore.setAvatarSource(
+		getAvatarSource(characterClass.value, e.target.value)
+	);
+}
 </script>
 
 <style scoped>

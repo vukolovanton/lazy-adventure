@@ -6,8 +6,6 @@ import {CharacterSheet, CharacterSheetMain} from "@/interfaces/CharacterSheet";
 export const useCharacterMainInfo = defineStore(StoreIds.PlayerBaseInfo, {
     state: (): CharacterSheetMain => {
 		return {
-            characterId: 0,
-            userId: 0,
 			name: '',
 			characterClass: '',
 			level: 0,
@@ -15,14 +13,13 @@ export const useCharacterMainInfo = defineStore(StoreIds.PlayerBaseInfo, {
 			race: '',
             alignment: '',
             exp: 0,
+            gender: 'm',
 		};
 	},
 
 	actions: {
         setCharacterMainInfo(character: CharacterSheet) {
             this.name = character.name;
-            this.characterId = character.characterId;
-            this.userId = character.userId;
             this.name = character.name;
             this.characterClass = character.characterClass;
             this.level = character.level;
@@ -30,6 +27,7 @@ export const useCharacterMainInfo = defineStore(StoreIds.PlayerBaseInfo, {
             this.race = character.race;
             this.alignment = character.alignment;
             this.exp = character.exp;
+            this.gender = character.gender;
 		},
 		setCharacterName(name: string) {
             this.name = name;
@@ -57,6 +55,9 @@ export const useCharacterMainInfo = defineStore(StoreIds.PlayerBaseInfo, {
         },
         setExp(exp: number) {
             this.exp = exp;
+        },
+        setGender(gender: string) {
+            this.gender = gender;
         }
 	},
 

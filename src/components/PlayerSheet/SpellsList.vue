@@ -61,7 +61,6 @@ function setSpellLevel(value: string) {
 }
 
 function setIsCantrip(value: boolean) {
-console.log(value)
     newSpell.cantrip = value;
 }
 
