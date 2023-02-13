@@ -189,7 +189,6 @@ onBeforeMount(() => {
 
 onMounted(() => {
 	// === Join Room
-    console.log(globalStore.user, 'globalStore.user')
 	state.socket.emit('joinRoom', {
 		characterName: characterName.value,
 		room: SOCKET_IO_ROOM_NAME,

@@ -22,7 +22,6 @@ const characterStore = useCharacterMainInfo();
 const { name, characterClass, gender } = storeToRefs(characterStore);
 
 const avatarSrc = computed(() => {
-    console.log(getAvatarSource(characterClass.value, gender.value))
 	return getAvatarSource(characterClass.value, gender.value);
 });
 

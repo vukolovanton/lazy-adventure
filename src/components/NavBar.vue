@@ -22,7 +22,7 @@ import { useRouter } from 'vue-router';
 import Character from '@/components/Character.vue';
 import AuthService from '@/utils/auth/auth.service';
 import { useGlobalStore } from '@/store/globalStore';
-import { storeToRefs } from 'pinia';
+import { storeToRefs, getActivePinia } from 'pinia';
 
 const globalStore = useGlobalStore();
 const { isSuccess, successMessage } = storeToRefs(globalStore);
@@ -32,6 +32,7 @@ const snackbarRef = ref();
 
 function handleLogout() {
 	AuthService.logout();
+    getActivePinia()._s.forEach(store => store.$reset());
 	router.push('/login');
 }
 

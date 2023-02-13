@@ -114,12 +114,6 @@ function handleSavePlayerSheet() {
         spells: characterSpells.$state.spells,
     }
 
-    console.log({
-    currentUser,
-    character,
-    gender: characterMainInfo.$state.gender
-    })
-
 	PlayerService.updateCharacter(character)
 		.then(() => globalStore.setIsSuccess('Character sheet saved successfully'))
 		.catch(errorHandler);
