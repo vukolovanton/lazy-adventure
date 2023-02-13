@@ -1,3 +1,5 @@
+import {PlayerClasses} from "@/interfaces/PlayerStats";
+
 export const SOCKET_IO_URL = 'http://localhost:3002';
 export const GLOBAL_API_URL = 'http://localhost:3001/api'
 export const SOCKET_IO_ROOM_NAME = 'dev';
@@ -26,7 +28,7 @@ export const GET_DEFAULT_CHARACTER = (name: string, userId: number) => ({
     name: name,
     userId: userId,
     gender: 'm',
-    characterClass: "wizard",
+    characterClass: PlayerClasses.Wizard,
     level: 1,
     background: "none",
     race: "human",
