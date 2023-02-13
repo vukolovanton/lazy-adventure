@@ -59,7 +59,7 @@ async function getCharacterSheet() {
 	isLoading.value = true;
 
 	if (currentUser) {
-		const response = await PlayerService.fetchCharacterByCharacterId("57");
+		const response = await PlayerService.fetchCharacterByCharacterName("abstracat");
 		setSheetToStore(response);
         characterRef.value = response;
 	}

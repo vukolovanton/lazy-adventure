@@ -10,17 +10,18 @@ class TilesService {
 		const formData = new FormData();
 		formData.append('file', tileset);
 
-		return axios.post(GLOBAL_API_URL + '/files/upload', formData, {
+		return axios.post(GLOBAL_API_URL + '/files', formData, {
 			headers: {
 				...authHeader(),
 				'Content-Type': 'multipart/form-data',
+				'X-File-Name': 'Somebodyoncetoldme',
 			},
 		});
 	}
 
 	fetchAllAvailableileTiles(): Promise<any> {
 		return axios
-			.get(GLOBAL_API_URL + '/files/list', {
+			.get(GLOBAL_API_URL + '/files', {
 				headers: authHeader(),
 			})
 			.then((response) => {
@@ -28,17 +29,17 @@ class TilesService {
 			})
 			.catch(errorHandler);
 	}
-//
-//	fetchMonstersList(): Promise<TilesSources[]> {
-//		return axios
-//			.get(API_URL + 'files/monsters', {
-//				headers: authHeader(),
-//			})
-//			.then((response) => {
-//				return response.data;
-//			})
-//			.catch(errorHandler);
-//	}
+
+	fetchMonstersList(): Promise<any> {
+		return axios
+			.get(GLOBAL_API_URL + '/files/monsters', {
+				headers: authHeader(),
+			})
+			.then((response) => {
+				return response.data;
+			})
+			.catch(errorHandler);
+	}
 }
 
 export default new TilesService();

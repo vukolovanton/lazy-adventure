@@ -52,12 +52,11 @@ export function getAvatarSource(playerClass: string, gender: 'f' | 'm') {
 	}
 }
 
-export function updateCharacterDynamicProperty<T>(items: T[], id: number): T[] {
+export function updateCharacterDynamicProperty<T>(items: T[]): T[] {
     const updated: T | [] = [];
     items.forEach(item => {
         updated.push({
             ...item,
-            characterId: id,
         })
     });
     return updated;

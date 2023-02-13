@@ -40,9 +40,6 @@ export const useCharacterMainInfo = defineStore(StoreIds.PlayerBaseInfo, {
         setUserId(userId: number) {
             this.userId = userId;
         },
-        setName(name: string) {
-            this.name = name;
-        },
         setCharacterClass(characterClass: string) {
             this.characterClass = characterClass;
         },

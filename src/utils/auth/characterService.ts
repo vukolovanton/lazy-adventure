@@ -24,28 +24,21 @@ class CharacterService {
 
     async updateCharacter(character: CharacterSheetStore) {
         const {clone, attacks, spells} = this.convertStoreModelToApi(character);
+        clone.attacks = attacks;
+        clone.spells = spells;
+        
         await Promise.all([
             this.updateCharacterInfo(clone).catch(onReject),
-            this.updateCharacterAttacks(attacks).catch(onReject),
-            this.updateCharacterSpells(spells).catch(onReject)
         ]);
     }
 
     private updateCharacterInfo(character: CharacterSheet) {
-        return axios.patch(GLOBAL_API_URL + '/character', character, {headers: authHeader()});
+        return axios.post(GLOBAL_API_URL + '/character', character, {headers: authHeader()});
     }
 
-    private updateCharacterAttacks(attacks: CharacterSheetAttacks[]) {
-        return axios.patch(GLOBAL_API_URL + '/character/attacks', attacks, {headers: authHeader()});
-    }
-
-    private updateCharacterSpells(spells: CharacterSheetSpells[]) {
-        return axios.patch(GLOBAL_API_URL + '/character/spells', spells, {headers: authHeader()});
-    }
-
-    fetchCharacterByCharacterId(characterId: string): Promise<AxiosResponse<CharacterSheet> | void> {
+    fetchCharacterByCharacterName(characterName: string): Promise<AxiosResponse<CharacterSheet> | void> {
         return axios
-            .get(GLOBAL_API_URL + '/character' + `/${characterId}`, {headers: authHeader()})
+            .get(GLOBAL_API_URL + '/character' + `/${characterName}`, {headers: authHeader()})
             .then((response) => {
                 if (response.data) {
                     return response.data;
@@ -68,23 +61,19 @@ class CharacterService {
             proficiency[lowerFirstLetterAndTrimSpaces(skill.name)] = skill.isProficient;
         })
 
-        proficiency.characterId = clone.characterId;
-        skills.characterId = clone.characterId;
         clone.proficiency = proficiency;
         clone.skills = skills;
-
 
         const savingThrows = {};
         character.savingThrows.forEach(savingThrow => {
             savingThrows[savingThrow.name] = savingThrow.points;
             proficiency[savingThrow.name] = savingThrow.isProficient;
         })
-        savingThrows.characterId = clone.characterId;
         clone.savingThrows = savingThrows;
 
 
-        const attacks = updateCharacterDynamicProperty(character.attacks, character.characterId);
-        const spells = updateCharacterDynamicProperty(character.spells, character.characterId);
+        const attacks = updateCharacterDynamicProperty(character.attacks);
+        const spells = updateCharacterDynamicProperty(character.spells);
 
         delete clone.attacks;
         delete clone.spells;

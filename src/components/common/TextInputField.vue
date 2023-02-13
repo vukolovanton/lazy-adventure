@@ -1,6 +1,7 @@
 <template>
 	<div class="input-container">
 		<input
+            :disabled="disabled"
 			spellcheck="false"
 			:class="calculatedClass"
 			:type="type"
@@ -19,6 +20,10 @@ const props = defineProps({
 	label: String,
 	id: String,
 	inputValue: [String, Number],
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
 	type: {
 		type: String,
 		default: 'text',

@@ -1,10 +1,10 @@
 <template>
 	<section class="CharacterMainInfo">
 		<TextInputField
-			label="Character Name"
+			label="Name"
 			id="name"
 			:input-value="name"
-			@set-input-value="store.setCharacterName"
+            :disabled="true"
 		/>
 		<div class="container">
 			<select name="select" @change="handleClassChange" id="characterClass">
@@ -51,7 +51,7 @@
 			id="exp"
 			type="number"
 			:input-value="exp"
-			@set-input-value="store.setExperience"
+			@set-input-value="store.setExp"
 		/>
 	</section>
 </template>
