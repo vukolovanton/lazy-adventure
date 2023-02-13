@@ -2,8 +2,7 @@ import { InventoryItem } from './PlayerInventory';
 import { Spell } from './PlayerSpells';
 
 export interface User {
-	email: string;
-	password: string;
+	characterName: string;
 	isDm?: boolean;
 }
 

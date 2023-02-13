@@ -37,6 +37,7 @@ import SavingThrows from "@/components/PlayerSheet/SavingThrows.vue";
 import {useCharacterAttacksStore} from "@/store/palyerStats/characterAttacks";
 import Attacks from "@/components/PlayerSheet/Attacks.vue";
 import {useCharacterSpellsStore} from "@/store/palyerStats/characterSpellsStore";
+import { GET_DEFAULT_CHARACTER } from "@/constants";
 
 const characterMainInfo = useCharacterMainInfo();
 const characterBaseStats = useCharacterBaseStatsStore();
@@ -49,7 +50,7 @@ const globalStore = useGlobalStore();
 
 const isLoading = ref(false);
 const characterRef = ref(null);
-const currentUser = AuthService.getCurrentUser();
+const currentUser = AuthService.getCurrentUserFromLocalStorage();
 
 onMounted(() => {
 	getCharacterSheet();
@@ -59,9 +60,15 @@ async function getCharacterSheet() {
 	isLoading.value = true;
 
 	if (currentUser) {
-		const response = await PlayerService.fetchCharacterByCharacterName("abstracat");
-		setSheetToStore(response);
-        characterRef.value = response;
+		const response = await PlayerService.fetchCharacterByCharacterName(currentUser.characterName);
+        if (response) {
+            setSheetToStore(response);
+            characterRef.value = response;
+        } else {
+            const defaultCharacter = GET_DEFAULT_CHARACTER(currentUser.characterName);
+            setSheetToStore(defaultCharacter);
+            characterRef.value = defaultCharacter;
+        }
 	}
 
 	isLoading.value = false;

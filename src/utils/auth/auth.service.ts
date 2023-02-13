@@ -14,15 +14,7 @@ class AuthService {
         .then((response) => {
             if (response) {
                 if (response.data) {
-                    const store = useGlobalStore();
-                    store.setEmail(response.data.email);
-                    store.setUserId(response.data.userId);
-                    
-                    localStorage.setItem("user", JSON.stringify({
-                        email: response.data.email,
-                        password: response.data.password,
-                        userId: response.data.userId,
-                    }))
+
 
                     return true;
                 }
@@ -33,48 +25,19 @@ class AuthService {
     }
 
 	login(user: User) {
-		return axios
-			.post(API_URL_LOGIN, {
-				email: user.email,
-				password: user.password,
-			})
-			.then((response) => {
-				if (response.data.jwtToken) {
-                    localStorage.setItem('token', JSON.stringify(response.data.jwtToken));
+        const store = useGlobalStore();
+        store.setCharacterName(user.characterName);
 
-				}
-				return response.data;
-			})
-			.catch((e) => alert(e));
+        localStorage.setItem("user", JSON.stringify({
+            characterName: user.characterName,
+        }));
 	}
 
 	logout() {
 		localStorage.clear();
 	}
 
-	register(user: User) {
-		return axios
-			.post(API_URL_REGISTER + 'register', {
-				email: user.email,
-				password: user.password,
-			})
-			.then((response) => {
-				if (response.data.token) {
-					localStorage.setItem('user', JSON.stringify(response.data));
-
-					const store = useGlobalStore();
-					store.setEmail(response.data.user.username);
-					store.setUserId(response.data.userId);
-				}
-
-				return response.data;
-			})
-			.catch((error) => {
-				alert(error);
-			});
-	}
-
-	getCurrentUser(): AuthResponse | null {
+	getCurrentUserFromLocalStorage(): User | null {
 		const user = localStorage.getItem('user');
 		if (user) {
 			return JSON.parse(user);

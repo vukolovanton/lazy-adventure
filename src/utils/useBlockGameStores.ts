@@ -6,18 +6,19 @@ import {usePlayerSpellsStore} from '@/store/palyerStats/playerSpellsStore';
 import {useGlobalStore} from '@/store/globalStore';
 import {useTilesEditorStore} from '@/store/tilesEditorStore';
 import {useCharacterHitPointsStore} from "@/store/palyerStats/characterHitPointsStore";
+import {useCharacterAttacksStore} from "@/store/palyerStats/characterAttacks";
+import {useCharacterSpellsStore} from "@/store/palyerStats/characterSpellsStore";
 
 export function useBlockGameStores() {
     const globalStore = useGlobalStore();
 
     const playerBaseInfoStore = useCharacterMainInfo();
-    const {characterName, characterClass, level} =
-        storeToRefs(playerBaseInfoStore);
+    const {name, characterClass, level} = storeToRefs(playerBaseInfoStore);
 
-    const inventoryStore = usePlayerInventoryStore();
-    const {inventory} = storeToRefs(inventoryStore);
+    const attactsStore = useCharacterAttacksStore();
+    const {attacks} = storeToRefs(attactsStore);
 
-    const spellsStore = usePlayerSpellsStore();
+    const spellsStore = useCharacterSpellsStore();
     const {spells} = storeToRefs(spellsStore);
 
     const tilesStore = useTilesEditorStore();
@@ -46,13 +47,13 @@ export function useBlockGameStores() {
         maximumHitPoints: hitPointMaximum.value,
         temporaryHitPoints: temporaryHitPoints.value,
         hitDice: hitDice.value,
-        attacks: inventory.value,
+        attacks: attacks.value,
         spells: spells.value,
     };
 
     return {
         stats,
-        characterName,
+        characterName: name,
         selectedTileUrl,
     };
 }

@@ -1,8 +1,6 @@
 import {CharacterSavingThrowsStore, CharacterSkillsStore} from "@/interfaces/PlayerSkills";
 
 export interface CharacterSheet {
-    characterId: number;
-    userId: number;
     name: string;
     characterClass: string;
     level: number;
@@ -25,7 +23,6 @@ export interface CharacterSheetStore extends Omit<CharacterSheet, "savingThrows"
 }
 
 export interface CharacterSheetMain {
-    characterId: number;
     userId: number;
     name: string;
     characterClass: string;
@@ -37,7 +34,6 @@ export interface CharacterSheetMain {
 }
 
 export interface CharacterSheetBaseStats {
-    characterId: number;
     strength: number;
     dexterity: number;
     constitution: number;
@@ -51,7 +47,6 @@ export interface CharacterSheetBaseStats {
 }
 
 export interface CharacterSheetHitPoints {
-    characterId: number;
     hitPointMaximum: number;
     currentHitPoints: number;
     temporaryHitPoints: number;
@@ -59,7 +54,6 @@ export interface CharacterSheetHitPoints {
 }
 
 export interface CharacterSheetSkills {
-    characterId: number;
     acrobatics: number;
     animalHandling: number;
     arcana: number;
@@ -81,7 +75,6 @@ export interface CharacterSheetSkills {
 }
 
 export interface CharacterSheetProficiency {
-    characterId: boolean;
     acrobatics: boolean;
     animalHandling: boolean;
     arcana: boolean;
@@ -109,7 +102,6 @@ export interface CharacterSheetProficiency {
 }
 
 export interface CharacterSheetSavingThrows {
-    characterId: number;
     strength: number;
     dexterity: number;
     constitution: number;

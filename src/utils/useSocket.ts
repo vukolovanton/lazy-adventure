@@ -28,7 +28,7 @@ export function useSocket(context: any) {
 
 	// == Join Room
 	state.socket.emit('joinRoom', {
-		email: characterName.value,
+		characterName: characterName.value,
 		room: SOCKET_IO_ROOM_NAME,
 	});
 
@@ -51,7 +51,7 @@ export function useSocket(context: any) {
 
 	onUnmounted(() => {
 		state.socket.emit('leaveRoom', {
-			email: characterName.value,
+			characterName: characterName.value,
 			room: SOCKET_IO_ROOM_NAME,
 		});
 		state.socket.close();
