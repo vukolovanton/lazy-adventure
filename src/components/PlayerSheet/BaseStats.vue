@@ -4,43 +4,43 @@
 			type="number"
 			label="Strength"
 			id="strength"
-			:input-value="strength"
-			@set-input-value="store.setStrength"
+			:inputValue="strength"
+			@update:inputValue="store.setStrength"
 		/>
 		<TextInputField
 			type="number"
 			label="Dexterity"
 			id="dexterity"
-			:input-value="dexterity"
-			@set-input-value="store.setDexterity"
+			:inputValue="dexterity"
+			@update:inputValue="store.setDexterity"
 		/>
 		<TextInputField
 			type="number"
 			label="Constitution"
 			id="constitution"
-			:input-value="constitution"
-			@set-input-value="store.setConstitution"
+			:inputValue="constitution"
+			@update:inputValue="store.setConstitution"
 		/>
 		<TextInputField
 			type="number"
 			label="Intelligence"
 			id="intelligence"
-			:input-value="intelligence"
-			@set-input-value="store.setIntelligence"
+			:inputValue="intelligence"
+			@update:inputValue="store.setIntelligence"
 		/>
 		<TextInputField
 			type="number"
 			label="Wisdom"
 			id="wisdom"
-			:input-value="wisdom"
-			@set-input-value="store.setWisdom"
+			:inputValue="wisdom"
+			@update:inputValue="store.setWisdom"
 		/>
 		<TextInputField
 			type="number"
 			label="Charisma"
 			id="charisma"
-			:input-value="charisma"
-			@set-input-value="store.setCharisma"
+			:inputValue="charisma"
+			@update:inputValue="store.setCharisma"
 		/>
 	</section>
 </template>

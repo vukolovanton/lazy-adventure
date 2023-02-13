@@ -35,7 +35,7 @@ export const useCharacterBaseStatsStore = defineStore(
                 this.speed = character.baseStats.speed;
 			},
             setStrength(strength: number) {
-                this.sstrength = strength;
+                this.strength = strength;
             },
             setDexterity(dex: number) {
                 this.dexterity = dex;

@@ -11,20 +11,20 @@
 			<SmallTextInput
 				label="Name"
 				id="itemName"
-				:input-value="newItem.name"
-				@set-input-value="setItemName"
+				:inputValue="newItem.name"
+				@update:inputValue="setItemName"
 			/>
 			<SmallTextInput
 				label="Weight"
 				id="itemWeight"
-				:input-value="newItem.weight"
-				@set-input-value="setItemWeight"
+				:inputValue="newItem.weight"
+				@update:inputValue="setItemWeight"
 			/>
 			<SmallTextInput
 				label="Count"
 				id="itemCount"
-				:input-value="newItem.count"
-				@set-input-value="setItemCount"
+				:inputValue="newItem.count"
+				@update:inputValue="setItemCount"
 			/>
 		</div>
 		<button @click="handleSaveNewItem" :disabled="!isFilled">Add</button>

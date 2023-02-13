@@ -5,22 +5,22 @@
                     type="number"
                     label="Armor Class"
                     id="armorClass"
-                    :input-value="armorClass"
-                    @set-input-value="characterBaseStatsStore.setArmorClass"
+                    :inputValue="armorClass"
+                    @update:inputValue="characterBaseStatsStore.setArmorClass"
             />
             <TextInputField
                     type="number"
                     label="Initiative"
                     id="initiative"
-                    :input-value="initiative"
-                    @set-input-value="characterBaseStatsStore.setInitiative"
+                    :inputValue="initiative"
+                    @update:inputValue="characterBaseStatsStore.setInitiative"
             />
             <TextInputField
                     type="number"
                     label="Speed"
                     id="speed"
-                    :input-value="speed"
-                    @set-input-value="characterBaseStatsStore.setSpeed"
+                    :inputValue="speed"
+                    @update:inputValue="characterBaseStatsStore.setSpeed"
             />
         </div>
         <div class="inner-container">
@@ -28,22 +28,22 @@
                     type="number"
                     label="Current Hit Points"
                     id="currentHitPoints"
-                    :input-value="currentHitPoints"
-                    @set-input-value="characterHitPointsStore.setCurrentHitPoints"
+                    :inputValue="currentHitPoints"
+                    @update:inputValue="characterHitPointsStore.setCurrentHitPoints"
             />
             <TextInputField
                     type="number"
                     label="Maximum Hit Points"
                     id="hitPointMaximum"
-                    :input-value="hitPointMaximum"
-                    @set-input-value="characterHitPointsStore.setHitPointsMaximum"
+                    :inputValue="hitPointMaximum"
+                    @update:inputValue="characterHitPointsStore.setHitPointsMaximum"
             />
             <TextInputField
                     type="number"
                     label="Temporary Hit Points"
                     id="temporaryHitPoints"
-                    :input-value="temporaryHitPoints"
-                    @set-input-value="characterHitPointsStore.setTemporaryHitPoints"
+                    :inputValue="temporaryHitPoints"
+                    @update:inputValue="characterHitPointsStore.setTemporaryHitPoints"
             />
         </div>
 
@@ -51,8 +51,8 @@
             <TextInputField
                     label="Hit Dice"
                     id="hitDice"
-                    :input-value="hitDice"
-                    @set-input-value="characterHitPointsStore.setHitDice"
+                    :inputValue="hitDice"
+                    @update:inputValue="characterHitPointsStore.setHitDice"
             />
         </div>
     </section>

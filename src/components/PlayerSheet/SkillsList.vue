@@ -5,8 +5,8 @@
                     type="number"
                     label="Proficiency Bonus"
                     id="proficiencyBonus"
-                    :input-value="proficiencyBonus"
-                    @set-input-value="characterBaseStatsStore.setProficiencyBonus"
+                    :inputValue="proficiencyBonus"
+                    @update:inputValue="characterBaseStatsStore.setProficiencyBonus"
             />
 		</div>
 		<div v-for="skill in skills" class="skills-container">

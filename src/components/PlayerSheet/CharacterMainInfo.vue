@@ -3,7 +3,7 @@
 		<TextInputField
 			label="Name"
 			id="name"
-			:input-value="name"
+			:inputValue="name"
             :disabled="true"
 		/>
 		<div class="container">
@@ -21,14 +21,14 @@
 		<TextInputField
 			label="Race"
 			id="race"
-			:input-value="race"
-			@set-input-value="store.setRace"
+			:inputValue="race"
+            @update:inputValue="store.setRace"
 		/>
 		<TextInputField
 			label="Alignment"
 			id="alignment"
-			:input-value="alignment"
-			@set-input-value="store.setAlignment"
+			:inputValue="alignment"
+			@update:inputValue="store.setAlignment"
 		/>
 		<div class="container">
 			<select name="select" @change="handleChangeGender" id="gender">
@@ -43,15 +43,15 @@
 			label="Level"
 			id="level"
 			type="number"
-			:input-value="level"
-			@set-input-value="store.setLevel"
+			:inputValue="level"
+			@update:inputValue="store.setLevel"
 		/>
 		<TextInputField
 			label="Experience"
 			id="exp"
 			type="number"
-			:input-value="exp"
-			@set-input-value="store.setExp"
+			:inputValue="exp"
+			@update:inputValue="store.setExp"
 		/>
 	</section>
 </template>

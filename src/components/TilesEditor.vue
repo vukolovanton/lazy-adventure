@@ -19,8 +19,8 @@
 		<SmallTextInput
 			label="Map name"
 			id="tileName"
-			:input-value="store.mapName"
-			@set-input-value="setTileName"
+			:inputValue="store.mapName"
+			@update:inputValue="setTileName"
 		/>
 		<button class="clear-button">Clear canvas</button>
 		<button class="save-temp-button">Save temporary changes</button>

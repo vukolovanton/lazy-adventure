@@ -5,8 +5,8 @@
 			:class="calculatedClass"
 			:type="type"
 			:id="id"
-			v-model="inputValue"
-			@input="$emit('setInputValue', inputValue)"
+            :value="inputValue"
+            @input="$emit('update:inputValue', $event.target.value)"
 		/>
 		<label :for="id">{{ label }}</label>
 	</div>
@@ -24,7 +24,7 @@ const props = defineProps({
 		default: 'text',
 	},
 });
-defineEmits(['setInputValue']);
+defineEmits(['update:inputValue']);
 
 const calculatedClass = computed(
 	() =>
