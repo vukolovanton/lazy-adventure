@@ -3,26 +3,24 @@ import axios from 'axios';
 import { handleError } from 'vue';
 import authHeader from './auth/auth-header';
 import { errorHandler } from './utils';
-
-const API_URL = 'http://localhost:3001/api/v1/';
+import {GLOBAL_API_URL} from "@/constants";
 
 class TilesService {
 	saveTile(tileset: File) {
 		const formData = new FormData();
 		formData.append('file', tileset);
 
-		return axios.post(API_URL + 'files', formData, {
+		return axios.post(GLOBAL_API_URL + '/files/upload', formData, {
 			headers: {
 				...authHeader(),
 				'Content-Type': 'multipart/form-data',
-				'X-File-Name': 'Somebodyoncetoldme',
 			},
 		});
 	}
 
-	fetchAllAvailableileTiles(): Promise<TilesSources[]> {
+	fetchAllAvailableileTiles(): Promise<any> {
 		return axios
-			.get(API_URL + 'files', {
+			.get(GLOBAL_API_URL + '/files/list', {
 				headers: authHeader(),
 			})
 			.then((response) => {
@@ -30,24 +28,17 @@ class TilesService {
 			})
 			.catch(errorHandler);
 	}
-
-	fetchMonstersList(): Promise<TilesSources[]> {
-		return axios
-			.get(API_URL + 'files/monsters', {
-				headers: authHeader(),
-			})
-			.then((response) => {
-				return response.data;
-			})
-			.catch(errorHandler);
-	}
-
-	// fetchPlayer(id: string): Promise<Player> {
-	// 	return axios
-	// 		.get(API_URL + 'player/' + id, { headers: authHeader() })
-	// 		.then((response) => response.data)
-	// 		.catch((e) => alert(e));
-	// }
+//
+//	fetchMonstersList(): Promise<TilesSources[]> {
+//		return axios
+//			.get(API_URL + 'files/monsters', {
+//				headers: authHeader(),
+//			})
+//			.then((response) => {
+//				return response.data;
+//			})
+//			.catch(errorHandler);
+//	}
 }
 
 export default new TilesService();

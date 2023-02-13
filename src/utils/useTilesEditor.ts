@@ -80,7 +80,7 @@ export function useTilesEditor(
 	async function exportCanvas() {
 		const promise = new Promise((resolve) => {
 			canvas.value.toBlob((blob) => {
-				const file = new File([blob!], mapName.value);
+				const file = new File([blob!], mapName.value + '.png');
 				resolve(file);
 			});
 		});
