@@ -44,9 +44,6 @@ export const useCharacterMainInfo = defineStore(StoreIds.PlayerBaseInfo, {
         setLevel(level: number) {
             this.level = level;
         },
-        setBackground(background: string) {
-            this.background = background;
-        },
         setRace(race: string) {
             this.race = race;
         },

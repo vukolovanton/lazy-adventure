@@ -22,9 +22,11 @@ export enum StoreIds {
     CharacterSpells = 'CharacterSpells',
 }
 
-export const GET_DEFAULT_CHARACTER = (name: string) => ({
+export const GET_DEFAULT_CHARACTER = (name: string, userId: number) => ({
     name: name,
-    characterClass: "paladin",
+    userId: userId,
+    gender: 'm',
+    characterClass: "wizard",
     level: 1,
     background: "none",
     race: "human",

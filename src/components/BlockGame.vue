@@ -38,7 +38,7 @@
 							}"
 						>
 							<span>
-								{{ user.username }}
+								{{ characterName }}
 							</span>
 						</div>
 					</vue-resizable>
@@ -165,7 +165,7 @@ function handleAddMonster() {
 	const tempId = Date.now().toString();
 
 	state.socket.emit('joinRoom', {
-		email: state.monster.name,
+		characterName: state.monster.name,
 		room: SOCKET_IO_ROOM_NAME,
 		details: {
 			avatarSource: state.monster.avatarSource,
@@ -189,12 +189,14 @@ onBeforeMount(() => {
 
 onMounted(() => {
 	// === Join Room
+    console.log(globalStore.user, 'globalStore.user')
 	state.socket.emit('joinRoom', {
-		email: characterName.value,
+		characterName: characterName.value,
 		room: SOCKET_IO_ROOM_NAME,
 		details: {
 			avatarSource: globalStore.user.avatarSource,
-			userId: globalStore.user.id,
+			userId: globalStore.user.userId,
+//            userId: Date.now(),
 			stats: {
 				...stats,
 				isPlayer: true,
@@ -230,7 +232,7 @@ onMounted(() => {
 
 onUnmounted(() => {
 	state.socket.emit('leaveRoom', {
-		email: characterName.value,
+		characterName: characterName.value,
 		room: SOCKET_IO_ROOM_NAME,
 	});
 

@@ -12,8 +12,8 @@ import {useCharacterSpellsStore} from "@/store/palyerStats/characterSpellsStore"
 export function useBlockGameStores() {
     const globalStore = useGlobalStore();
 
-    const playerBaseInfoStore = useCharacterMainInfo();
-    const {name, characterClass, level} = storeToRefs(playerBaseInfoStore);
+    const characterMainInfoStore = useCharacterMainInfo();
+    const {name, characterClass, level} = storeToRefs(characterMainInfoStore);
 
     const attactsStore = useCharacterAttacksStore();
     const {attacks} = storeToRefs(attactsStore);

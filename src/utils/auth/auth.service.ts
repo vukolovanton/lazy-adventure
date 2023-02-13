@@ -26,10 +26,13 @@ class AuthService {
 
 	login(user: User) {
         const store = useGlobalStore();
+
         store.setCharacterName(user.characterName);
+        store.setUserId(user.userId);
 
         localStorage.setItem("user", JSON.stringify({
             characterName: user.characterName,
+            userId: user.userId,
         }));
 	}
 

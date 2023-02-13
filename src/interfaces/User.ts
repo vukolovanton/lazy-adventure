@@ -4,6 +4,7 @@ import { Spell } from './PlayerSpells';
 export interface User {
 	characterName: string;
 	isDm?: boolean;
+    userId: number;
 }
 
 export interface AuthResponse {

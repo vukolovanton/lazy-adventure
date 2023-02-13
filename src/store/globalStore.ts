@@ -7,6 +7,7 @@ export const useGlobalStore = defineStore(StoreIds.GlobalStore, {
 		user: {
 			characterName: '',
 			avatarSource: '',
+            userId: '',
 		},
 		isLoading: false,
 		isSuccess: Date.now(),
@@ -20,7 +21,7 @@ export const useGlobalStore = defineStore(StoreIds.GlobalStore, {
         setCharacterName(value: string) {
           this.user.characterName = value;
         },
-		setUserId(value: string) {
+		setUserId(value: number) {
 			this.user.id = value;
 		},
 		setIsLoading(value: boolean) {

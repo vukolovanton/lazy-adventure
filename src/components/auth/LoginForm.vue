@@ -22,8 +22,6 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useGlobalStore } from '@/store/globalStore';
 import AuthService from '@/utils/auth/auth.service';
-import { AuthResponse } from '@/interfaces/User';
-import { AxiosResponse } from 'axios';
 
 const router = useRouter();
 const store = useGlobalStore();
@@ -35,6 +33,7 @@ async function handleAuth() {
 	const user = {
 		characterName: characterName.value,
         isDm: checked.value,
+        userId: Date.now()
 	};
 
 	store.setIsLoading(true);

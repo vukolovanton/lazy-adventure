@@ -30,7 +30,7 @@ import { useCharacterBaseStatsStore } from '@/store/palyerStats/characterBaseSta
 import { useCharacterSkillsStore } from '@/store/palyerStats/characterSkillsStore';
 import { useGlobalStore } from '@/store/globalStore';
 import { errorHandler, getAvatarSource } from '@/utils/utils';
-import {CharacterSheet, CharacterSheetStore} from "@/interfaces/CharacterSheet";
+import {CharacterSheet} from "@/interfaces/CharacterSheet";
 import {useCharacterHitPointsStore} from "@/store/palyerStats/characterHitPointsStore";
 import {useCharacterSavingThrowsStore} from "@/store/palyerStats/characterSavingThrows";
 import SavingThrows from "@/components/PlayerSheet/SavingThrows.vue";
@@ -65,7 +65,7 @@ async function getCharacterSheet() {
             setSheetToStore(response);
             characterRef.value = response;
         } else {
-            const defaultCharacter = GET_DEFAULT_CHARACTER(currentUser.characterName);
+            const defaultCharacter = GET_DEFAULT_CHARACTER(currentUser.characterName, currentUser.userId);
             setSheetToStore(defaultCharacter);
             characterRef.value = defaultCharacter;
         }
@@ -98,6 +98,7 @@ function handleSavePlayerSheet() {
 
     const character = {
         name: characterMainInfo.$state.name,
+        userId: currentUser.userId,
         gender: characterMainInfo.$state.gender,
         characterClass: characterMainInfo.$state.characterClass,
         level: characterMainInfo.$state.level,
@@ -112,6 +113,12 @@ function handleSavePlayerSheet() {
         attacks: characterAttacks.$state.attacks,
         spells: characterSpells.$state.spells,
     }
+
+    console.log({
+    currentUser,
+    character,
+    gender: characterMainInfo.$state.gender
+    })
 
 	PlayerService.updateCharacter(character)
 		.then(() => globalStore.setIsSuccess('Character sheet saved successfully'))

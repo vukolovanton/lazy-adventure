@@ -3,6 +3,7 @@ import {CharacterSavingThrowsStore, CharacterSkillsStore} from "@/interfaces/Pla
 export interface CharacterSheet {
     name: string;
     gender: 'm' | 'f';
+    userId: number;
     characterClass: string;
     level: number;
     background: string;
