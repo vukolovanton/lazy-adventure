@@ -1,32 +1,20 @@
 <template>
 	<section class="SkillList">
 		<div class="filter">
-			<input
-				type="radio"
-				id="all"
-				name="spells"
-				value="all"
-				:checked="filter === 'all'"
-				@change="filter = 'all'"
-			/>
-			<label for="all">All</label>
-
-			<input
-				type="radio"
-				id="learned"
-				name="spells"
-				value="learned"
-				:checked="filter === 'learned'"
-				@change="filter = 'learned'"
-			/>
-			<label for="learned">Learned</label>
+            <TextInputField
+                    type="number"
+                    label="Proficiency Bonus"
+                    id="proficiencyBonus"
+                    :inputValue="proficiencyBonus"
+                    @update:inputValue="characterBaseStatsStore.setProficiencyBonus"
+            />
 		</div>
-		<div v-for="skill in filteredSkills" class="skills-container">
+		<div v-for="skill in skills" class="skills-container">
 			<input
 				type="checkbox"
 				:id="skill.name"
-				:checked="skill.isLearned"
-				@change="store.setIsLearned(skill.name, $event.target?.checked)"
+				:checked="skill.isProficient"
+				@change="store.setIsProficient(skill.name, $event.target?.checked)"
 			/>
 			<label :for="skill.name">{{ skill.name }}</label>
 			<div class="skills-controlls">
@@ -42,21 +30,25 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
 import { storeToRefs } from 'pinia';
-import { usePlayerSkillsStore } from '@/store/palyerStats/playerSkillsStore';
+import { useCharacterSkillsStore } from '@/store/palyerStats/characterSkillsStore';
+import { useCharacterBaseStatsStore } from '@/store/palyerStats/characterBaseStatsStore';
+import TextInputField from "@/components/common/TextInputField.vue";
 
-const store = usePlayerSkillsStore();
+const characterBaseStatsStore = useCharacterBaseStatsStore();
+const store = useCharacterSkillsStore();
 const { skills } = storeToRefs(store);
 
-const filter = ref('all');
-const filteredSkills = computed(() => {
-	if (filter.value === 'all') {
-		return skills.value;
-	}
+const { proficiencyBonus } = storeToRefs(characterBaseStatsStore);
 
-	return skills.value.filter((skill) => skill.isLearned);
-});
+//const filter = ref('all');
+//const filteredSkills = computed(() => {
+//	if (filter.value === 'all') {
+//		return skills.value;
+//	}
+//
+//	return skills.value.filter((skill) => skill.isLearned);
+//});
 </script>
 
 <style lang="scss" scoped>

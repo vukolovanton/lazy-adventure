@@ -47,14 +47,24 @@ export interface Stealth extends DexSkill {}
 export interface Survival extends WisSkill {}
 
 export type SkillStoreItem = {
-	name: UserFacingSkillsList;
+    name: typeof UserFacingSkillsListObject;
 	type: SkillType;
 	points: number;
-	isLearned: boolean;
+	isProficient: boolean;
 };
 
-export interface PlayerSkillsStore {
+export type SavingThrowStoreItem = {
+    name: string;
+    points: number;
+    isProficient: boolean;
+};
+
+export interface CharacterSkillsStore {
 	skills: SkillStoreItem[];
+}
+
+export interface CharacterSavingThrowsStore {
+    savingThrows: SavingThrowStoreItem[];
 }
 
 export enum SkillType {
@@ -68,6 +78,7 @@ export enum SkillType {
 
 export enum SkillsList {
 	ACROBATICS = 'acrobatics',
+    ANIMAL_HANDLING = 'animalHandling',
 	ARCANA = 'arcana',
 	ATHLETICS = 'athletics',
 	DECEPTION = 'deception',
@@ -88,6 +99,7 @@ export enum SkillsList {
 
 export enum UserFacingSkillsList {
 	ACROBATICS = 'Acrobatics',
+    ANIMAL_HANDLING = 'Animal Handling',
 	ARCANA = 'Arcana',
 	ATHLETICS = 'Athletics',
 	DECEPTION = 'Deception',
@@ -104,4 +116,25 @@ export enum UserFacingSkillsList {
 	SLEIGHT_OF_HAND = 'Sleight Of Hand',
 	STEALTH = 'Stealth',
 	SURVIVAL = 'Survival',
+}
+
+export const UserFacingSkillsListObject = {
+    [SkillsList.ACROBATICS]: 'Acrobatics',
+    [SkillsList.ANIMAL_HANDLING]: 'Animal Handling',
+    [SkillsList.ARCANA]: 'Arcana',
+    [SkillsList.ATHLETICS]: 'Athletics',
+    [SkillsList.DECEPTION]: 'Deception',
+    [SkillsList.HISTORY]: 'History',
+    [SkillsList.INSIGHT]: 'Insight',
+    [SkillsList.INTIMIDATION]: 'Intimidation',
+    [SkillsList.INVESTIGATION]: 'Investigation',
+    [SkillsList.MEDICINE]: 'Medicine',
+    [SkillsList.NATURE]: 'Nature',
+    [SkillsList.PERCEPTION]: 'Perception',
+    [SkillsList.PERFORMANCE]: 'Performance',
+    [SkillsList.PERSUASION]: 'Persuasion',
+    [SkillsList.RELIGION]: 'Religion',
+    [SkillsList.SLEIGHT_OF_HAND]: 'Sleight Of Hand',
+    [SkillsList.STEALTH]: 'Stealth',
+    [SkillsList.SURVIVAL]: 'Survival',
 }

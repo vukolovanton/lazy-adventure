@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { PlayerBaseStats } from '@/interfaces/PlayerStats';
 import { StoreIds } from '@/constants';
 
-export const usePlayerBaseStats = defineStore(StoreIds.PlayerBaseStats, {
+export const useCharacterAdditionalInfo = defineStore(StoreIds.PlayerBaseStats, {
 	state: (): PlayerBaseStats => ({
 		strength: 0,
 		dexterety: 0,
@@ -13,7 +13,7 @@ export const usePlayerBaseStats = defineStore(StoreIds.PlayerBaseStats, {
 	}),
 
 	actions: {
-		setPlayerBaseStats(baseStats: PlayerBaseStats) {
+		setCharacterAdditionalInfo(baseStats: PlayerBaseStats) {
 			this.strength = baseStats.strength;
 			this.dexterety = baseStats.dexterety;
 			this.constitution = baseStats.constitution;

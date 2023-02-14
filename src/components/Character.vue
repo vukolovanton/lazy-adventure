@@ -4,7 +4,7 @@
 			<img :src="avatarSrc" width="64" height="64" v-if="avatarSrc" />
 		</div>
 		<div class="stats">
-			<h3>{{ characterName }}</h3>
+			<h3>{{ name }}</h3>
 		</div>
 	</div>
 </template>
@@ -13,14 +13,13 @@
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { usePlayerBaseInfo } from '@/store/palyerStats/playerBaseInfoStore';
+import { useCharacterMainInfo } from '@/store/palyerStats/characterMainInfoStore';
 import { getAvatarSource } from '@/utils/utils';
 
 const router = useRouter();
 
-const playerBaseInfoStore = usePlayerBaseInfo();
-const { characterName, characterClass, gender } =
-	storeToRefs(playerBaseInfoStore);
+const characterStore = useCharacterMainInfo();
+const { name, characterClass, gender } = storeToRefs(characterStore);
 
 const avatarSrc = computed(() => {
 	return getAvatarSource(characterClass.value, gender.value);

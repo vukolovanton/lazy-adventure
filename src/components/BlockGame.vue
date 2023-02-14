@@ -194,7 +194,7 @@ onMounted(() => {
 		room: SOCKET_IO_ROOM_NAME,
 		details: {
 			avatarSource: globalStore.user.avatarSource,
-			userId: globalStore.user.id,
+			userId: globalStore.user.userId,
 			stats: {
 				...stats,
 				isPlayer: true,

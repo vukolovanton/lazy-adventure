@@ -14,15 +14,7 @@ class AuthService {
         .then((response) => {
             if (response) {
                 if (response.data) {
-                    const store = useGlobalStore();
-                    store.setUsername(response.data.email);
-                    store.setUserId(response.data.userId);
-                    
-                    localStorage.setItem("user", JSON.stringify({
-                        username: response.data.email,
-                        password: response.data.password,
-                        id: response.data.userId,
-                    }))
+
 
                     return true;
                 }
@@ -33,48 +25,22 @@ class AuthService {
     }
 
 	login(user: User) {
-		return axios
-			.post(API_URL_LOGIN, {
-				email: user.email,
-				password: user.password,
-			})
-			.then((response) => {
-				if (response.data.jwtToken) {
-                    localStorage.setItem('token', JSON.stringify(response.data.jwtToken));
+        const store = useGlobalStore();
 
-				}
-				return response.data;
-			})
-			.catch((e) => alert(e));
+        store.setCharacterName(user.characterName);
+        store.setUserId(user.userId);
+
+        localStorage.setItem("user", JSON.stringify({
+            characterName: user.characterName,
+            userId: user.userId,
+        }));
 	}
 
 	logout() {
 		localStorage.clear();
 	}
 
-	register(user: User) {
-		return axios
-			.post(API_URL_REGISTER + 'register', {
-				email: user.email,
-				password: user.password,
-			})
-			.then((response) => {
-				if (response.data.token) {
-					localStorage.setItem('user', JSON.stringify(response.data));
-
-					const store = useGlobalStore();
-					store.setUsername(response.data.user.username);
-					store.setUserId(response.data.user.id);
-				}
-
-				return response.data;
-			})
-			.catch((error) => {
-				alert(error);
-			});
-	}
-
-	getCurrentUser(): AuthResponse | null {
+	getCurrentUserFromLocalStorage(): User | null {
 		const user = localStorage.getItem('user');
 		if (user) {
 			return JSON.parse(user);

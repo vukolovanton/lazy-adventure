@@ -1,10 +1,10 @@
 <template>
-	<section class="BaseInfo">
+	<section class="CharacterMainInfo">
 		<TextInputField
-			label="Character Name"
-			id="characterName"
-			:input-value="characterName"
-			@set-input-value="store.setCharacterName"
+			label="Name"
+			id="name"
+			:inputValue="name"
+            :disabled="true"
 		/>
 		<div class="container">
 			<select name="select" @change="handleClassChange" id="characterClass">
@@ -21,14 +21,14 @@
 		<TextInputField
 			label="Race"
 			id="race"
-			:input-value="race"
-			@set-input-value="store.setRace"
+			:inputValue="race"
+            @update:inputValue="store.setRace"
 		/>
 		<TextInputField
-			label="Aligment"
-			id="aligment"
-			:input-value="aligment"
-			@set-input-value="store.setAligment"
+			label="Alignment"
+			id="alignment"
+			:inputValue="alignment"
+			@update:inputValue="store.setAlignment"
 		/>
 		<div class="container">
 			<select name="select" @change="handleChangeGender" id="gender">
@@ -39,17 +39,19 @@
 			<label for="characterClass">Gender</label>
 		</div>
 
-		<IncrementInputField
+		<TextInputField
 			label="Level"
-			:value="level"
-			@set-incrementable-value="updateCharacterLevel"
+			id="level"
+			type="number"
+			:inputValue="level"
+			@update:inputValue="store.setLevel"
 		/>
 		<TextInputField
 			label="Experience"
-			id="experience"
+			id="exp"
 			type="number"
-			:input-value="experience"
-			@set-input-value="store.setExperience"
+			:inputValue="exp"
+			@update:inputValue="store.setExp"
 		/>
 	</section>
 </template>
@@ -57,22 +59,22 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia';
 import TextInputField from '@/components/common/TextInputField.vue';
-import IncrementInputField from '@/components/common/IncrementInputField.vue';
-import { usePlayerBaseInfo } from '@/store/palyerStats/playerBaseInfoStore';
+import { useCharacterMainInfo } from '@/store/palyerStats/characterMainInfoStore';
 import { useGlobalStore } from '@/store/globalStore';
 import { PlayerClasses } from '@/interfaces/PlayerStats';
 import { getAvatarSource } from '@/utils/utils';
 
-const store = usePlayerBaseInfo();
+const store = useCharacterMainInfo();
 const globalStore = useGlobalStore();
 const {
-	characterName,
-	characterClass,
-	level,
-	race,
-	aligment,
-	experience,
-	gender,
+    name,
+    characterClass,
+    level,
+    background,
+    race,
+    alignment,
+    exp,
+    gender
 } = storeToRefs(store);
 
 function handleClassChange(e: any) {
@@ -89,14 +91,6 @@ function handleChangeGender(e: any) {
 	globalStore.setAvatarSource(
 		getAvatarSource(characterClass.value, e.target.value)
 	);
-}
-
-function updateCharacterLevel(value: string) {
-	if (value === '+') {
-		store.incrementLevel();
-	} else if (value === '-') {
-		store.decrementLevel();
-	}
 }
 </script>
 

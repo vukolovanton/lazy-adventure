@@ -3,76 +3,88 @@
 		<button @click="handleSavePlayerSheet" class="main">Save</button>
 	</div>
 	<div class="player-sheet-container">
-		<BaseInfo />
-		<AdditionalInfo />
+		<CharacterMainInfo />
+		<CharacterAdditionalInfo />
 		<BaseStats />
 		<SkillList />
+        <SavingThrows />
 		<SpellsList />
-		<InventoryList />
+		<Attacks />
 	</div>
 </template>
 
 <script lang="ts" setup>
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 
-import BaseInfo from './BaseInfo.vue';
-import AdditionalInfo from './AdditionalInfo.vue';
+import CharacterMainInfo from './CharacterMainInfo.vue';
+import CharacterAdditionalInfo from './CharacterAdditionalInfo.vue';
 import BaseStats from './BaseStats.vue';
 import SkillList from './SkillsList.vue';
 import SpellsList from './SpellsList.vue';
-import InventoryList from './InventoryList.vue';
 
-import { Player } from '@/interfaces/Player';
 import AuthService from '@/utils/auth/auth.service';
-import PlayerService from '@/utils/auth/player.service';
+import PlayerService from '@/utils/auth/characterService';
 
-import { usePlayerBaseInfo } from '@/store/palyerStats/playerBaseInfoStore';
-import { usePlayerAdditionalInfo } from '@/store/palyerStats/playerAdditionalInfoStore';
-import { usePlayerBaseStats } from '@/store/palyerStats/playerBaseStatsStore';
-import { usePlayerSkillsStore } from '@/store/palyerStats/playerSkillsStore';
-import { usePlayerSpellsStore } from '@/store/palyerStats/playerSpellsStore';
-import { usePlayerInventoryStore } from '@/store/palyerStats/playerInventoryStore';
+import { useCharacterMainInfo } from '@/store/palyerStats/characterMainInfoStore';
+import { useCharacterBaseStatsStore } from '@/store/palyerStats/characterBaseStatsStore';
+import { useCharacterSkillsStore } from '@/store/palyerStats/characterSkillsStore';
 import { useGlobalStore } from '@/store/globalStore';
 import { errorHandler, getAvatarSource } from '@/utils/utils';
+import {CharacterSheet} from "@/interfaces/CharacterSheet";
+import {useCharacterHitPointsStore} from "@/store/palyerStats/characterHitPointsStore";
+import {useCharacterSavingThrowsStore} from "@/store/palyerStats/characterSavingThrows";
+import SavingThrows from "@/components/PlayerSheet/SavingThrows.vue";
+import {useCharacterAttacksStore} from "@/store/palyerStats/characterAttacks";
+import Attacks from "@/components/PlayerSheet/Attacks.vue";
+import {useCharacterSpellsStore} from "@/store/palyerStats/characterSpellsStore";
+import { GET_DEFAULT_CHARACTER } from "@/constants";
 
-const playerBaseInfoStore = usePlayerBaseInfo();
-const playerAdditionalInfoStore = usePlayerAdditionalInfo();
-const playerBaseStatsStore = usePlayerBaseStats();
-const playerSkillsStore = usePlayerSkillsStore();
-const playerSpellsStore = usePlayerSpellsStore();
-const playerInventoryStore = usePlayerInventoryStore();
+const characterMainInfo = useCharacterMainInfo();
+const characterBaseStats = useCharacterBaseStatsStore();
+const characterSkills = useCharacterSkillsStore();
+const characterHitPoints = useCharacterHitPointsStore();
+const characterSavingThrows = useCharacterSavingThrowsStore();
+const characterAttacks = useCharacterAttacksStore();
+const characterSpells = useCharacterSpellsStore();
 const globalStore = useGlobalStore();
 
 const isLoading = ref(false);
-const currentUser = AuthService.getCurrentUser();
+const characterRef = ref(null);
+const currentUser = AuthService.getCurrentUserFromLocalStorage();
 
 onMounted(() => {
-	getPlayersSheet();
+	getCharacterSheet();
 });
 
-async function getPlayersSheet() {
+async function getCharacterSheet() {
 	isLoading.value = true;
 
 	if (currentUser) {
-		const response = await PlayerService.fetchPlayer(currentUser.user.id);
-		const result = await Promise.resolve(response);
-		setSheetToStore(result);
+		const response = await PlayerService.fetchCharacterByCharacterName(currentUser.characterName);
+        if (response) {
+            setSheetToStore(response);
+            characterRef.value = response;
+        } else {
+            const defaultCharacter = GET_DEFAULT_CHARACTER(currentUser.characterName, currentUser.userId);
+            setSheetToStore(defaultCharacter);
+            characterRef.value = defaultCharacter;
+        }
 	}
 
 	isLoading.value = false;
 }
 
-function setSheetToStore(player: Player) {
-	if (Object.keys(player).length > 0) {
-		playerBaseInfoStore.setPlayerBaseInfo(player.baseInfo);
-		playerAdditionalInfoStore.setPlayerAdditionalInfo(player.additionalInfo);
-		playerBaseStatsStore.setPlayerBaseStats(player.baseStats);
-		playerSkillsStore.setPlayerSkills(player.skills);
-		playerSpellsStore.setPlayerSpells(player.spells);
-		playerInventoryStore.setPlayerInventory(player.inventory);
-
+function setSheetToStore(character: CharacterSheet) {
+	if (Object.keys(character).length > 0) {
+		characterMainInfo.setCharacterMainInfo(character);
+		characterBaseStats.setCharacterBaseStats(character);
+        characterHitPoints.setCharacterHitPoints(character.hitPoints);
+        characterSavingThrows.setCharacterSavingThrows(character.savingThrows, character.proficiency);
+		characterSkills.setPlayerSkills(character.skills, character.proficiency);
+        characterAttacks.setCharacterAttacks(character.attacks);
+        characterSpells.setCharacterSpells(character.spells);
 		globalStore.setAvatarSource(
-			getAvatarSource(player.baseInfo.characterClass, player.baseInfo.gender)
+			getAvatarSource(character.characterClass, character.gender)
 		);
 	}
 
@@ -84,24 +96,32 @@ function handleSavePlayerSheet() {
 		return;
 	}
 
-	const player: Player = {
-		userId: currentUser.user.id,
-		baseInfo: playerBaseInfoStore.$state,
-		additionalInfo: playerAdditionalInfoStore.$state,
-		baseStats: playerBaseStatsStore.$state,
-		skills: playerSkillsStore.$state.skills,
-		spells: playerSpellsStore.$state.spells,
-		inventory: playerInventoryStore.$state.inventory,
-	};
+    const character = {
+        name: characterMainInfo.$state.name,
+        userId: currentUser.userId,
+        gender: characterMainInfo.$state.gender,
+        characterClass: characterMainInfo.$state.characterClass,
+        level: characterMainInfo.$state.level,
+        background: characterMainInfo.$state.background,
+        race: characterMainInfo.$state.race,
+        alignment: characterMainInfo.$state.alignment,
+        exp: characterMainInfo.$state.exp,
+        baseStats: characterBaseStats.$state,
+        hitPoints: characterHitPoints.$state,
+        skills: characterSkills.$state.skills,
+        savingThrows: characterSavingThrows.$state.savingThrows,
+        attacks: characterAttacks.$state.attacks,
+        spells: characterSpells.$state.spells,
+    }
 
-	PlayerService.savePlayer(player)
-		.then(() => globalStore.setIsSuccess('Player sheet saved successfully'))
+	PlayerService.updateCharacter(character)
+		.then(() => globalStore.setIsSuccess('Character sheet saved successfully'))
 		.catch(errorHandler);
 }
 
-onBeforeUnmount(() => {
-	handleSavePlayerSheet();
-});
+//onBeforeUnmount(() => {
+//	handleSavePlayerSheet();
+//});
 </script>
 
 <style>
@@ -117,10 +137,10 @@ onBeforeUnmount(() => {
 	gap: 1.5em 4em;
 	grid-auto-flow: row;
 	grid-template-areas:
-		'BaseInfo BaseInfo BaseInfo'
+		'BaseInfo BaseInfo SkillList'
 		'BaseStats AdditionalInfo SkillList'
-		'BaseStats SpellsList InventoryList'
-		'BaseStats SpellsList InventoryList';
+		'BaseStats SpellsList Attacks'
+		'BaseStats SpellsList Attacks';
 	max-width: 70vw;
 	margin: 0 auto;
 }
@@ -129,8 +149,8 @@ onBeforeUnmount(() => {
 	grid-area: SpellsList;
 }
 
-.InventoryList {
-	grid-area: InventoryList;
+.Attacks {
+	grid-area: Attacks;
 }
 
 .BaseInfo {

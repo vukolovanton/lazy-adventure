@@ -19,8 +19,8 @@
 		<SmallTextInput
 			label="Map name"
 			id="tileName"
-			:input-value="store.mapName"
-			@set-input-value="setTileName"
+			:inputValue="store.mapName"
+			@update:inputValue="setTileName"
 		/>
 		<button class="clear-button">Clear canvas</button>
 		<button class="save-temp-button">Save temporary changes</button>
@@ -34,7 +34,7 @@
 	<section class="tiles-editor-container">
 		<aside>
 			<div class="tileset-container">
-				<img ref="tilesetSource" src="src/assets/tileset.png" />
+				<img ref="tilesetSource" src="/tileset.png" />
 				<div
 					ref="tilesetSelection"
 					class="tileset-container_selection"

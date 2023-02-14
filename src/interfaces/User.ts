@@ -2,19 +2,15 @@ import { InventoryItem } from './PlayerInventory';
 import { Spell } from './PlayerSpells';
 
 export interface User {
-	email: string;
-	password: string;
+	characterName: string;
 	isDm?: boolean;
+    userId: number;
 }
 
 export interface AuthResponse {
-	user: {
-		username: string;
-		password?: string;
-		isAdmin?: boolean;
-		id: string;
-	};
-	token: string;
+    email: string;
+    password: string;
+    userId: number;
 }
 
 export type SocketResponseData = {

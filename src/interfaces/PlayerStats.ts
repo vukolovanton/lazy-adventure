@@ -1,5 +1,5 @@
 export interface PlayerBaseInfo {
-	characterName: string;
+	name: string;
 	characterClass: string;
 	level: number;
 	race: string;

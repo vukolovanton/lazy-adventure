@@ -1,11 +1,11 @@
 import { reactive, onBeforeMount, onMounted, onUnmounted, ref } from 'vue';
 import { io, Socket } from 'socket.io-client';
 import { storeToRefs } from 'pinia';
-import { usePlayerBaseInfo } from '@/store/palyerStats/playerBaseInfoStore';
+import { useCharacterMainInfo } from '@/store/palyerStats/characterMainInfoStore';
 import { SOCKET_IO_URL, SOCKET_IO_ROOM_NAME } from '@/constants';
 
 export function useSocket(context: any) {
-	const playerBaseInfoStore = usePlayerBaseInfo();
+	const playerBaseInfoStore = useCharacterMainInfo();
 	const { characterName } = storeToRefs(playerBaseInfoStore);
 
 	const state = reactive({
@@ -28,7 +28,7 @@ export function useSocket(context: any) {
 
 	// == Join Room
 	state.socket.emit('joinRoom', {
-		username: characterName.value,
+		characterName: characterName.value,
 		room: SOCKET_IO_ROOM_NAME,
 	});
 
@@ -51,7 +51,7 @@ export function useSocket(context: any) {
 
 	onUnmounted(() => {
 		state.socket.emit('leaveRoom', {
-			username: characterName.value,
+			characterName: characterName.value,
 			room: SOCKET_IO_ROOM_NAME,
 		});
 		state.socket.close();

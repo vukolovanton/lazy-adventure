@@ -14,14 +14,14 @@
 		<SmallTextInput
 			label="Name"
 			id="monsterName"
-			:input-value="props.name"
-			@set-input-value="props.handleSetMonsterName"
+			:inputValue="props.name"
+			@update:inputValue="props.handleSetMonsterName"
 		/>
 		<SmallTextInput
 			label="Hit Points"
 			id="monsterHitPoints"
-			:input-value="props.hitPoints"
-			@set-input-value="props.handleSetMonsterHitPoints"
+			:inputValue="props.hitPoints"
+			@update:inputValue="props.handleSetMonsterHitPoints"
 		/>
 		<button @click="handleAddMonster" :disabled="!props.isFilled">Add</button>
 	</div>

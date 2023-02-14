@@ -3,7 +3,7 @@
 		<RouterLink to="/" class="navbar-item">
 			<h2>Lazy Adventure</h2>
 		</RouterLink>
-		<Player />
+		<Character />
 		<div>
 			<RouterLink to="/map-editor" class="navbar-item">Map Editor</RouterLink>
 			<RouterLink to="/stats" class="navbar-item">Stats</RouterLink>
@@ -19,10 +19,10 @@
 <script lang="ts" setup>
 import { watch, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import Player from '@/components/Player.vue';
+import Character from '@/components/Character.vue';
 import AuthService from '@/utils/auth/auth.service';
 import { useGlobalStore } from '@/store/globalStore';
-import { storeToRefs } from 'pinia';
+import { storeToRefs, getActivePinia } from 'pinia';
 
 const globalStore = useGlobalStore();
 const { isSuccess, successMessage } = storeToRefs(globalStore);
@@ -32,6 +32,7 @@ const snackbarRef = ref();
 
 function handleLogout() {
 	AuthService.logout();
+    getActivePinia()._s.forEach(store => store.$reset());
 	router.push('/login');
 }
 
@@ -87,7 +88,7 @@ h2 {
 	position: relative;
 
 	&::before {
-		content: url('src/assets/logo.svg');
+		content: url('/logo.svg');
 		display: inline-block;
 		transform: translateY(25%);
 	}

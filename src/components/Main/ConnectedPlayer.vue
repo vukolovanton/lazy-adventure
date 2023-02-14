@@ -22,13 +22,13 @@
 				</div>
 			</div>
 			<div class="items">
-				<h4>Inventory:</h4>
+				<h4>Attacks:</h4>
 				<div
-					v-for="item in user.details.stats.inventory"
-					v-if="user.details.stats.inventory.length > 0"
+					v-for="item in user.details.stats.attacks"
+					v-if="user.details.stats.attacks.length > 0"
 					class="item"
 				>
-					<span> {{ item.count }}x {{ item.name }}</span>
+					<span> {{ item.name }} {{ item.atkBonus }} {{ item.damage}}</span>
 				</div>
 
 				<h4>Spells:</h4>
@@ -37,8 +37,7 @@
 					v-if="user.details.stats.spells.length > 0"
 					class="item"
 				>
-					<span> {{ spell.name }} - </span>
-					<span> {{ spell.attack }} / {{ spell.dice }} / {{ spell.type }}</span>
+					<span>{{ spell.spellLevel}} {{ spell.spellName }}</span>
 				</div>
 			</div>
 		</div>
