@@ -34,7 +34,7 @@
 	<section class="tiles-editor-container">
 		<aside>
 			<div class="tileset-container">
-				<img ref="tilesetSource" src="src/assets/tileset.png" />
+				<img ref="tilesetSource" src="/tileset.png" />
 				<div
 					ref="tilesetSelection"
 					class="tileset-container_selection"

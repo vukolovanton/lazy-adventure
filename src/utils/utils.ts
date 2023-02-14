@@ -23,29 +23,29 @@ export function errorHandler(e: AxiosError) {
 export function getAvatarSource(playerClass: string, gender: 'f' | 'm') {
 	switch (playerClass) {
 		case PlayerClasses.Wizard:
-			return `src/assets/characters/wizard-${gender}.png`;
+			return `/characters/wizard-${gender}.png`;
 		case PlayerClasses.Druid:
-			return `src/assets/characters/druid-${gender}.png`;
+			return `/characters/druid-${gender}.png`;
 		case PlayerClasses.Sorcerer:
-			return `src/assets/characters/sorcerer-${gender}.png`;
+			return `/characters/sorcerer-${gender}.png`;
 		case PlayerClasses.Warlock:
-			return `src/assets/characters/warlock-${gender}.png`;
+			return `/characters/warlock-${gender}.png`;
 		case PlayerClasses.Ranger:
-			return `src/assets/characters/ranger-${gender}.png`;
+			return `/characters/ranger-${gender}.png`;
 		case PlayerClasses.Rouge:
-			return `src/assets/characters/rouge-${gender}.png`;
+			return `/characters/rouge-${gender}.png`;
 		case PlayerClasses.Monk:
-			return `src/assets/characters/monk-${gender}.png`;
+			return `/characters/monk-${gender}.png`;
 		case PlayerClasses.Bard:
-			return `src/assets/characters/bard-${gender}.png`;
+			return `/characters/bard-${gender}.png`;
 		case PlayerClasses.Barbarian:
-			return `src/assets/characters/barbarian-${gender}.png`;
+			return `/characters/barbarian-${gender}.png`;
 		case PlayerClasses.Paladin:
-			return `src/assets/characters/paladin-${gender}.png`;
+			return `/characters/paladin-${gender}.png`;
 		case PlayerClasses.Fighter:
-			return `src/assets/characters/fighter-${gender}.png`;
+			return `/characters/fighter-${gender}.png`;
 		case PlayerClasses.Cleric:
-			return `src/assets/characters/cleric-${gender}.png`;
+			return `/characters/cleric-${gender}.png`;
 
 		default:
 			return '';

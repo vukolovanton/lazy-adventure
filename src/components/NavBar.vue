@@ -88,7 +88,7 @@ h2 {
 	position: relative;
 
 	&::before {
-		content: url('src/assets/logo.svg');
+		content: url('/logo.svg');
 		display: inline-block;
 		transform: translateY(25%);
 	}
