@@ -114,10 +114,6 @@ function handleSavePlayerSheet() {
 		.then(() => globalStore.setIsSuccess('Character sheet saved successfully'))
 		.catch(errorHandler);
 }
-
-//onBeforeUnmount(() => {
-//	handleSavePlayerSheet();
-//});
 </script>
 
 <style>

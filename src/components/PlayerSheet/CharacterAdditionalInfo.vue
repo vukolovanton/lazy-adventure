@@ -55,7 +55,7 @@
                     @update:inputValue="characterHitPointsStore.setHitDice"
             />
         </div>
-                    <SavingThrows />
+        <SavingThrows/>
     </section>
 </template>
 

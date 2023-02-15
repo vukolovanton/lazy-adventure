@@ -51,7 +51,6 @@ const { savingThrows } = storeToRefs(store);
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-    justify-content: space-between;
 }
 .saving-throws-controlls {
 	display: flex;

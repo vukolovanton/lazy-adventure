@@ -68,8 +68,6 @@ function setAttackDamage(value: string) {
 }
 
 function handleSaveNewItem() {
-//	if (!isFilled) return;
-
 	const t = { ...newAttack };
 	store.setNewCharacterAttack(t);
 
