@@ -60,3 +60,9 @@ const {
     charisma
 } = storeToRefs(store);
 </script>
+
+<style lang="scss" scoped>
+.BaseStats {
+	grid-area: BaseStats;
+}
+</style>

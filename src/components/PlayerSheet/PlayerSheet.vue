@@ -7,9 +7,7 @@
 		<CharacterAdditionalInfo />
 		<BaseStats />
 		<SkillList />
-        <SavingThrows />
-		<SpellsList />
-		<Attacks />
+        <AttacksAndSpells />
 	</div>
 </template>
 
@@ -20,7 +18,6 @@ import CharacterMainInfo from './CharacterMainInfo.vue';
 import CharacterAdditionalInfo from './CharacterAdditionalInfo.vue';
 import BaseStats from './BaseStats.vue';
 import SkillList from './SkillsList.vue';
-import SpellsList from './SpellsList.vue';
 
 import AuthService from '@/utils/auth/auth.service';
 import PlayerService from '@/utils/auth/characterService';
@@ -33,11 +30,10 @@ import { errorHandler, getAvatarSource } from '@/utils/utils';
 import {CharacterSheet} from "@/interfaces/CharacterSheet";
 import {useCharacterHitPointsStore} from "@/store/palyerStats/characterHitPointsStore";
 import {useCharacterSavingThrowsStore} from "@/store/palyerStats/characterSavingThrows";
-import SavingThrows from "@/components/PlayerSheet/SavingThrows.vue";
 import {useCharacterAttacksStore} from "@/store/palyerStats/characterAttacks";
-import Attacks from "@/components/PlayerSheet/Attacks.vue";
 import {useCharacterSpellsStore} from "@/store/palyerStats/characterSpellsStore";
 import { GET_DEFAULT_CHARACTER } from "@/constants";
+import AttacksAndSpells from "@/components/PlayerSheet/AttacksAndSpells.vue";
 
 const characterMainInfo = useCharacterMainInfo();
 const characterBaseStats = useCharacterBaseStatsStore();
@@ -133,42 +129,18 @@ function handleSavePlayerSheet() {
 .player-sheet-container {
 	display: grid;
 	grid-template-columns: 0.5fr 1.5fr 1fr;
-	grid-template-rows: min-content min-content min-content min-content;
+	grid-template-rows: min-content min-content min-content;
 	gap: 1.5em 4em;
 	grid-auto-flow: row;
 	grid-template-areas:
-		'BaseInfo BaseInfo SkillList'
-		'BaseStats AdditionalInfo SkillList'
-		'BaseStats SpellsList Attacks'
-		'BaseStats SpellsList Attacks';
+		'CharacterMainInfo CharacterAdditionalInfo SkillList'
+		'BaseStats AttacksAndSpells SkillList'
+		'BaseStats AttacksAndSpells .';
 	max-width: 70vw;
 	margin: 0 auto;
 }
 
-.SpellsList {
-	grid-area: SpellsList;
-}
-
 .Attacks {
 	grid-area: Attacks;
-}
-
-.BaseInfo {
-	justify-self: stretch;
-	align-self: stretch;
-	grid-area: BaseInfo;
-}
-
-.BaseStats {
-	grid-area: BaseStats;
-}
-
-.AdditionalInfo {
-	grid-area: AdditionalInfo;
-}
-
-.SkillList {
-	grid-area: SkillList;
-	justify-self: stretch;
 }
 </style>

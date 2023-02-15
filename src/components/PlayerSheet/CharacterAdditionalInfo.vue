@@ -55,6 +55,7 @@
                     @update:inputValue="characterHitPointsStore.setHitDice"
             />
         </div>
+                    <SavingThrows />
     </section>
 </template>
 
@@ -63,6 +64,7 @@ import {storeToRefs} from 'pinia';
 import TextInputField from '@/components/common/TextInputField.vue';
 import {useCharacterBaseStatsStore} from '@/store/palyerStats/characterBaseStatsStore';
 import {useCharacterHitPointsStore} from "@/store/palyerStats/characterHitPointsStore";
+import SavingThrows from "@/components/PlayerSheet/SavingThrows.vue";
 
 const characterBaseStatsStore = useCharacterBaseStatsStore();
 const characterHitPointsStore = useCharacterHitPointsStore();
@@ -80,6 +82,10 @@ const {
 </script>
 
 <style lang="scss" scoped>
+.CharacterAdditionalInfo {
+  grid-area: CharacterAdditionalInfo;
+}
+
 .inner-container {
   display: flex;
   justify-content: space-between;

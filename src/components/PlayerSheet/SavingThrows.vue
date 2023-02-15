@@ -1,6 +1,9 @@
 <template>
 	<section class="SavingThrows">
+        <h3>Saving Throws</h3>
+        <div class="saving-throws-grid">
 		<div v-for="savingThrow in savingThrows" class="saving-throws-container">
+        <div>
 			<input
 				type="checkbox"
 				:id="savingThrow.name"
@@ -8,6 +11,7 @@
 				@change="store.setIsProficient(savingThrow.name, $event.target?.checked)"
 			/>
 			<label :for="savingThrow.name">{{ savingThrow.name }}</label>
+            </div>
 			<div class="saving-throws-controlls">
 				<span>{{ savingThrow.points }}</span>
 				<div>
@@ -16,6 +20,7 @@
 				</div>
 			</div>
 		</div>
+        </div>
 	</section>
 </template>
 
@@ -29,10 +34,24 @@ const { savingThrows } = storeToRefs(store);
 </script>
 
 <style lang="scss" scoped>
+.SavingThrows {
+	grid-area: SavingThrows;
+}
+.saving-throws-grid {
+    display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 5px 25px;
+  grid-template-areas:
+    ". ."
+    ". ."
+    ". .";
+}
 .saving-throws-container {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+    justify-content: space-between;
 }
 .saving-throws-controlls {
 	display: flex;

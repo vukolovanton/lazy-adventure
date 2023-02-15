@@ -1,5 +1,19 @@
 <template>
 	<section class="CharacterMainInfo">
+    		<TextInputField
+			label="Level"
+			id="level"
+			type="number"
+			:inputValue="level"
+			@update:inputValue="store.setLevel"
+		/>
+		<TextInputField
+			label="Experience"
+			id="exp"
+			type="number"
+			:inputValue="exp"
+			@update:inputValue="store.setExp"
+		/>
 		<TextInputField
 			label="Name"
 			id="name"
@@ -38,21 +52,6 @@
 			</select>
 			<label for="characterClass">Gender</label>
 		</div>
-
-		<TextInputField
-			label="Level"
-			id="level"
-			type="number"
-			:inputValue="level"
-			@update:inputValue="store.setLevel"
-		/>
-		<TextInputField
-			label="Experience"
-			id="exp"
-			type="number"
-			:inputValue="exp"
-			@update:inputValue="store.setExp"
-		/>
 	</section>
 </template>
 
@@ -95,12 +94,14 @@ function handleChangeGender(e: any) {
 </script>
 
 <style scoped>
-.BaseInfo {
-	grid-area: BaseInfo;
+.CharacterMainInfo {
+	grid-area: CharacterMainInfo;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	flex-wrap: wrap;
+	justify-self: stretch;
+	align-self: stretch;
 }
 
 .container {

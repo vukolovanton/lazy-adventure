@@ -10,22 +10,24 @@
 			<SmallTextInput
 				label="Spell Level"
 				id="spellLevel"
-				:input-value="newSpell.spellLevel"
-				@set-input-value="setSpellLevel"
+				:inputValue="newSpell.spellLevel"
+				@update:inputValue="setSpellLevel"
 			/>
 			<SmallTextInput
 				label="Spell Name"
 				id="spellName"
-				:input-value="newSpell.name"
-				@set-input-value="setSpellName"
+				:inputValue="newSpell.name"
+				@update:inputValue="setSpellName"
 			/>
-			<input
-				type="checkbox"
-				id="cantrip"
-				:checked="newSpell.cantrip"
-				@change="setIsCantrip($event.target?.checked)"
-			/>
-            <label for="scantrip">Cantrip</label>
+            <div>
+    			<input
+    				type="checkbox"
+    				id="cantrip"
+    				:checked="newSpell.cantrip"
+    				@change="setIsCantrip($event.target?.checked)"
+    			/>
+                <label for="scantrip">Cantrip</label>
+            </div>
 		</div>
 		<button @click="handleSaveNewSpell" :disabled="!isFilled">Add</button>
 	</section>
@@ -77,6 +79,10 @@ function handleSaveNewSpell() {
 </script>
 
 <style lang="scss" scoped>
+.SpellsList {
+	grid-area: SpellsList;
+}
+
 h3 {
 	margin-bottom: 1em;
 }

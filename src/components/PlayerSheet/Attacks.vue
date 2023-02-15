@@ -11,23 +11,28 @@
 			<SmallTextInput
 				label="Name"
 				id="name"
-				:input-value="newAttack.name"
-				@set-input-value="setAttackName"
+				:inputValue="newAttack.name"
+				@update:inputValue="setAttackName"
 			/>
 			<SmallTextInput
 				label="Damage"
 				id="damage"
-				:input-value="newAttack.damage"
-				@set-input-value="setAttackDamage"
+				:inputValue="newAttack.damage"
+				@update:inputValue="setAttackDamage"
 			/>
 			<SmallTextInput
 				label="Atk Bonus"
 				id="aktBonus"
-				:input-value="newAttack.atkBonus"
-				@set-input-value="setAttackBonus"
+				:inputValue="newAttack.atkBonus"
+				@update:inputValue="setAttackBonus"
 			/>
 		</div>
-		<button @click="handleSaveNewItem" :disabled="!isFilled">Add</button>
+		<button
+            @click="handleSaveNewItem"
+            :disabled="!isFilled"
+        >
+            Add
+        </button>
 	</section>
 </template>
 
@@ -63,7 +68,7 @@ function setAttackDamage(value: string) {
 }
 
 function handleSaveNewItem() {
-	if (!isFilled) return;
+//	if (!isFilled) return;
 
 	const t = { ...newAttack };
 	store.setNewCharacterAttack(t);

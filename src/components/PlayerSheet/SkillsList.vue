@@ -41,17 +41,13 @@ const { skills } = storeToRefs(store);
 
 const { proficiencyBonus } = storeToRefs(characterBaseStatsStore);
 
-//const filter = ref('all');
-//const filteredSkills = computed(() => {
-//	if (filter.value === 'all') {
-//		return skills.value;
-//	}
-//
-//	return skills.value.filter((skill) => skill.isLearned);
-//});
 </script>
 
 <style lang="scss" scoped>
+.SkillList {
+	grid-area: SkillList;
+	justify-self: stretch;
+}
 .filter {
 	margin-bottom: 1em;
 }
