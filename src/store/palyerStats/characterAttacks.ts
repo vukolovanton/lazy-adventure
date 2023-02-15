@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { InventoryItem } from '@/interfaces/PlayerInventory';
 import { trimString } from '@/utils/utils';
 import { StoreIds } from '@/constants';
 import {CharacterSheetAttacks} from "@/interfaces/CharacterSheet";

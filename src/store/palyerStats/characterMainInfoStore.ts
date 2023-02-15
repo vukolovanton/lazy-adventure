@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { PlayerBaseInfo } from '@/interfaces/PlayerStats';
 import { StoreIds } from '@/constants';
 import {CharacterSheet, CharacterSheetMain} from "@/interfaces/CharacterSheet";
 
@@ -32,9 +31,6 @@ export const useCharacterMainInfo = defineStore(StoreIds.PlayerBaseInfo, {
 		setCharacterName(name: string) {
             this.name = name;
 		},
-        setCharacterId(characterId: number) {
-            this.characterId = characterId;
-        },
         setUserId(userId: number) {
             this.userId = userId;
         },

@@ -1,6 +1,3 @@
-import { InventoryItem } from './PlayerInventory';
-import { Spell } from './PlayerSpells';
-
 export interface User {
 	characterName: string;
 	isDm?: boolean;
@@ -29,8 +26,8 @@ export type SocketResponseData = {
 			maximumHitPoints: string;
 			temporaryHitPoints: string;
 			hitDice: string;
-			inventory: InventoryItem[];
-			spells: Spell[];
+			attacks: unknown[];
+			spells: unknown[];
 		};
 	};
 };
